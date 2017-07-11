@@ -8,4 +8,3 @@ package by.pvt.hermanovich.airline.entities;
 public enum UserType {
     CLIENT, ADMINISTRATOR
 }
-
