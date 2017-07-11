@@ -1,11 +1,13 @@
 package by.pvt.hermanovich.airline.dao;
 
 import by.pvt.hermanovich.airline.entities.User;
+import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
 
 import java.sql.Connection;
 
 /**
  * Description: This interface describes methods for working with <i>users</i> database table.
+ *
  * Created by Yauheni Hermanovich on 10.07.2017.
  */
 public interface ImplUserDAO extends AbstractDAO<User> {
@@ -20,7 +22,7 @@ public interface ImplUserDAO extends AbstractDAO<User> {
      *                          returns "true" if the incoming data correspond to the record of the database table;
      *                          returns "false" if the incoming data do not correspond to the record of the database table.
      */
-    boolean isAuthorized(String login, String password, Connection connection);
+    boolean isAuthorized(String login, String password, Connection connection) throws DAOExceptiion;
 
     /**
      * This method reads data from <i>users</i> database table, creates and returns User object according to the entered login.
@@ -29,5 +31,5 @@ public interface ImplUserDAO extends AbstractDAO<User> {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      * @return              - User object.
      */
-    User getByLogin(String login, Connection connection);
+    User getByLogin(String login, Connection connection) throws DAOExceptiion;
 }

@@ -2,6 +2,7 @@ package by.pvt.hermanovich.airline.entities;
 
 /**
  * Description: This class describes all applications users.
+ *
  * Created by Yauheni Hermanovich on 10.07.2017.
  */
 public class User extends BaseEntity {
@@ -12,6 +13,9 @@ public class User extends BaseEntity {
     private String login;
     private String password;
     private UserType userType;
+
+    public User() {
+    }
 
     public User(int id, String firstName, String surname, String documentNumber, String login, String password, UserType userType) {
         this.id = id;

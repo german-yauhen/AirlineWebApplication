@@ -1,31 +1,37 @@
 package by.pvt.hermanovich.airline.dao.implementations;
 
+import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplUserDAO;
 import by.pvt.hermanovich.airline.entities.User;
-
-import java.sql.Connection;
+import by.pvt.hermanovich.airline.entities.UserType;
+import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
+import by.pvt.hermanovich.airline.utils.ConnectorDB;
+import org.apache.log4j.Logger;
+import java.sql.*;
 import java.util.List;
 
 /**
  * Description: This class describes methods which work with <i>users</i> database table.
+ *
  * Created by Yauheni Hermanovich on 11.07.2017.
  */
 public class UserDAO implements ImplUserDAO {
+    private static final Logger logger = Logger.getLogger(UserDAO.class);
 
     private volatile static UserDAO instance;
 
     /**
-     * Default constructor.
+     * This constructor initiates a database connection.
      */
-    public UserDAO() {
+    private UserDAO() {
     }
 
     /**
      * Singleton realization with "Double Checked Locking & Volatile" principle for high performance and thread safety.
      *
-     * @return - an instance of the class.
+     * @return              - an instance of the class.
      */
-    private static UserDAO getInstance() {
+    public static UserDAO getInstance() {
         if (instance == null) {
             synchronized (UserDAO.class) {
                 if (instance == null) {
@@ -39,12 +45,28 @@ public class UserDAO implements ImplUserDAO {
     /**
      * This method creates and inserts an entity in a database table.
      *
-     * @param entity     - the current entity which has been created.
-     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @param user          - the current user which has been created.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void add(User entity, Connection connection) {
-
+    public void add(User user, Connection connection) throws DAOExceptiion {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.ADD_USER);
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getSurname());
+            statement.setString(3, user.getDocumentNumber());
+            statement.setString(4, user.getLogin());
+            statement.setString(5, user.getPassword());
+            statement.setString(6, String.valueOf(user.getUserType()));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            String message = "An error was occurred while executing the request to add the user.";
+            logger.error(message, e);
+            throw new DAOExceptiion(message, e);
+        } finally {
+            ConnectorDB.closeStatement(statement);
+        }
     }
 
     /**
@@ -53,24 +75,60 @@ public class UserDAO implements ImplUserDAO {
      * @param login         - entered <i>login</i> filed of the user.
      * @param password      - entered <i>password</i> field of the user.
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
-     * @return              - boolean value of the operation:
+     * @return              - boolean value as a result:
      *                          returns "true" if the incoming data correspond to the record of the database table;
      *                          returns "false" if the incoming data do not correspond to the record of the database table.
      */
     @Override
-    public boolean isAuthorized(String login, String password, Connection connection) {
-        return false;
+    public boolean isAuthorized(String login, String password, Connection connection) throws DAOExceptiion {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        boolean isLogined = false;
+        try {
+            statement = connection.prepareStatement(QueriesDB.CHECK_AUTHORIZATION);
+            statement.setString(1, login);
+            statement.setString(2, password);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                isLogined = true;
+            }
+        } catch (SQLException e) {
+            String message = "The record in the database was not found.";
+            logger.error(message, e);
+            throw new DAOExceptiion(message, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return isLogined;
     }
 
     /**
      * This method updates an existing record (row) in a database table.
      *
-     * @param id         - id number of the current entity which will be updated.
-     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @param user              - the current entity of user which will be updated.
+     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void update(int id, Connection connection) {
-
+    public void update(User user, Connection connection) throws DAOExceptiion {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.UPDATE_USER_BY_ID);
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getSurname());
+            statement.setString(3, user.getDocumentNumber());
+            statement.setString(4, user.getLogin());
+            statement.setString(5, user.getPassword());
+            statement.setString(6, String.valueOf(user.getUserType()));
+            statement.setInt(7, user.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            String message = "An error was occurred while executing the request to update the user.";
+            logger.error(message, e);
+            throw new DAOExceptiion(message, e);
+        } finally {
+            ConnectorDB.closeStatement(statement);
+        }
     }
 
     /**
@@ -80,8 +138,19 @@ public class UserDAO implements ImplUserDAO {
      * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void delete(int id, Connection connection) {
-
+    public void delete(int id, Connection connection) throws DAOExceptiion {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.DELETE_USER_BY_ID);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            String message = "An error was occurred while executing the request to delete the user.";
+            logger.error(message, e);
+            throw new DAOExceptiion(message, e);
+        } finally {
+            ConnectorDB.closeStatement(statement);
+        }
     }
 
     /**
@@ -92,8 +161,26 @@ public class UserDAO implements ImplUserDAO {
      * @return              - User object.
      */
     @Override
-    public User getByLogin(String login, Connection connection) {
-        return null;
+    public User getByLogin(String login, Connection connection) throws DAOExceptiion {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        User user = new User();
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_USER_BY_LOGIN);
+            statement.setString(1, login);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                createUser(resultSet, user);
+            }
+        } catch (SQLException e) {
+            String message = "The record in the database was not found.";
+            logger.error(message, e);
+            throw new DAOExceptiion(message, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return user;
     }
 
     /**
@@ -104,11 +191,30 @@ public class UserDAO implements ImplUserDAO {
      * @return              - an entity from a database table according to the incoming id number.
      */
     @Override
-    public User getById(int id, Connection connection) {
-        return null;
+    public User getById(int id, Connection connection) throws DAOExceptiion {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        User user = new User();
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_USER_BY_ID);
+            statement.setInt(1, id);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                createUser(resultSet, user);
+            }
+        } catch (SQLException e) {
+            String message = "The record in the database was not found.";
+            logger.error(message, e);
+            throw new DAOExceptiion(message, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return user;
     }
 
     /**
+     * NOT USED
      * This method reads and returns information from all records (rows) of a database table.
      *
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
@@ -118,4 +224,30 @@ public class UserDAO implements ImplUserDAO {
     public List<User> getAll(Connection connection) {
         return null;
     }
+
+    /**
+     * An additional method.
+     * This method creates entity of User class from data received from ResultSet.
+     *
+     * @param resultSet     - a database result "row" with required values.
+     * @param user          - the entity of User with "null" value for setting corresponding values.
+     * @return              - created user with fields.
+     * @throws SQLException
+     */
+    private User createUser(ResultSet resultSet, User user) throws SQLException {
+        user.setId(resultSet.getInt("id"));
+        user.setFirstName(resultSet.getString("firstname"));
+        user.setSurname(resultSet.getString("surname"));
+        user.setDocumentNumber(resultSet.getString("document_number"));
+        user.setLogin(resultSet.getString("login"));
+        user.setPassword(resultSet.getString("password"));
+        switch (resultSet.getString("user_type")) {
+            case "client": user.setUserType(UserType.CLIENT);
+                break;
+            case "administrator": user.setUserType(UserType.ADMINISTRATOR);
+                break;
+        }
+        return user;
+    }
+
 }
