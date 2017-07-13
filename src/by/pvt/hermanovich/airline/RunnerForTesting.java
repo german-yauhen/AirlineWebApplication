@@ -52,13 +52,13 @@ public class RunnerForTesting {
 //                logger.info(UserDAO.getInstance().getAll(connection));
 //                AirportDAO.getInstance().getAll(connection);
 //                AirportDAO.getInstance().getAll(connection);
-//                UserDAO.getInstance().getAll(connection);
+                UserDAO.getInstance().getAll(connection);
 //                Luggage cabinNew = LuggageDAO.getInstance().getById(3, connection);
 //                cabinNew.setLuggageType("baggage");
 //                cabinNew.setPrice((float)18.0);
 //                LuggageDAO.getInstance().update(cabinNew, connection);
 //                logger.info(LuggageDAO.getInstance().getById(3, connection));
-                LuggageDAO.getInstance().deleteById(3, connection);
+//                LuggageDAO.getInstance().deleteById(3, connection);
                 logger.info("DONE!");
             } catch (DAOExceptiion daoExceptiion) {
                 logger.error(daoExceptiion);
