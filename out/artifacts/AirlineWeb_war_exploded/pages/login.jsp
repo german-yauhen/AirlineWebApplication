@@ -28,9 +28,6 @@
 					<br/>
 					<input type="submit" value="Log In"/>
 					<input type="button" value="Registration" onclick='location.href="registration"'/>
-					<!--
-						<a href="controller?command=gotoregistration">Registration</a>
-					-->
 				</fieldset>
 			</form>
 		</div>
