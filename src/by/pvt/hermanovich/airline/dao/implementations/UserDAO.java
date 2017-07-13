@@ -8,10 +8,11 @@ import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Description: This class describes methods which work with <i>users</i> database table.
+ * Description: This class contains implementation of interface methods which works with <i>users</i> database table.
  *
  * Created by Yauheni Hermanovich on 11.07.2017.
  */
@@ -20,16 +21,13 @@ public class UserDAO implements ImplUserDAO {
 
     private volatile static UserDAO instance;
 
-    /**
-     * This constructor initiates a database connection.
-     */
     private UserDAO() {
     }
 
     /**
      * Singleton realization with "Double Checked Locking & Volatile" principle for high performance and thread safety.
      *
-     * @return              - an instance of the class.
+     * @return      - an instance of the class.
      */
     public static UserDAO getInstance() {
         if (instance == null) {
@@ -106,8 +104,8 @@ public class UserDAO implements ImplUserDAO {
     /**
      * This method updates an existing record (row) in a database table.
      *
-     * @param user              - the current entity of user which will be updated.
-     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @param user          - the current entity of user which will be updated.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
     public void update(User user, Connection connection) throws DAOExceptiion {
@@ -123,7 +121,7 @@ public class UserDAO implements ImplUserDAO {
             statement.setInt(7, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the request to update the user.";
+            String message = "An error was occurred while executing the query to update the user.";
             logger.error(message, e);
             throw new DAOExceptiion(message, e);
         } finally {
@@ -134,18 +132,18 @@ public class UserDAO implements ImplUserDAO {
     /**
      * This method deletes an existing record (row) in a database table.
      *
-     * @param id         - id number of the current entity which will be deleted.
-     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @param id            - id number of the current entity which will be deleted.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void delete(int id, Connection connection) throws DAOExceptiion {
+    public void deleteById(int id, Connection connection) throws DAOExceptiion {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.DELETE_USER_BY_ID);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the request to delete the user.";
+            String message = "An error was occurred while executing the query to deleteById the user from database.";
             logger.error(message, e);
             throw new DAOExceptiion(message, e);
         } finally {
@@ -214,15 +212,32 @@ public class UserDAO implements ImplUserDAO {
     }
 
     /**
-     * NOT USED
      * This method reads and returns information from all records (rows) of a database table.
      *
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      * @return              - list of all entities from a database table.
      */
     @Override
-    public List<User> getAll(Connection connection) {
-        return null;
+    public List<User> getAll(Connection connection) throws DAOExceptiion {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<User> users = new ArrayList<User>();
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_ALL_USERS);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                users.add(createUser(resultSet, new User()));
+//                logger.info(users.get((users.size()-1)));
+            }
+        } catch (SQLException e) {
+            String message = "There are no records in the users database table or one particular record in the database was not found.";
+            logger.error(message, e);
+            throw new DAOExceptiion(message, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return users;
     }
 
     /**
@@ -244,7 +259,7 @@ public class UserDAO implements ImplUserDAO {
         switch (resultSet.getString("user_type")) {
             case "client": user.setUserType(UserType.CLIENT);
                 break;
-            case "administrator": user.setUserType(UserType.ADMINISTRATOR);
+            case "admin": user.setUserType(UserType.ADMIN);
                 break;
         }
         return user;

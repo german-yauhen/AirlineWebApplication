@@ -2,11 +2,11 @@ package by.pvt.hermanovich.airline.dao;
 
 import by.pvt.hermanovich.airline.entities.User;
 import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
-
 import java.sql.Connection;
 
 /**
- * Description: This interface describes methods for working with <i>users</i> database table.
+ * Description: This interface describes methods for working with <i>users</i> database table,
+ * extending the capabilities of basic DAO interface.
  *
  * Created by Yauheni Hermanovich on 10.07.2017.
  */
@@ -32,4 +32,21 @@ public interface ImplUserDAO extends AbstractDAO<User> {
      * @return              - User object.
      */
     User getByLogin(String login, Connection connection) throws DAOExceptiion;
+
+    /**
+     * This method deletes an existing record (row) in a database table.
+     *
+     * @param id                - id number of the current entity which will be deleted.
+     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
+     */
+    void deleteById(int id, Connection connection) throws DAOExceptiion;
+
+    /**
+     * This method reads and returns information from a record (row) of a database table.
+     *
+     * @param id                - id number of the record (row) in the database table..
+     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return                  - an entity from a database table according to the incoming id number.
+     */
+    User getById(int id, Connection connection) throws DAOExceptiion;
 }

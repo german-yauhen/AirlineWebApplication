@@ -1,6 +1,8 @@
 package by.pvt.hermanovich.airline;
 
+import by.pvt.hermanovich.airline.dao.implementations.AirportDAO;
 import by.pvt.hermanovich.airline.dao.implementations.UserDAO;
+import by.pvt.hermanovich.airline.entities.Airport;
 import by.pvt.hermanovich.airline.entities.User;
 import by.pvt.hermanovich.airline.entities.UserType;
 import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
@@ -37,9 +39,19 @@ public class RunnerForTesting {
 //                user.setPassword("graf");
 //                user.setUserType(UserType.CLIENT);
 //                UserDAO.getInstance().update(user, connection);
-                logger.info("Logged? - " + String.valueOf(
-                        UserDAO.getInstance().isAuthorized("german", "123", connection)
-                ));
+//                logger.info("Logged? - " + String.valueOf(
+//                        UserDAO.getInstance().isAuthorized("german", "123", connection)
+//                ));
+//                Airport airport = new Airport("WWW", "WWWAIRWWW", "AIRCITY");
+//                AirportDAO.getInstance().add(airport, connection);
+//                AirportDAO.getInstance().deleteByCode("WWW", connection);
+//                AirportDAO.getInstance().getByCode("VNO", connection);
+//                logger.info(AirportDAO.getInstance().getByCode("VNO", connection));
+//                logger.info(UserDAO.getInstance().getAll(connection));
+//                AirportDAO.getInstance().getAll(connection);
+                AirportDAO.getInstance().getAll(connection);
+                UserDAO.getInstance().getAll(connection);
+                logger.info("DONE!");
             } catch (DAOExceptiion daoExceptiion) {
                 logger.error(daoExceptiion);
             }

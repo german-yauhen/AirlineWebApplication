@@ -6,5 +6,5 @@ package by.pvt.hermanovich.airline.entities;
  * Created by Yauheni Hermanovich on 10.07.2017.
  */
 public enum UserType {
-    CLIENT, ADMINISTRATOR
+    CLIENT, ADMIN
 }

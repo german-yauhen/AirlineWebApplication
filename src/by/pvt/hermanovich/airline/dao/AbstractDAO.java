@@ -31,27 +31,10 @@ public interface AbstractDAO<T extends BaseEntity> {
     void update(T entity, Connection connection) throws DAOExceptiion;
 
     /**
-     * This method deletes an existing record (row) in a database table.
-     *
-     * @param id                - id number of the current entity which will be deleted.
-     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
-     */
-    void delete(int id, Connection connection) throws DAOExceptiion;
-
-    /**
-     * This method reads and returns information from a record (row) of a database table.
-     *
-     * @param id                - id number of the record (row) in the database table..
-     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
-     * @return - an entity from a database table according to the incoming id number.
-     */
-    T getById(int id, Connection connection) throws DAOExceptiion;
-
-    /**
      * This method reads and returns information from all records (rows) of a database table.
      *
      * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
      * @return                  - list of all entities from a database table.
      */
-    List<T> getAll(Connection connection);
+    List<T> getAll(Connection connection) throws DAOExceptiion;
 }
