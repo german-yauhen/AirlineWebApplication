@@ -107,7 +107,8 @@ public class AirportDAO implements ImplAirportDAO {
             while (resultSet.next()) {
                 airports.add(createAirport(resultSet, new Airport()));
 //                logger.info(airports.get((airports.size()-1)));
-            }        } catch (SQLException e) {
+            }
+        } catch (SQLException e) {
             String message = "There are no records in the airports database table or one particular record in the database was not found.";
             logger.error(message, e);
             throw new DAOExceptiion(message, e);
@@ -115,7 +116,7 @@ public class AirportDAO implements ImplAirportDAO {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
         }
-        return null;
+        return airports;
     }
 
     /**
