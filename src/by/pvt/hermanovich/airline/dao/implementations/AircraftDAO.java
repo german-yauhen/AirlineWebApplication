@@ -6,10 +6,8 @@ import by.pvt.hermanovich.airline.entities.Aircraft;
 import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -94,7 +92,25 @@ public class AircraftDAO implements ImplAircraftDAO {
      */
     @Override
     public List<Aircraft> getAll(Connection connection) throws DAOExceptiion {
-        return null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Aircraft> aircrafts = new ArrayList<Aircraft>();
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_ALL_AIRCRAFTS);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                aircrafts.add(createAircraft(resultSet, new Aircraft()));
+                logger.info(aircrafts.get((aircrafts.size()-1)));
+            }
+        } catch (SQLException e) {
+            String message = "There are no records in the aircrafts database table or one particular record in the database was not found.";
+            logger.error(message, e);
+            throw new DAOExceptiion(message, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return aircrafts;
     }
 
     /**
@@ -106,7 +122,64 @@ public class AircraftDAO implements ImplAircraftDAO {
      * @return - Aircraft object.
      */
     @Override
-    public Aircraft getByCode(String aicraftCode, Connection connection) {
-        return null;
+    public Aircraft getByCode(String aicraftCode, Connection connection) throws DAOExceptiion {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Aircraft aircraft = new Aircraft();
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_AIRCRAFT_BY_CODE);
+            statement.setString(1, aicraftCode);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                createAircraft(resultSet, aircraft);
+                logger.info(aircraft);
+            }
+        } catch (SQLException e) {
+            String message = "The record in the database was not found.";
+            logger.error(message, e);
+            throw new DAOExceptiion(message, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return aircraft;
+    }
+
+    /**
+     * This method deletes an existing record (row) in a database table.
+     *
+     * @param aircraftCode      - aircraft code which will be used for deleting aircraft.
+     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @throws DAOExceptiion
+     */
+    @Override
+    public void deleteAircraftByCode(String aircraftCode, Connection connection) throws DAOExceptiion {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.DELETE_AIRCRAFT_BY_CODE);
+            statement.setString(1, aircraftCode);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            String message = "An error was occurred while executing the query to delete the aircraft from database.";
+            logger.error(message, e);
+            throw new DAOExceptiion(message, e);
+        } finally {
+            ConnectorDB.closeStatement(statement);
+        }
+    }
+
+    /**
+     * An additional method.
+     * This method creates entity of User class from data received from ResultSet.
+     *
+     * @param resultSet         - a database result "row" with required values.
+     * @param aircraft          - the entity of Aircraft with "null" value for setting corresponding values.
+     * @return                  - created aircraft with fields.
+     * @throws SQLException
+     */
+    private Aircraft createAircraft(ResultSet resultSet, Aircraft aircraft) throws SQLException {
+        aircraft.setAircraftCode(resultSet.getString("aircraft_code"));
+        aircraft.setModel(resultSet.getString("model"));
+        return aircraft;
     }
 }

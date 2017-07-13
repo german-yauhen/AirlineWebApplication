@@ -1,6 +1,7 @@
 package by.pvt.hermanovich.airline.dao;
 
 import by.pvt.hermanovich.airline.entities.Aircraft;
+import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
 import java.sql.Connection;
 
 /**
@@ -17,7 +18,16 @@ public interface ImplAircraftDAO extends AbstractDAO<Aircraft> {
      *
      * @param aicraftCode   - an entered aircraft code, called hull No.
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
-     * @return               - Aircraft object.
+     * @return              - Aircraft object.
      */
-    Aircraft getByCode(String aicraftCode, Connection connection);
+    Aircraft getByCode(String aicraftCode, Connection connection) throws DAOExceptiion;
+
+    /**
+     * This method deletes an existing record (row) in a database table.
+     *
+     * @param aircraftCode      - aircraft code which will be used for deleting aircraft.
+     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @throws DAOExceptiion
+     */
+    void deleteAircraftByCode(String aircraftCode, Connection connection) throws DAOExceptiion;
 }

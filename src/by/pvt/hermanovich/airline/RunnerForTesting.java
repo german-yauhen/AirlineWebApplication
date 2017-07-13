@@ -1,12 +1,10 @@
 package by.pvt.hermanovich.airline;
 
+import by.pvt.hermanovich.airline.dao.implementations.AircraftDAO;
 import by.pvt.hermanovich.airline.dao.implementations.AirportDAO;
 import by.pvt.hermanovich.airline.dao.implementations.LuggageDAO;
 import by.pvt.hermanovich.airline.dao.implementations.UserDAO;
-import by.pvt.hermanovich.airline.entities.Airport;
-import by.pvt.hermanovich.airline.entities.Luggage;
-import by.pvt.hermanovich.airline.entities.User;
-import by.pvt.hermanovich.airline.entities.UserType;
+import by.pvt.hermanovich.airline.entities.*;
 import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
@@ -52,13 +50,21 @@ public class RunnerForTesting {
 //                logger.info(UserDAO.getInstance().getAll(connection));
 //                AirportDAO.getInstance().getAll(connection);
 //                AirportDAO.getInstance().getAll(connection);
-                UserDAO.getInstance().getAll(connection);
+//                UserDAO.getInstance().getAll(connection);
 //                Luggage cabinNew = LuggageDAO.getInstance().getById(3, connection);
 //                cabinNew.setLuggageType("baggage");
 //                cabinNew.setPrice((float)18.0);
 //                LuggageDAO.getInstance().update(cabinNew, connection);
 //                logger.info(LuggageDAO.getInstance().getById(3, connection));
 //                LuggageDAO.getInstance().deleteById(3, connection);
+//                AircraftDAO.getInstance().getByCode("EI-SEV", connection);
+//                Aircraft aircraft = new Aircraft("NEW-AIR", "Samalet EPTA");
+//                AircraftDAO.getInstance().add(aircraft, connection);
+//                Aircraft aircraftNew = AircraftDAO.getInstance().getByCode("EI-SEV", connection);
+//                aircraftNew.setModel("Boeing 737-700");
+//                AircraftDAO.getInstance().update(aircraftNew, connection);
+                AircraftDAO.getInstance().getAll(connection);
+//                AircraftDAO.getInstance().deleteAircraftByCode("NEW-AIR", connection);
                 logger.info("DONE!");
             } catch (DAOExceptiion daoExceptiion) {
                 logger.error(daoExceptiion);

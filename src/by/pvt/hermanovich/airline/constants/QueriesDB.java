@@ -32,7 +32,7 @@ public class QueriesDB {
     public static final String UPDATE_AIRCRAFT = "UPDATE aircrafts SET model = ? WHERE aircraft_code = ?";
     public static final String GET_ALL_AIRCRAFTS = "SELECT * FROM aircrafts";
     public static final String GET_AIRCRAFT_BY_CODE = "SELECT * FROM aircrafts WHERE aircraft_code = ?";
-    public static final String DELETE_AIRCRAFT = "DELETE FROM aircrafts WHERE aircraft_code = ?";
+    public static final String DELETE_AIRCRAFT_BY_CODE = "DELETE FROM aircrafts WHERE aircraft_code = ?";
 
 
 }
