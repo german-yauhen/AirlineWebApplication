@@ -1,8 +1,10 @@
 package by.pvt.hermanovich.airline;
 
 import by.pvt.hermanovich.airline.dao.implementations.AirportDAO;
+import by.pvt.hermanovich.airline.dao.implementations.LuggageDAO;
 import by.pvt.hermanovich.airline.dao.implementations.UserDAO;
 import by.pvt.hermanovich.airline.entities.Airport;
+import by.pvt.hermanovich.airline.entities.Luggage;
 import by.pvt.hermanovich.airline.entities.User;
 import by.pvt.hermanovich.airline.entities.UserType;
 import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
@@ -49,8 +51,14 @@ public class RunnerForTesting {
 //                logger.info(AirportDAO.getInstance().getByCode("VNO", connection));
 //                logger.info(UserDAO.getInstance().getAll(connection));
 //                AirportDAO.getInstance().getAll(connection);
-                AirportDAO.getInstance().getAll(connection);
-                UserDAO.getInstance().getAll(connection);
+//                AirportDAO.getInstance().getAll(connection);
+//                UserDAO.getInstance().getAll(connection);
+//                Luggage cabinNew = LuggageDAO.getInstance().getById(3, connection);
+//                cabinNew.setLuggageType("baggage");
+//                cabinNew.setPrice((float)18.0);
+//                LuggageDAO.getInstance().update(cabinNew, connection);
+//                logger.info(LuggageDAO.getInstance().getById(3, connection));
+                LuggageDAO.getInstance().deleteById(3, connection);
                 logger.info("DONE!");
             } catch (DAOExceptiion daoExceptiion) {
                 logger.error(daoExceptiion);

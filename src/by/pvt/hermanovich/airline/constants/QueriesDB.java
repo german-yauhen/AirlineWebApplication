@@ -21,4 +21,10 @@ public class QueriesDB {
     public static final String DELETE_AIRPORT_BY_CODE = "DELETE FROM airports WHERE airport_code = ?";
     public static final String GET_AIRPORT_BY_CODE = "SELECT * FROM airports WHERE airport_code = ?";
     public static final String GET_ALL_AIRPORTS = "SELECT * FROM airports";
+    /*Queries to work with luggage database table.*/
+    public static final String ADD_LUGGAGE = "INSERT INTO luggage (luggage_type, price) VALUES (?, ?)";
+    public static final String UPDATE_LUGGAGE = "UPDATE luggage SET luggage_type = ?, price = ? WHERE id = ?";
+    public static final String GET_LUGGAGE_BY_ID = "SELECT * FROM luggage WHERE id = ?";
+    public static final String GET_ALL_LUGGAGE_TYPES = "SELECT * FROM luggage";
+    public static final String DELETE_LUGGAGE_BY_ID = "DELETE FROM luggage WHERE id = ?";
 }
