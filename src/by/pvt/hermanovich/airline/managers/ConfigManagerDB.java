@@ -1,6 +1,6 @@
-package by.pvt.hermanovich.airline.utils;
+package by.pvt.hermanovich.airline.managers;
 
-import by.pvt.hermanovich.airline.constants.ConfigConstantDB;
+import by.pvt.hermanovich.airline.constants.ConfigConstant;
 import java.util.ResourceBundle;
 
 /**
@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  */
 public class ConfigManagerDB {
     public volatile static ConfigManagerDB instance;
-    private final ResourceBundle dbProp = ResourceBundle.getBundle(ConfigConstantDB.DATABASE_PROPERTIES_SOURCE);
+    private final ResourceBundle dbProp = ResourceBundle.getBundle(ConfigConstant.DATABASE_PROPERTIES_SOURCE);
 
     public ConfigManagerDB() {
     }
@@ -34,8 +34,8 @@ public class ConfigManagerDB {
     /**
      * This method provides getting a property from property file according to the incoming value.
      *
-     * @param key - incoming value of the key for getting a property.
-     * @return - a property value.
+     * @param key   - incoming value of the key for getting a property.
+     * @return      - a property value.
      */
     public String getProperty(String key) {
         return dbProp.getString(key);

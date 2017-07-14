@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--Created by Yauheni Hermanovich 14.07.2017--%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 	<head>
 		<title>Login Page</title>
@@ -28,6 +29,9 @@
 					<br/>
 					<input type="submit" value="Log In"/>
 					<input type="button" value="Registration" onclick='location.href="registration"'/>
+					<!--
+						<a href="controller?command=gotoregistration">Registration</a>
+					-->
 				</fieldset>
 			</form>
 		</div>

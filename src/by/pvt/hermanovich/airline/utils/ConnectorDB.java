@@ -1,11 +1,12 @@
 package by.pvt.hermanovich.airline.utils;
 
+import by.pvt.hermanovich.airline.managers.ConfigManagerDB;
+
 import java.sql.*;
-import java.util.ResourceBundle;
 
 /**
  * Description: This class contains static method which executes reading parameters for connection to database from
- * resource file <i>database.configuration</i> and receive a connection.
+ * resource file <i>database.managers</i> and receive a connection.
  * Created by Yauheni Hermanovich on 10.07.2017.
  */
 public class ConnectorDB {
