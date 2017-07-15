@@ -1,7 +1,7 @@
 package by.pvt.hermanovich.airline.dao;
 
 import by.pvt.hermanovich.airline.entities.BaseEntity;
-import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
+import by.pvt.hermanovich.airline.exceptions.DAOException;
 
 import java.sql.Connection;
 import java.util.List;
@@ -20,7 +20,7 @@ public interface AbstractDAO<T extends BaseEntity> {
      * @param entity            - the current entity which has been created.
      * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
      */
-    void add(T entity, Connection connection) throws DAOExceptiion;
+    void add(T entity, Connection connection) throws DAOException;
 
     /**
      * This method updates an existing record (row) in a database table.
@@ -28,7 +28,7 @@ public interface AbstractDAO<T extends BaseEntity> {
      * @param entity            - the current entity which will be updated.
      * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
      */
-    void update(T entity, Connection connection) throws DAOExceptiion;
+    void update(T entity, Connection connection) throws DAOException;
 
     /**
      * This method reads and returns information from all records (rows) of a database table.
@@ -36,5 +36,5 @@ public interface AbstractDAO<T extends BaseEntity> {
      * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
      * @return                  - list of all entities from a database table.
      */
-    List<T> getAll(Connection connection) throws DAOExceptiion;
+    List<T> getAll(Connection connection) throws DAOException;
 }

@@ -1,7 +1,7 @@
 package by.pvt.hermanovich.airline.dao;
 
 import by.pvt.hermanovich.airline.entities.Airport;
-import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
+import by.pvt.hermanovich.airline.exceptions.DAOException;
 
 import java.sql.Connection;
 
@@ -21,7 +21,7 @@ public interface ImplAirportDAO extends AbstractDAO<Airport> {
      * @param connection         - the current connection to a database. Transmitted from the service module to provide transactions.
      * @return                   - Airport object.
      */
-    Airport getByCode(String airportCode, Connection connection) throws DAOExceptiion;
+    Airport getByCode(String airportCode, Connection connection) throws DAOException;
 
     /**
      * This method deletes an existing airport in a database table according to the airport code.
@@ -29,5 +29,5 @@ public interface ImplAirportDAO extends AbstractDAO<Airport> {
      * @param airportCode        - an entered airport code.
      * @param connection         - the current connection to a database. Transmitted from the service module to provide transactions.
      */
-    void deleteByCode(String airportCode, Connection connection) throws DAOExceptiion;
+    void deleteByCode(String airportCode, Connection connection) throws DAOException;
 }

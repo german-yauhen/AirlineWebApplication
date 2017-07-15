@@ -37,7 +37,7 @@ public class RequestHandler extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    private static void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public static void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CommandsFactory factory = CommandsFactory.getInstance();
         BasicCommand command = factory.defineCommand(request);
         String page = command.execute(request);
@@ -46,8 +46,6 @@ public class RequestHandler extends HttpServlet {
             dispatcher.forward(request, response);
         } else {
             page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.INDEX_PAGE);
-            request.getSession().setAttribute(Parameters.PAGE_NOT_FOUND,
-                    ConfigManagerMessages.getInstance().getProperty(MessageConstants.PAGE_NOT_FOUND));
             response.sendRedirect(request.getContextPath() + page);
         }
     }

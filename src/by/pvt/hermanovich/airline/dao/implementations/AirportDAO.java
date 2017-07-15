@@ -3,7 +3,7 @@ package by.pvt.hermanovich.airline.dao.implementations;
 import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplAirportDAO;
 import by.pvt.hermanovich.airline.entities.Airport;
-import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
+import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
 import java.sql.*;
@@ -45,7 +45,7 @@ public class AirportDAO implements ImplAirportDAO {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void add(Airport airport, Connection connection) throws DAOExceptiion {
+    public void add(Airport airport, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.ADD_AIRPORT);
@@ -56,7 +56,7 @@ public class AirportDAO implements ImplAirportDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the request to add the airport.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -71,7 +71,7 @@ public class AirportDAO implements ImplAirportDAO {
      * @return              - Airport object.
      */
     @Override
-    public Airport getByCode(String airportCode, Connection connection) throws DAOExceptiion {
+    public Airport getByCode(String airportCode, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         Airport airport = new Airport();
@@ -85,7 +85,7 @@ public class AirportDAO implements ImplAirportDAO {
         } catch (SQLException e) {
             String message = "The record in the database was not found.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         }
         return airport;
     }
@@ -97,7 +97,7 @@ public class AirportDAO implements ImplAirportDAO {
      * @return              - list of all entities from a database table.
      */
     @Override
-    public List<Airport> getAll(Connection connection) throws DAOExceptiion {
+    public List<Airport> getAll(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<Airport> airports = new ArrayList<Airport>();
@@ -111,7 +111,7 @@ public class AirportDAO implements ImplAirportDAO {
         } catch (SQLException e) {
             String message = "There are no records in the airports database table or one particular record in the database was not found.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -142,7 +142,7 @@ public class AirportDAO implements ImplAirportDAO {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void update(Airport airport, Connection connection) throws DAOExceptiion {
+    public void update(Airport airport, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.UPDATE_AIRPORT);
@@ -153,7 +153,7 @@ public class AirportDAO implements ImplAirportDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the query to update the airport.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -166,7 +166,7 @@ public class AirportDAO implements ImplAirportDAO {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void deleteByCode(String airportCode, Connection connection) throws DAOExceptiion {
+    public void deleteByCode(String airportCode, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.DELETE_AIRPORT_BY_CODE);
@@ -175,7 +175,7 @@ public class AirportDAO implements ImplAirportDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the query to deleteById the airport from the database.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }

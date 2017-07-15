@@ -1,7 +1,7 @@
 package by.pvt.hermanovich.airline.dao;
 
 import by.pvt.hermanovich.airline.entities.User;
-import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
+import by.pvt.hermanovich.airline.exceptions.DAOException;
 import java.sql.Connection;
 
 /**
@@ -22,7 +22,7 @@ public interface ImplUserDAO extends AbstractDAO<User> {
      *                          returns "true" if the incoming data correspond to the record of the database table;
      *                          returns "false" if the incoming data do not correspond to the record of the database table.
      */
-    boolean isAuthorized(String login, String password, Connection connection) throws DAOExceptiion;
+    boolean isAuthorized(String login, String password, Connection connection) throws DAOException;
 
     /**
      * This method reads data from <i>users</i> database table, creates and returns User object according to the entered login.
@@ -31,7 +31,7 @@ public interface ImplUserDAO extends AbstractDAO<User> {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      * @return              - User object.
      */
-    User getByLogin(String login, Connection connection) throws DAOExceptiion;
+    User getByLogin(String login, Connection connection) throws DAOException;
 
     /**
      * This method deletes an existing record (row) in a database table.
@@ -39,7 +39,7 @@ public interface ImplUserDAO extends AbstractDAO<User> {
      * @param id                - id number of the current entity which will be deleted.
      * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
      */
-    void deleteById(int id, Connection connection) throws DAOExceptiion;
+    void deleteById(int id, Connection connection) throws DAOException;
 
     /**
      * This method reads and returns information from a record (row) of a database table.
@@ -48,5 +48,5 @@ public interface ImplUserDAO extends AbstractDAO<User> {
      * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
      * @return                  - an entity from a database table according to the incoming id number.
      */
-    User getById(int id, Connection connection) throws DAOExceptiion;
+    User getById(int id, Connection connection) throws DAOException;
 }

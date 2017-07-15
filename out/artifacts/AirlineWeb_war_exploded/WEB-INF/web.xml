@@ -5,7 +5,23 @@
 		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
            version="3.0">
 
+    <!--Servlet description start-->
+    <servlet>
+        <servlet-name>controller</servlet-name>
+        <servlet-class>by.pvt.hermanovich.airline.controller.FrontController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>controller</servlet-name>
+        <url-pattern>/controller</url-pattern>
+    </servlet-mapping>
+    <!--Servlet description end-->
+
+
+
+
+    <!--Start page description start-->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    <!--Start page description end-->
 </web-app>

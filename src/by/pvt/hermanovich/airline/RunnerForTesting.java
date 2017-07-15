@@ -1,11 +1,7 @@
 package by.pvt.hermanovich.airline;
 
 import by.pvt.hermanovich.airline.dao.implementations.AircraftDAO;
-import by.pvt.hermanovich.airline.dao.implementations.AirportDAO;
-import by.pvt.hermanovich.airline.dao.implementations.LuggageDAO;
-import by.pvt.hermanovich.airline.dao.implementations.UserDAO;
-import by.pvt.hermanovich.airline.entities.*;
-import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
+import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
 
@@ -23,9 +19,8 @@ public class RunnerForTesting {
         logger.info("Begin.");
         Connection connection = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+//            Class.forName("com.mysql.jdbc.Driver");
             connection = ConnectorDB.getConnection();
-            logger.info("Connection has been received successfully.");
             logger.info(connection.getMetaData().getURL());
             logger.info(connection.getMetaData().getUserName());
             logger.info("Transaction isolation level is " + String.valueOf(connection.getTransactionIsolation()));
@@ -66,12 +61,10 @@ public class RunnerForTesting {
                 AircraftDAO.getInstance().getAll(connection);
 //                AircraftDAO.getInstance().deleteAircraftByCode("NEW-AIR", connection);
                 logger.info("DONE!");
-            } catch (DAOExceptiion daoExceptiion) {
-                logger.error(daoExceptiion);
+            } catch (DAOException daoException) {
+                logger.error(daoException);
             }
         } catch (SQLException e) {
-            logger.error(e);
-        } catch (ClassNotFoundException e) {
             logger.error(e);
         } finally {
             ConnectorDB.closeConnection(connection);

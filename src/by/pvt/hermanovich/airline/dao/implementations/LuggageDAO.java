@@ -3,7 +3,7 @@ package by.pvt.hermanovich.airline.dao.implementations;
 import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplLuggageDAO;
 import by.pvt.hermanovich.airline.entities.Luggage;
-import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
+import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
 
@@ -49,7 +49,7 @@ public class LuggageDAO implements ImplLuggageDAO {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void add(Luggage luggage, Connection connection) throws DAOExceptiion {
+    public void add(Luggage luggage, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.ADD_LUGGAGE);
@@ -59,7 +59,7 @@ public class LuggageDAO implements ImplLuggageDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the request to add the user.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -72,7 +72,7 @@ public class LuggageDAO implements ImplLuggageDAO {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void update(Luggage luggage, Connection connection) throws DAOExceptiion {
+    public void update(Luggage luggage, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.UPDATE_LUGGAGE);
@@ -83,7 +83,7 @@ public class LuggageDAO implements ImplLuggageDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the query to update the luggage type.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -97,7 +97,7 @@ public class LuggageDAO implements ImplLuggageDAO {
      * @return              - Luggage object.
      */
     @Override
-    public Luggage getById(int id, Connection connection) throws DAOExceptiion {
+    public Luggage getById(int id, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet =  null;
         Luggage luggage = new Luggage();
@@ -111,7 +111,7 @@ public class LuggageDAO implements ImplLuggageDAO {
         } catch (SQLException e) {
             String message = "The record in the database was not found.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -126,7 +126,7 @@ public class LuggageDAO implements ImplLuggageDAO {
      * @return              - list of all entities from a database table.
      */
     @Override
-    public List<Luggage> getAll(Connection connection) throws DAOExceptiion {
+    public List<Luggage> getAll(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<Luggage> luggageTypes = new ArrayList<Luggage>();
@@ -140,7 +140,7 @@ public class LuggageDAO implements ImplLuggageDAO {
         } catch (SQLException e) {
             String message = "There are no records in the luggage database table or one particular record in the database was not found.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -155,7 +155,7 @@ public class LuggageDAO implements ImplLuggageDAO {
      * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void deleteById(int id, Connection connection) throws DAOExceptiion {
+    public void deleteById(int id, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.DELETE_LUGGAGE_BY_ID);
@@ -164,7 +164,7 @@ public class LuggageDAO implements ImplLuggageDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the query to delete the luggage from database.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         }
     }
 

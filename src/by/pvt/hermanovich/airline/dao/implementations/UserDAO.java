@@ -4,7 +4,7 @@ import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplUserDAO;
 import by.pvt.hermanovich.airline.entities.User;
 import by.pvt.hermanovich.airline.entities.UserType;
-import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
+import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
 import java.sql.*;
@@ -47,7 +47,7 @@ public class UserDAO implements ImplUserDAO {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void add(User user, Connection connection) throws DAOExceptiion {
+    public void add(User user, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.ADD_USER);
@@ -61,7 +61,7 @@ public class UserDAO implements ImplUserDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the request to add the user.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -78,7 +78,7 @@ public class UserDAO implements ImplUserDAO {
      *                          returns "false" if the incoming data do not correspond to the record of the database table.
      */
     @Override
-    public boolean isAuthorized(String login, String password, Connection connection) throws DAOExceptiion {
+    public boolean isAuthorized(String login, String password, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         boolean isLogined = false;
@@ -93,7 +93,7 @@ public class UserDAO implements ImplUserDAO {
         } catch (SQLException e) {
             String message = "The record in the database was not found.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -108,7 +108,7 @@ public class UserDAO implements ImplUserDAO {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void update(User user, Connection connection) throws DAOExceptiion {
+    public void update(User user, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.UPDATE_USER_BY_ID);
@@ -123,7 +123,7 @@ public class UserDAO implements ImplUserDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the query to update the user.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -136,7 +136,7 @@ public class UserDAO implements ImplUserDAO {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void deleteById(int id, Connection connection) throws DAOExceptiion {
+    public void deleteById(int id, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.DELETE_USER_BY_ID);
@@ -145,7 +145,7 @@ public class UserDAO implements ImplUserDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the query to deleteById the user from database.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -159,7 +159,7 @@ public class UserDAO implements ImplUserDAO {
      * @return              - User object.
      */
     @Override
-    public User getByLogin(String login, Connection connection) throws DAOExceptiion {
+    public User getByLogin(String login, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         User user = new User();
@@ -173,7 +173,7 @@ public class UserDAO implements ImplUserDAO {
         } catch (SQLException e) {
             String message = "The record in the database was not found.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -189,7 +189,7 @@ public class UserDAO implements ImplUserDAO {
      * @return              - an entity from a database table according to the incoming id number.
      */
     @Override
-    public User getById(int id, Connection connection) throws DAOExceptiion {
+    public User getById(int id, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         User user = new User();
@@ -203,7 +203,7 @@ public class UserDAO implements ImplUserDAO {
         } catch (SQLException e) {
             String message = "The record in the database was not found.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -218,7 +218,7 @@ public class UserDAO implements ImplUserDAO {
      * @return              - list of all entities from a database table.
      */
     @Override
-    public List<User> getAll(Connection connection) throws DAOExceptiion {
+    public List<User> getAll(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<User> users = new ArrayList<User>();
@@ -232,7 +232,7 @@ public class UserDAO implements ImplUserDAO {
         } catch (SQLException e) {
             String message = "There are no records in the users database table or one particular record in the database was not found.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);

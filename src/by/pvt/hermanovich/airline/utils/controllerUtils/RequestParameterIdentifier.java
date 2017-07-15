@@ -21,21 +21,22 @@ public class RequestParameterIdentifier {
      * @return          - type of command that will be executed.
      */
     public static CommandType getCommandFromRequest(HttpServletRequest request) {
-        String commandFromRequest = request.getParameter(Parameters.COMMAND);
         CommandType commandType = CommandType.DEFAULT;
-        if (commandFromRequest != null && (!commandFromRequest.isEmpty())) {
-            commandType = CommandType.valueOf(commandFromRequest.toUpperCase());
+        if (request.getParameter(Parameters.COMMAND) != null
+                && !request.getParameter(Parameters.COMMAND).isEmpty()) {
+            commandType = CommandType.valueOf(request.getParameter(Parameters.COMMAND).toUpperCase());
         }
         return commandType;
     }
 
+
     /**
-     * This method defines user type that can be client or admin.
+     * This method defines user type from request.
      *
      * @param request   - object of request.
-     * @return          - user type: client or admin.
+     * @return          - user type; it can be client or admin.
      */
-    public static UserType getUserType(HttpServletRequest request) {
+    public static UserType getUserTypeFromRequest(HttpServletRequest request) {
         switch (String.valueOf(request.getSession().getAttribute(Parameters.USER_TYPE))) {
             case "client":
                 return UserType.CLIENT;
@@ -44,5 +45,25 @@ public class RequestParameterIdentifier {
             default:
                 return UserType.CLIENT;
         }
+    }
+
+    /**
+     * This method receives users login and password from an object of request
+     * and constructs an user with the corresponding fields.
+     *
+     * @param request   - object of request.
+     * @return          - an user with the following fields: login and password.
+     */
+    public static User getUserLoginPasswordFromRequest(HttpServletRequest request) {
+        User user = new User();
+        String login = request.getParameter(Parameters.LOGIN);
+        String password = request.getParameter(Parameters.PASSWORD);
+        if (login != null && !login.isEmpty()) {
+            user.setLogin(login);
+        }
+        if (password != null && !password.isEmpty()) {
+            user.setPassword(password);
+        }
+        return user;
     }
 }

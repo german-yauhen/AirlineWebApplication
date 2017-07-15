@@ -6,7 +6,7 @@ import java.sql.SQLException;
  * Description: This class send exception to service module.
  * Created by Yauheni Hermanovich on 11.07.2017.
  */
-public class DAOExceptiion extends Exception {
+public class DAOException extends Exception {
 
     /**
      * Constructs a new exception with the specified detail message.  The
@@ -16,7 +16,7 @@ public class DAOExceptiion extends Exception {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public DAOExceptiion(String message) {
+    public DAOException(String message) {
     }
 
     /**
@@ -32,6 +32,6 @@ public class DAOExceptiion extends Exception {
      *                permitted, and indicates that the cause is nonexistent or
      *                unknown.)
      */
-    public DAOExceptiion(String message, SQLException e) {
+    public DAOException(String message, SQLException e) {
     }
 }

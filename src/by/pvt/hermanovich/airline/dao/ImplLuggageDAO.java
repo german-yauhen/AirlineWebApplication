@@ -1,7 +1,7 @@
 package by.pvt.hermanovich.airline.dao;
 
 import by.pvt.hermanovich.airline.entities.Luggage;
-import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
+import by.pvt.hermanovich.airline.exceptions.DAOException;
 
 import java.sql.Connection;
 
@@ -20,7 +20,7 @@ public interface ImplLuggageDAO extends AbstractDAO<Luggage> {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      * @return              - Luggage object.
      */
-    Luggage getById(int id, Connection connection) throws DAOExceptiion;
+    Luggage getById(int id, Connection connection) throws DAOException;
 
     /**
      * This method deletes an existing record (row) in a database table.
@@ -28,5 +28,5 @@ public interface ImplLuggageDAO extends AbstractDAO<Luggage> {
      * @param id            - entered <i>id</i>.
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
-    void deleteById(int id, Connection connection) throws DAOExceptiion;
+    void deleteById(int id, Connection connection) throws DAOException;
 }

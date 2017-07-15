@@ -30,7 +30,7 @@
     </head>
     <body>
         <div class="data">
-            <h3>Welcome to Airline Company, <i>${user.getFirstName()} ${user.getSurname()}</i>!</h3>
+            <h3>Administration service of Airline Company. <i>${user.getFirstName()} ${user.getSurname()}</i>.</h3>
             <div id="logoutelem">
                 <form name="logout" method="POST" action="controller">
                     <input type="hidden" name="command" value="logout" />

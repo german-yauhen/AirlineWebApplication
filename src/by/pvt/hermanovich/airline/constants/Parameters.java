@@ -12,4 +12,10 @@ public class Parameters {
     public static final String USER_TYPE = "userType";
 
     public static final String COMMAND = "command";
+    public static final String ID = "id";
+    public static final String LOGIN = "login";
+    public static final String PASSWORD = "password";
+    public static final String USER = "user";
+    public static final String ERROR_LOGIN_PASSWORD = "errorLoginOrPassword";
+    public static final String ERROR_DATABASE = "errorDatabase";
 }

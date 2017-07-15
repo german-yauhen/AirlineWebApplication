@@ -2,10 +2,10 @@ package by.pvt.hermanovich.airline.commands.factory;
 
 import by.pvt.hermanovich.airline.commands.BasicCommand;
 import by.pvt.hermanovich.airline.constants.MessageConstants;
+import by.pvt.hermanovich.airline.constants.Parameters;
 import by.pvt.hermanovich.airline.managers.ConfigManagerMessages;
 import by.pvt.hermanovich.airline.utils.controllerUtils.RequestParameterIdentifier;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -43,7 +43,7 @@ public class CommandsFactory {
      * @return          - a particular command that will be executed.
      */
     public BasicCommand defineCommand(HttpServletRequest request) {
-        BasicCommand currentCommand = null;
+        BasicCommand currentCommand;
         try {
             CommandType commandType = RequestParameterIdentifier.getCommandFromRequest(request);
             currentCommand = commandType.getCurrentCommand();

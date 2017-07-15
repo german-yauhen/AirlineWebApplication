@@ -3,7 +3,7 @@ package by.pvt.hermanovich.airline.dao.implementations;
 import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplAircraftDAO;
 import by.pvt.hermanovich.airline.entities.Aircraft;
-import by.pvt.hermanovich.airline.exceptions.DAOExceptiion;
+import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
 import java.sql.*;
@@ -45,7 +45,7 @@ public class AircraftDAO implements ImplAircraftDAO {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void add(Aircraft aircraft, Connection connection) throws DAOExceptiion {
+    public void add(Aircraft aircraft, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.ADD_AIRCRAFT);
@@ -55,7 +55,7 @@ public class AircraftDAO implements ImplAircraftDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the request to add the aircraft.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -68,7 +68,7 @@ public class AircraftDAO implements ImplAircraftDAO {
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     @Override
-    public void update(Aircraft aircraft, Connection connection) throws DAOExceptiion {
+    public void update(Aircraft aircraft, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.UPDATE_AIRCRAFT);
@@ -78,7 +78,7 @@ public class AircraftDAO implements ImplAircraftDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the query to update the aircraft.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -91,7 +91,7 @@ public class AircraftDAO implements ImplAircraftDAO {
      * @return              - list of all entities from a database table.
      */
     @Override
-    public List<Aircraft> getAll(Connection connection) throws DAOExceptiion {
+    public List<Aircraft> getAll(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<Aircraft> aircrafts = new ArrayList<Aircraft>();
@@ -105,7 +105,7 @@ public class AircraftDAO implements ImplAircraftDAO {
         } catch (SQLException e) {
             String message = "There are no records in the aircrafts database table or one particular record in the database was not found.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -122,7 +122,7 @@ public class AircraftDAO implements ImplAircraftDAO {
      * @return - Aircraft object.
      */
     @Override
-    public Aircraft getByCode(String aicraftCode, Connection connection) throws DAOExceptiion {
+    public Aircraft getByCode(String aicraftCode, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         Aircraft aircraft = new Aircraft();
@@ -137,7 +137,7 @@ public class AircraftDAO implements ImplAircraftDAO {
         } catch (SQLException e) {
             String message = "The record in the database was not found.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -150,10 +150,10 @@ public class AircraftDAO implements ImplAircraftDAO {
      *
      * @param aircraftCode      - aircraft code which will be used for deleting aircraft.
      * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
-     * @throws DAOExceptiion
+     * @throws DAOException
      */
     @Override
-    public void deleteAircraftByCode(String aircraftCode, Connection connection) throws DAOExceptiion {
+    public void deleteAircraftByCode(String aircraftCode, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.DELETE_AIRCRAFT_BY_CODE);
@@ -162,7 +162,7 @@ public class AircraftDAO implements ImplAircraftDAO {
         } catch (SQLException e) {
             String message = "An error was occurred while executing the query to delete the aircraft from database.";
             logger.error(message, e);
-            throw new DAOExceptiion(message, e);
+            throw new DAOException(message, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }

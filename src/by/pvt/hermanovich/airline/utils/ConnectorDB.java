@@ -1,6 +1,8 @@
 package by.pvt.hermanovich.airline.utils;
 
+import by.pvt.hermanovich.airline.constants.MessageConstants;
 import by.pvt.hermanovich.airline.managers.ConfigManagerDB;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 
@@ -10,6 +12,7 @@ import java.sql.*;
  * Created by Yauheni Hermanovich on 10.07.2017.
  */
 public class ConnectorDB {
+    private final static Logger logger = Logger.getLogger(ConnectorDB.class);
 
     /**
      * This method provides making a connection to database using a property file.
@@ -18,11 +21,19 @@ public class ConnectorDB {
      * @throws SQLException
      */
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                ConfigManagerDB.getInstance().getProperty("db.url"),
-                ConfigManagerDB.getInstance().getProperty("db.user"),
-                ConfigManagerDB.getInstance().getProperty("db.password")
-        );
+        Connection connection = null;
+        try {
+            Class.forName(ConfigManagerDB.getInstance().getProperty("db.classforname"));
+            connection = DriverManager.getConnection(
+                    ConfigManagerDB.getInstance().getProperty("db.url"),
+                    ConfigManagerDB.getInstance().getProperty("db.user"),
+                    ConfigManagerDB.getInstance().getProperty("db.password")
+            );
+            logger.info(MessageConstants.CONNECTION_SUCCESS);
+        } catch (ClassNotFoundException e) {
+            logger.error(MessageConstants.CLASS_FOR_NAME_ERROR, e);
+        }
+        return connection;
     }
 
     /**
@@ -35,7 +46,7 @@ public class ConnectorDB {
             try {
                 statement.close();
             } catch (SQLException e) {
-                System.out.println("Statement is null.\n" + e);
+                logger.error(MessageConstants.STATEMENT_ERROR);
             }
         }
     }
@@ -50,7 +61,7 @@ public class ConnectorDB {
             try {
                 resultSet.close();
             } catch (SQLException e) {
-                System.out.println("ResultSet is null.\n" + e);
+                logger.error(MessageConstants.RESULTSET_ERROR);
             }
         }
     }
@@ -65,7 +76,7 @@ public class ConnectorDB {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.println("Connection is null.\n" + e);
+                logger.error(MessageConstants.CONNECTION_ERROR);
             }
         }
     }

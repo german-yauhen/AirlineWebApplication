@@ -5,6 +5,7 @@
         <title>Title</title>
     </head>
     <body>
+        <!--Start page redirects to the Login Page-->
         <jsp:forward page="/pages/login.jsp"/>
     </body>
 </html>
