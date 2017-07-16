@@ -18,4 +18,9 @@ public class Parameters {
     public static final String USER = "user";
     public static final String ERROR_LOGIN_PASSWORD = "errorLoginOrPassword";
     public static final String ERROR_DATABASE = "errorDatabase";
+    public static final String FIRST_NAME = "firstName";
+    public static final String SURNAME = "surname";
+    public static final String DOCUMENT_NUMBER = "documentNumber";
+    public static final String SUCCESS_UPDATE = "successUpdate";
+    public static final String TRUE = "true";
 }

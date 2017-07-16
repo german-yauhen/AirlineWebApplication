@@ -66,4 +66,29 @@ public class RequestParameterIdentifier {
         }
         return user;
     }
+
+    /**
+     * This method receives first name, surname, document number from request
+     * and sets this values to the corresponding fields of the user which is passed
+     * to the method as parameter.
+     *
+     * @param user      - user, which fields will be updated.
+     * @param request   - request object with necessaries parameters.
+     * @return          - user object with updated fields.
+     */
+    public static User getUserFromRequest(User user, HttpServletRequest request) {
+        String firstName = request.getParameter(Parameters.FIRST_NAME);
+        String surname = request.getParameter(Parameters.SURNAME);
+        String documentNumber = request.getParameter(Parameters.DOCUMENT_NUMBER);
+        String login = request.getParameter(Parameters.LOGIN);
+        if ( (firstName != null && !firstName.isEmpty())
+                & (surname != null && !surname.isEmpty())
+                & (documentNumber != null && !documentNumber.isEmpty())
+                & (login != null && !login.isEmpty())) {
+            user.setFirstName(firstName);
+            user.setSurname(surname);
+            user.setDocumentNumber(documentNumber);
+        }
+        return user;
+    }
 }

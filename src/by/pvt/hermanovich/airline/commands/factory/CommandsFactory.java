@@ -48,7 +48,7 @@ public class CommandsFactory {
             CommandType commandType = RequestParameterIdentifier.getCommandFromRequest(request);
             currentCommand = commandType.getCurrentCommand();
         } catch (IllegalArgumentException e) {
-            logger.error(ConfigManagerMessages.getInstance().getProperty(MessageConstants.WRONG_COMMAND), e);
+            logger.error(MessageConstants.WRONG_COMMAND, e);
             currentCommand  = CommandType.DEFAULT.getCurrentCommand();
         }
         return currentCommand;

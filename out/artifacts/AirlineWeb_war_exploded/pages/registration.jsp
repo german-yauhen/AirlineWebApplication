@@ -11,19 +11,17 @@
                 background: url("/images/bg_registration.jpg") no-repeat center center fixed;
                 background-size: cover;
             }
-            .registraionform {
+            #registartionelem {
                 position: absolute;
-                top: 30%;
-                left: 20%;
+                left: 40%; top: 20%;
             }
         </style>
     </head>
     <body>
-        <div class="registraionform">
-            <p>Enter your <i>Personal Data</i> for registration.</p>
+        <div id="registartionelem">
             <form name="registrationForm" method="POST" action="controller">
                 <input type="hidden" name="command" value="registration"/>
-                <fieldset style="width: 25%">
+                <fieldset>
                     <legend align="center">Registration Form</legend>
                     <table>
                         <tr>

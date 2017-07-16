@@ -73,7 +73,7 @@ public class UserService {
      * @param login     - entered login.
      * @return          - User object.
      */
-    public User getUserByLogin(String login) {
+    public User getUserByLogin(String login) throws SQLException {
         User user = null;
         Connection connection = null;
         try {
@@ -83,6 +83,9 @@ public class UserService {
             connection.commit();
             logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
             logger.error(MessageConstants.TRANSACTION_FAILED);
         } finally {
             ConnectorDB.closeConnection(connection);
@@ -90,5 +93,27 @@ public class UserService {
         return user;
     }
 
-
+    /**
+     * This method updates user object. This method implements work with transaction support.
+     *
+     * @param user          - an user which fields will be updated.
+     * @throws SQLException
+     */
+    public void updateUser(User user) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            UserDAO.getInstance().update(user, connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+    }
 }

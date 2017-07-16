@@ -16,9 +16,6 @@
     </servlet-mapping>
     <!--Servlet description end-->
 
-
-
-
     <!--Start page description start-->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

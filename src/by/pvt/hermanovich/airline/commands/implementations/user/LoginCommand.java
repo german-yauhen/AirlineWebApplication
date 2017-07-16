@@ -22,10 +22,16 @@ public class LoginCommand implements BasicCommand {
     private final static Logger logger = Logger.getLogger(LoginCommand.class);
 
     /**
-     * This method describes the logon logic.
+     * This method describes the logon logic. The method uses methods of the RequestParameterIdentifier and UserService
+     * classes and works according to the following steps:
+     *      - getting an user object from request object using login and password saved in the corresponding request
+     *      object using the <i>getUserLoginPasswordFromRequest(...)<i/> method;
+     *      - checking user's authorization using the <i>checkUserAuthorization(...)</i> method;
+     *      - if the user is authorized the user's are created using the <i>getUserByLogin(...)<i/> method;
+     *      - generating the page according to the user's type (client or admin).
      *
-     * @param request - request which will be processed.
-     * @return - a page which user will be directed to.
+     * @param request   - request which will be processed.
+     * @return          - a page which user will be directed to.
      */
     @Override
     public String execute(HttpServletRequest request) {
