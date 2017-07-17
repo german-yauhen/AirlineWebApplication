@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 /**
  * Description: This class send exception to service module.
+ *
  * Created by Yauheni Hermanovich on 11.07.2017.
  */
 public class DAOException extends Exception {
@@ -20,9 +21,8 @@ public class DAOException extends Exception {
     }
 
     /**
-     * Constructs a new exception with the specified detail message and
-     * cause.  <p>Note that the detail message associated with
-     * {@code e} is <i>not</i> automatically incorporated in
+     * This method constructs a new exception with the specified detail message and cause.
+     * Note that the detail message associated with {@code e} is not automatically incorporated in
      * this exception's detail message.
      *
      * @param message the detail message (which is saved for later retrieval
