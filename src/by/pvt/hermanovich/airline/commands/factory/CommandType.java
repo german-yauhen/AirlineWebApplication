@@ -2,6 +2,9 @@ package by.pvt.hermanovich.airline.commands.factory;
 
 import by.pvt.hermanovich.airline.commands.BasicCommand;
 import by.pvt.hermanovich.airline.commands.implementations.*;
+import by.pvt.hermanovich.airline.commands.implementations.luggage.CreateLuggage;
+import by.pvt.hermanovich.airline.commands.implementations.luggage.DeleteLuggage;
+import by.pvt.hermanovich.airline.commands.implementations.luggage.UpdateLuggage;
 import by.pvt.hermanovich.airline.commands.implementations.user.*;
 
 /**
@@ -12,7 +15,10 @@ import by.pvt.hermanovich.airline.commands.implementations.user.*;
 public enum CommandType {
 
     /*user commands*/
-    LOGIN, LOGOUT, REGISTRATION, GOTOREGISTRATION, UPDATECLIENT, DEFAULT;
+    LOGIN, LOGOUT, REGISTRATION, GOTOREGISTRATION, UPDATECLIENT, BACK, DEFAULT,
+
+    /*luggage commands*/
+    CREATELUGGAGE, UPDATELUGGAGE, DELETELUGGAGE;
 
     public BasicCommand getCurrentCommand() {
         switch (this) {
@@ -26,6 +32,14 @@ public enum CommandType {
                 return new GotoRegistrationCommand();
             case UPDATECLIENT:
                 return new UpdateClientCommand();
+            case BACK:
+                return new BackCommand();
+            case CREATELUGGAGE:
+                return new CreateLuggage();
+            case DELETELUGGAGE:
+                return new DeleteLuggage();
+            case UPDATELUGGAGE:
+                return new UpdateLuggage();
             case DEFAULT:
                 return new DefaultCommand();
             default:

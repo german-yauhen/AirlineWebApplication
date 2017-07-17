@@ -7,20 +7,23 @@ package by.pvt.hermanovich.airline.constants;
  * Created by Yauheni Hermanovich on 14.07.2017.
  */
 public class Parameters {
-    public static final String PAGE_NOT_FOUND = "pagenotfound";
-
     public static final String USER_TYPE = "userType";
-
     public static final String COMMAND = "command";
-    public static final String ID = "id";
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
     public static final String USER = "user";
     public static final String ERROR_LOGIN_PASSWORD = "errorLoginOrPassword";
-    public static final String ERROR_DATABASE = "errorDatabase";
+    public static final String ERROR_DATABASE = "errorDataBase";
     public static final String FIRST_NAME = "firstName";
     public static final String SURNAME = "surname";
     public static final String DOCUMENT_NUMBER = "documentNumber";
     public static final String SUCCESS_UPDATE = "successUpdate";
     public static final String TRUE = "true";
+    public static final String USER_UNIQUE_ERROR = "uniqueUserError";
+    public static final String SUCCESS_REGISTRATION = "registrationSuccess";
+    public static final String OPERATION_MESSAGE = "operationMessage";
+    public static final String BACK_PAGE = "backpage";
+    public static final String LUGGAGE_TYPE = "luggageType";
+    public static final String LUGGAGE_PRICE = "luggagePrice";
+    public static final String SUCCESS_ADD_LUGGAGE = "luggageAddSuccess";
 }

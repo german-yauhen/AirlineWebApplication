@@ -22,6 +22,6 @@ public class DefaultCommand implements BasicCommand {
      */
     @Override
     public String execute(HttpServletRequest request) {
-        return ConfigManagerPages.getInstance().getProperty(PathPageConstants.INDEX_PAGE);
+        return ConfigManagerPages.getInstance().getProperty(PathPageConstants.INDEX_PAGE_PATH);
     }
 }

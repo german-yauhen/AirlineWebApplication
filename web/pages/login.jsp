@@ -16,8 +16,11 @@
 				top: 30%;
 				left: 20%;
 			}
+			.itputelem {
+				opacity: 0.5;
+			}
 			#error {
-				color: red;
+				color: firebrick;
 			}
 		</style>
 	</head>
@@ -27,18 +30,12 @@
 				<fieldset>
 					<legend align="center">Login Form</legend>
 					<input type="hidden" name="command" value="login"/>
-					Login:<br/><input type="text" name="login" value=""/><br/>
-					Password:<br/><input type="password" name="password" value=""/><br/><br/>
+					Login:<br/><input class="itputelem" type="text" name="login" value=""/><br/>
+					Password:<br/><input class="itputelem" type="password" name="password" value=""/><br/><br/>
 					<input type="submit" value="Log In"/>
 					<input type="button" value="Registration" onclick='location.href="controller?command=gotoregistration"'/>
-					<!--
-					<input type="button" value="Registration" onclick='location.href="registration"'/>
-					-->
-					<!--
-						<a href="controller?command=gotoregistration">Registration</a>
-					-->
 				</fieldset>
-				<div id="error">${errorLoginOrPassword}</div>
+				<h4 id="error">${errorLoginOrPassword}</h4>
 			</form>
 		</div>
 	</body>

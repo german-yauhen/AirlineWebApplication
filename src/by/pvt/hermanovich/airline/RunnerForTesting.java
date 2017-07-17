@@ -26,7 +26,7 @@ public class RunnerForTesting {
             logger.info("Transaction isolation level is " + String.valueOf(connection.getTransactionIsolation()));
             logger.info("Supporting save points is " + connection.getMetaData().supportsSavepoints());
             try {
-//                User user = UserDAO.getInstance().getById(7, connection);
+//                User user = UserDAO.getInstance().getByType(7, connection);
 //                user.setFirstName("Edmont");
 //                user.setSurname("Dantes");
 //                user.setDocumentNumber("MK1239875");
@@ -46,11 +46,11 @@ public class RunnerForTesting {
 //                AirportDAO.getInstance().getAll(connection);
 //                AirportDAO.getInstance().getAll(connection);
 //                UserDAO.getInstance().getAll(connection);
-//                Luggage cabinNew = LuggageDAO.getInstance().getById(3, connection);
+//                Luggage cabinNew = LuggageDAO.getInstance().getByType(3, connection);
 //                cabinNew.setLuggageType("baggage");
 //                cabinNew.setPrice((float)18.0);
 //                LuggageDAO.getInstance().update(cabinNew, connection);
-//                logger.info(LuggageDAO.getInstance().getById(3, connection));
+//                logger.info(LuggageDAO.getInstance().getByType(3, connection));
 //                LuggageDAO.getInstance().deleteById(3, connection);
 //                AircraftDAO.getInstance().getByCode("EI-SEV", connection);
 //                Aircraft aircraft = new Aircraft("NEW-AIR", "Samalet EPTA");

@@ -45,22 +45,24 @@ public class LoginCommand implements BasicCommand {
                 session.setAttribute(Parameters.USER_TYPE, String.valueOf(user.getUserType()));
                 switch (user.getUserType()) {
                     case ADMIN:
-                        page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ADMIN_PAGE);
+                        // TODO: 17.07.2017 method() that returns lists of luggage, aircrafts ... to the admins page
+                        // TODO: 17.07.2017 session.setAttribute(this parameters)
+                        page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ADMIN_PAGE_PATH);
                         break;
                     case CLIENT:
-                        page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.CLIENT_PAGE);
+                        page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.CLIENT_PAGE_PATH);
                         break;
                     default:
-                        page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.CLIENT_PAGE);
+                        page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.CLIENT_PAGE_PATH);
                         break;
                 }
                 logger.info(MessageConstants.SUCCESS_LOGIN);
             } else {
-                page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.INDEX_PAGE);
+                page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.INDEX_PAGE_PATH);
                 request.setAttribute(Parameters.ERROR_LOGIN_PASSWORD, MessageConstants.WRONG_LOGIN_OR_PASSWORD);
             }
         } catch (SQLException e) {
-            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ERROR_PAGE);
+            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE, MessageConstants.DATABASE_ACCESS_ERROR);
             logger.error(MessageConstants.DATABASE_ACCESS_ERROR);
         }

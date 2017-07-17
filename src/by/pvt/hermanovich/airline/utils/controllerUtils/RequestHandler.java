@@ -2,9 +2,6 @@ package by.pvt.hermanovich.airline.utils.controllerUtils;
 
 import by.pvt.hermanovich.airline.commands.BasicCommand;
 import by.pvt.hermanovich.airline.commands.factory.CommandsFactory;
-import by.pvt.hermanovich.airline.constants.MessageConstants;
-import by.pvt.hermanovich.airline.constants.Parameters;
-import by.pvt.hermanovich.airline.managers.ConfigManagerMessages;
 import by.pvt.hermanovich.airline.managers.ConfigManagerPages;
 import by.pvt.hermanovich.airline.constants.PathPageConstants;
 import javax.servlet.RequestDispatcher;
@@ -15,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Description: This class contains method that handles a request from a *.jsp page.
+ * Description: This class contains method that handles a request from a *.jsp page and defines a command
+ * according to the parameter from request.
  *
  * Created by Yauheni Hermanovich on 14.07.2017.
  */
@@ -45,7 +43,7 @@ public class RequestHandler extends HttpServlet {
             RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(page);
             dispatcher.forward(request, response);
         } else {
-            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.INDEX_PAGE);
+            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.INDEX_PAGE_PATH);
             response.sendRedirect(request.getContextPath() + page);
         }
     }

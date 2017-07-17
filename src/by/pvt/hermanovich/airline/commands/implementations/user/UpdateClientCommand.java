@@ -32,12 +32,12 @@ public class UpdateClientCommand implements BasicCommand {
         User user = RequestParameterIdentifier.getUserLoginPasswordFromRequest(request);
         try {
             user = UserService.getInstance().getUserByLogin(user.getLogin());
-            user = RequestParameterIdentifier.getUserFromRequest(user, request);
+            user = RequestParameterIdentifier.updateUserFromRequest(user, request);
             UserService.getInstance().updateUser(user);
             request.getSession().setAttribute(Parameters.SUCCESS_UPDATE, Parameters.TRUE);
-            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.CLIENT_PAGE);
+            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.CLIENT_PAGE_PATH);
         } catch (SQLException e) {
-            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ERROR_PAGE);
+            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE, MessageConstants.DATABASE_ACCESS_ERROR);
             logger.error(MessageConstants.DATABASE_ACCESS_ERROR);
         }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Description: This class describes action to redirect guest to the registration page.
+ *
  * Created by Yauheni Hermanovich on 14.07.2017.
  */
 public class GotoRegistrationCommand implements BasicCommand {
@@ -20,6 +21,6 @@ public class GotoRegistrationCommand implements BasicCommand {
      */
     @Override
     public String execute(HttpServletRequest request) {
-        return ConfigManagerPages.getInstance().getProperty(PathPageConstants.REGISTRATION);
+        return ConfigManagerPages.getInstance().getProperty(PathPageConstants.REGISTRATION_PAGE_PATH);
     }
 }

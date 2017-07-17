@@ -1,5 +1,6 @@
 package by.pvt.hermanovich.airline.dao.implementations;
 
+import by.pvt.hermanovich.airline.constants.MessageConstants;
 import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplUserDAO;
 import by.pvt.hermanovich.airline.entities.User;
@@ -50,13 +51,12 @@ public class UserDAO implements ImplUserDAO {
     public void add(User user, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(QueriesDB.ADD_USER);
+            statement = connection.prepareStatement(QueriesDB.ADD_USER_WITHOUT_USERTYPE);
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getSurname());
             statement.setString(3, user.getDocumentNumber());
             statement.setString(4, user.getLogin());
             statement.setString(5, user.getPassword());
-            statement.setString(6, String.valueOf(user.getUserType()));
             statement.executeUpdate();
         } catch (SQLException e) {
             String message = "An error was occurred while executing the request to add the user.";
@@ -265,4 +265,33 @@ public class UserDAO implements ImplUserDAO {
         return user;
     }
 
+    /**
+     * This method check the uniqueness of the user.
+     *
+     * @param login         - entered <i>login</i>.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return              - boolean value of the condition.
+     * @throws DAOException
+     */
+    @Override
+    public boolean checkUniqueUser(String login, Connection connection) throws DAOException {
+        boolean isUniqueUser = true;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_USER_BY_LOGIN);
+            statement.setString(1, login);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                isUniqueUser = false;
+            }
+        } catch (SQLException e) {
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return isUniqueUser;
+    }
 }

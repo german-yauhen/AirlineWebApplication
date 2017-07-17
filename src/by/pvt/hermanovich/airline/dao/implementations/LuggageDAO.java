@@ -1,5 +1,6 @@
 package by.pvt.hermanovich.airline.dao.implementations;
 
+import by.pvt.hermanovich.airline.constants.MessageConstants;
 import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplLuggageDAO;
 import by.pvt.hermanovich.airline.entities.Luggage;
@@ -92,18 +93,18 @@ public class LuggageDAO implements ImplLuggageDAO {
     /**
      * This method reads data from <i>users</i> database table, creates and returns User object according to the entered login.
      *
-     * @param id            - entered <i>id</i>.
+     * @param luggageType            - entered <i>id</i>.
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      * @return              - Luggage object.
      */
     @Override
-    public Luggage getById(int id, Connection connection) throws DAOException {
+    public Luggage getByType(String luggageType, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet =  null;
         Luggage luggage = new Luggage();
         try {
-            statement = connection.prepareStatement(QueriesDB.GET_LUGGAGE_BY_ID);
-            statement.setInt(1, id);
+            statement = connection.prepareStatement(QueriesDB.GET_LUGGAGE_BY_TYPE);
+            statement.setString(1, luggageType);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 createLuggage(resultSet, luggage);
@@ -166,6 +167,38 @@ public class LuggageDAO implements ImplLuggageDAO {
             logger.error(message, e);
             throw new DAOException(message, e);
         }
+    }
+
+    /**
+     * This method check the uniqueness of the user.
+     *
+     * @param luggageType   - entered <i>type of the luggage</i>.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return              - boolean value of the condition:
+     *                          "false" if the incoming data correspond to the record of the database table;
+     *                          "true" if the incoming data do not correspond to the record of the database table.
+     * @throws DAOException
+     */
+    @Override
+    public boolean checkUniqueLuggage(String luggageType, Connection connection) throws DAOException {
+        boolean isUniqueLuggage = true;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_LUGGAGE_BY_TYPE);
+            statement.setString(1, luggageType);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                isUniqueLuggage = false;
+            }
+        } catch (SQLException e) {
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return isUniqueLuggage;
     }
 
     /**

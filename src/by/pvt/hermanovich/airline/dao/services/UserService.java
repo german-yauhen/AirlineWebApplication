@@ -61,6 +61,7 @@ public class UserService {
                 connection.rollback();
             }
             logger.error(MessageConstants.TRANSACTION_FAILED, e);
+            throw new SQLException(e);
         } finally {
             ConnectorDB.closeConnection(connection);
         }
@@ -87,6 +88,7 @@ public class UserService {
                 connection.rollback();
             }
             logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
         } finally {
             ConnectorDB.closeConnection(connection);
         }
@@ -112,6 +114,62 @@ public class UserService {
                 connection.rollback();
             }
             logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+    }
+
+    /**
+     * This method checks the uniqueness of the user. This method implements work with transaction support.
+     *
+     * @param user      - an user object with fields will be checked.
+     * @return          - boolean value of the condition.
+     * @throws SQLException
+     */
+    public boolean isUniqueUser(User user) throws SQLException {
+        boolean isUnique = false;
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            if (UserDAO.getInstance().checkUniqueUser(user.getLogin(), connection)) {
+                isUnique = true;
+            }
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return isUnique;
+    }
+
+    /**
+     * This method registers new user of application. This method implements work with transaction support.
+     *
+     * @param user      - a new user which will be registered.
+     * @throws SQLException
+     */
+    public void registerUser(User user) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            UserDAO.getInstance().add(user, connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
         } finally {
             ConnectorDB.closeConnection(connection);
         }

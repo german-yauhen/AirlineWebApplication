@@ -24,6 +24,6 @@ public class LogoutCommand implements BasicCommand {
     public String execute(HttpServletRequest request) {
         request.getSession().invalidate();
         logger.info(MessageConstants.SUCCESS_LOGOUT);
-        return ConfigManagerPages.getInstance().getProperty(PathPageConstants.INDEX_PAGE);
+        return ConfigManagerPages.getInstance().getProperty(PathPageConstants.INDEX_PAGE_PATH);
     }
 }

@@ -6,12 +6,12 @@ package by.pvt.hermanovich.airline.constants;
  * Created by Yauheni Hermanovich on 14.07.2017.
  */
 public class PathPageConstants {
-    public static final String INDEX_PAGE = "path.page.index";
-    public static final String LOGIN_PAGE = "path.page.login";
-    public static final String CLIENT_PAGE = "path.page.client";
-    public static final String ADMIN_PAGE = "path.page.admin";
-    public static final String ERROR_PAGE = "path.page.error";
-    public static final String REGISTRATION = "path.page.registration";
+    public static final String INDEX_PAGE_PATH = "path.page.index";
+    public static final String LOGIN_PAGE_PATH = "path.page.login";
+    public static final String CLIENT_PAGE_PATH = "path.page.client";
+    public static final String ADMIN_PAGE_PATH = "path.page.admin";
+    public static final String ERROR_PAGE_PATH = "path.page.error";
+    public static final String REGISTRATION_PAGE_PATH = "path.page.registration";
 
     public PathPageConstants() {
     }

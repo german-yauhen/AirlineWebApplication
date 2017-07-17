@@ -9,12 +9,24 @@
                 margin: 0px;
                 padding: 0px;
                 display: inline-block;
-                background: url("/images/bg_registration.jpg") no-repeat center center fixed;
+                background: url("/images/bg_menu.jpg") no-repeat center center fixed;
                 background-size: cover;
             }
             .data {
                 position: fixed;
                 left: 15px;
+            }
+            .itputelem {
+                opacity: 0.5;
+            }
+            .buttons {
+                display: flex;
+                justify-content: space-between;
+                text-align: justify;
+                text-align-last: justify;
+            }
+            .buttomsitem {
+                display: inline-block;
             }
             #usertypeelem {
                 position: fixed;
@@ -44,23 +56,25 @@
                         <table>
                             <tr>
                                 <td>Login:</td>
-                                <td><input type="text" name="login" value="${user.getLogin()}" readonly="readonly" /></td>
+                                <td><input class="itputelem" type="text" name="login" value="${user.getLogin()}" readonly="readonly" /></td>
                             </tr>
                             <tr>
                                 <td>First Name:</td>
-                                <td><input type="text" name="firstName" value="" /></td>
+                                <td><input class="itputelem" type="text" name="firstName" value="" /></td>
                             </tr>
                             <tr>
                                 <td>Surname:</td>
-                                <td><input type="text" name="surname" value="" /></td>
+                                <td><input class="itputelem" type="text" name="surname" value="" /></td>
                             </tr>
                             <tr>
                                 <td>Document Number:</td>
-                                <td><input type="text" name="documentNumber" value="" /></td>
+                                <td><input class="itputelem" type="text" name="documentNumber" value="" /></td>
                             </tr>
                         </table>
-                        <input type="submit" value="Update" />
-                        <input type="reset" value="Reset" />
+                        <div class="buttons">
+                            <input class="buttomsitem" type="submit" value="Update" />
+                            <input class="buttomsitem" type="reset" value="Reset" />
+                        </div>
                     </fieldset>
                     <spec:if test="${sessionScope.successUpdate eq 'true'}">
                         <i>You have successfully updated you personal data.</i>
