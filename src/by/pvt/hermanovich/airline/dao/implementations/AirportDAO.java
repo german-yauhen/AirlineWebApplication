@@ -1,5 +1,6 @@
 package by.pvt.hermanovich.airline.dao.implementations;
 
+import by.pvt.hermanovich.airline.constants.MessageConstants;
 import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplAirportDAO;
 import by.pvt.hermanovich.airline.entities.Airport;
@@ -49,9 +50,9 @@ public class AirportDAO implements ImplAirportDAO {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.ADD_AIRPORT);
-            statement.setString(1, String.valueOf(airport.getAirportCode()));
-            statement.setString(2, airport.getAirportName());
-            statement.setString(3, airport.getCity());
+            statement.setString(1, String.valueOf(airport.getAirportCode()).toUpperCase());
+            statement.setString(2, airport.getAirportName().toUpperCase());
+            statement.setString(3, airport.getCity().toUpperCase());
             statement.executeUpdate();
         } catch (SQLException e) {
             String message = "An error was occurred while executing the request to add the airport.";
@@ -106,7 +107,7 @@ public class AirportDAO implements ImplAirportDAO {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 airports.add(createAirport(resultSet, new Airport()));
-//                logger.info(airports.get((airports.size()-1)));
+                logger.info(airports.get((airports.size()-1)));
             }
         } catch (SQLException e) {
             String message = "There are no records in the airports database table or one particular record in the database was not found.";
@@ -179,5 +180,33 @@ public class AirportDAO implements ImplAirportDAO {
         } finally {
             ConnectorDB.closeStatement(statement);
         }
+    }
+
+    /**
+     * This method check the uniqueness of the airport.
+     *
+     * @param airportCode   - unique value of the airport code.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return              - boolean value of the condition.
+     */
+    public boolean checkUniqueAirport(String airportCode, Connection connection) throws DAOException {
+        boolean isUniqueAirport = true;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_AIRPORT_BY_CODE);
+            statement.setString(1, airportCode);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                isUniqueAirport = false;
+            }
+        } catch (SQLException e) {
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return isUniqueAirport;
     }
 }

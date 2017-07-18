@@ -30,4 +30,13 @@ public interface ImplAirportDAO extends AbstractDAO<Airport> {
      * @param connection         - the current connection to a database. Transmitted from the service module to provide transactions.
      */
     void deleteByCode(String airportCode, Connection connection) throws DAOException;
+
+    /**
+     * This method check the uniqueness of the airport.
+     *
+     * @param airportCode   - unique value of the airport code.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return              - boolean value of the condition.
+     */
+    boolean checkUniqueAirport(String airportCode, Connection connection) throws DAOException;
 }

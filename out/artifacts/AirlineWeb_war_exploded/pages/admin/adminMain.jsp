@@ -15,62 +15,88 @@
             select {
                 width: 100%;
             }
-            .data {
-                position: fixed;
-                left: 15px;
+            .wrapperWelcomeInfo {
+                position: absolute;
+                left: 10px; top: 5px;
             }
-            .itputelem {
-                opacity: 0.7;
+            .welcomeElement {
+                font-size: 18px;
             }
-            .buttons {
+            .wrapperPageData {
+                position: absolute;
+                left: 10px; top: 50px;
+            }
+            .updateUserElement {
+                position: absolute;
+            }
+            .wrapperButtons {
                 display: flex;
                 justify-content: space-between;
                 text-align: justify;
                 text-align-last: justify;
             }
-            .buttomsitem {
+            .buttonElement {
                 display: inline-block;
             }
-            .luggageelem {
+            .wrapperLuggageForms {
                 position: absolute;
-                left: 25px; top: 280px;
+                left: 255px; top: 0px;
             }
-            .message {
-                color: firebrick;
-                font-weight: 600;
-            }
-            #newluggageelem {
+            .addLuggageForm {
                 position: absolute;
                 left: 0px; top: 0px;
             }
-            #updluggageelem {
+            .updateLuggageForm {
                 position: absolute;
-                left: 230px; top: 0px;
+                left: 225px;
             }
-            #usertypeelem {
+            .wrapperAirportForms {
+                position: absolute;
+                left: 705px;
+            }
+            .addAirportForm {
+                position: absolute;
+                left: 0px;
+            }
+            .airportListForm {
+                position: absolute;
+                left: 230px;
+                width: 250px;
+            }
+            .inputElement {
+                opacity: 0.7;
+            }
+            .wrapperAircraftForms {
+                position: absolute;
+                top: 210px;
+            }
+            .addAircraftForm {
+                position: absolute;
+            }
+            .aircraftListForm {
+                position: absolute;
+                left: 235px;
+            }
+            .userTypeElement {
                 position: fixed;
-                left: 10px; bottom: 10px;
+                left: 10px; bottom: 5px;
                 color: firebrick;
             }
-            #logoutelem {
+            .logoutElement {
                 position: fixed;
-                right: 25px; top: 25px;
-                color: firebrick;
-            }
-            #updateelem {
-                position: absolute;
-                left: 25px; top: 80px;
+                right: 10px; top: 10px;
             }
         </style>
     </head>
     <body>
-        <div class="data">
-            <h3>
-                Administration service of Airline Company.<br/>
-                Administrator <i>${user.getFirstName()} ${user.getSurname()}</i>.
-            </h3>
+        <div class="wrapperWelcomeInfo">
+            <div class="welcomeElement">
+                Administration service of Airline Company.<br/>Administrator <i>${user.getFirstName()} ${user.getSurname()}</i>.
+            </div>
+        </div>
+        <div class="wrapperPageData">
             <!--UPDATE-->
-            <div id="updateelem">
+            <div class="updateUserElement">
                 <form name="clientData" method="POST" action="controller">
                     <fieldset>
                         <legend align="center">Update Data Form</legend>
@@ -78,34 +104,32 @@
                         <table>
                             <tr>
                                 <td>Login:</td>
-                                <td><input class="itputelem" type="text" name="login" value="${user.getLogin()}" readonly="readonly" /></td>
+                                <td><input class="inputElement" type="text" name="login" value="${user.getLogin()}" readonly="readonly" /></td>
                             </tr>
                             <tr>
-                                <td>First Name:</td>
-                                <td><input class="itputelem" type="text" name="firstName" value="" /></td>
+                                <td>Name:</td>
+                                <td><input class="inputElement" type="text" name="firstName" value="" /></td>
                             </tr>
                             <tr>
                                 <td>Surname:</td>
-                                <td><input class="itputelem" type="text" name="surname" value="" /></td>
+                                <td><input class="inputElement" type="text" name="surname" value="" /></td>
                             </tr>
                             <tr>
-                                <td>Document Number:</td>
-                                <td><input class="itputelem" type="text" name="documentNumber" value="" /></td>
+                                <td>Document:</td>
+                                <td><input class="inputElement" type="text" name="documentNumber" value="" /></td>
                             </tr>
                         </table>
-                        <div class="buttons">
-                            <input class="buttomsitem" type="submit" value="Update" />
-                            <input class="buttomsitem" type="reset" value="Reset" />
+                        <div class="wrapperButtons">
+                            <input class="buttonElement" type="submit" value="Update" />
+                            <input class="buttonElement" type="reset" value="Reset" />
                         </div>
                     </fieldset>
-                    <spec:if test="${sessionScope.successUpdate eq 'true'}">
-                        <i>You have successfully updated you personal data. Log in again to your account to see the changes.</i>
-                    </spec:if>
+                    <!--4-->
                 </form>
             </div>
             <!--NEW LUGGAGE--->
-            <div class="luggageelem">
-                <div id="newluggageelem">
+            <div class="wrapperLuggageForms">
+                <div class="addLuggageForm">
                     <form name="createLuggage" method="POST" action="controller">
                         <fieldset>
                             <legend align="center">Add Luggage</legend>
@@ -113,27 +137,23 @@
                             <table>
                                 <tr>
                                     <td>Type:</td>
-                                    <td><input class="itputelem" type="text" name="luggageType" value="" /></td>
+                                    <td><input class="inputElement" type="text" name="luggageType" value="" /></td>
                                 </tr>
                                 <tr>
                                     <td>Price:</td>
-                                    <td><input class="itputelem" type="text" name="luggagePrice" /></td>
+                                    <td><input class="inputElement" type="text" name="luggagePrice" /></td>
                                 </tr>
                             </table>
-                            <div class="buttons">
-                                <input class="buttomsitem" type="submit" value="Create" />
-                                <input class="buttomsitem" type="reset" value="Reset" />
+                            <div class="wrapperButtons">
+                                <input class="buttonElement" type="submit" value="Create" />
+                                <input class="buttonElement" type="reset" value="Reset" />
                             </div>
                         </fieldset>
-                        <div class="message">
-                            <spec:if test="${sessionScope.luggageAddSuccess eq 'true'}">
-                                <i>Luggage has been created. Log in again to your account to see the changes.</i>
-                            </spec:if>
-                        </div>
+                        <!--3-->
                     </form>
                 </div>
                 <!--UPD LUGGAGE-->
-                <div id="updluggageelem">
+                <div class="updateLuggageForm">
                     <form name="updateLuggage" method="POST" action="controller">
                         <fieldset>
                             <legend align="center">Update Luggage</legend>
@@ -153,34 +173,137 @@
                                 </tr>
                                 <tr>
                                     <td>Price:</td>
-                                    <td><input class="itputelem" type="text" name="luggagePrice"/></td>
+                                    <td><input class="inputElement" type="text" name="luggagePrice"/></td>
                                 </tr>
                             </table>
-                            <div class="buttons">
-                                <input class="buttomsitem" type="submit" value="Update" />
-                                <input class="buttomsitem" type="reset" value="Reset" />
+                            <div class="wrapperButtons">
+                                <input class="buttonElement" type="submit" value="Update" />
+                                <input class="buttonElement" type="reset" value="Reset" />
                                 <input type="button" value="Delete" onclick='location.href="controller?command=deleteluggage"'/>
                             </div>
                         </fieldset>
-                        <div class="message">
-                            <spec:if test="${sessionScope.luggageDeleteSuccess eq 'true'}">
-                                <i>Luggage has been deleted. Log in again to your account to see the changes.</i>
-                            </spec:if>
-                            <spec:if test="${sessionScope.luggageUpdateSuccess eq 'true'}">
-                                <i>Luggage has been updated.</i>
-                            </spec:if>
-                        </div>
+                        <!--2-->
                     </form>
                 </div>
             </div>
-            <!--LOGOUT-->
-            <div id="logoutelem">
-                <form name="logout" method="POST" action="controller">
-                    <input type="hidden" name="command" value="logout" />
-                    <input type="submit" value="Log Out" />
-                </form>
+            <!--NEW AIRPORT-->
+            <div class="wrapperAirportForms">
+                <div class="addAirportForm">
+                    <form name="Airport Data" method="POST" action="controller">
+                        <fieldset>
+                            <legend align="center">Add Airport</legend>
+                            <input type="hidden" name="command" value="createairport" />
+                            <table>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td><input class="inputElement" type="text" name="airportCode" value="WWW"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td><input class="inputElement" type="text" name="airportName" value=""/></td>
+                                </tr>
+                                <tr>
+                                    <td>City:</td>
+                                    <td><input class="inputElement" type="text" name="airportCity" value=""/></td>
+                                </tr>
+                            </table>
+                            <div class="wrapperButtons">
+                                <input class="buttonElement" type="submit" value="Create" />
+                                <input class="buttonElement" type="reset" value="Reset" />
+                            </div>
+                        </fieldset>
+                        <!--1-->
+                    </form>
+                </div>
+                <!--AIRPORTS LIST--->
+                <div class="airportListForm">
+                    <form name="airportList" style="width: 250px;">
+                        <fieldset>
+                            <legend align="center">Airports</legend>
+                            <select name="airportObject" size=6 multiple style="opacity: 0.7">
+                                <spec:forEach var="airport" items="${allAirports}">
+                                    <option>[${airport.getAirportCode().toUpperCase()}]-[${airport.getAirportName().toUpperCase()}]-[${airport.getCity().toUpperCase()}]</option>
+                                </spec:forEach>
+                            </select>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <!--NEW AIRCRAFT-->
+            <div class="wrapperAircraftForms">
+                <div class="addAircraftForm">
+                    <form name="Aircraft Data" method="POST" action="controller">
+                        <fieldset>
+                            <legend align="center">Add Aircraft</legend>
+                            <input type="hidden" name="command" value="createaircraft" />
+                            <table>
+                                <tr>
+                                    <td>Code:</td>
+                                    <td><input class="inputElement" type="text" name="aircraftCode" value="WW-WWW"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Model:</td>
+                                    <td><input class="inputElement" type="text" name="aircraftModel" value=""/></td>
+                                </tr>
+                            </table>
+                            <div class="wrapperButtons">
+                                <input class="buttonElement" type="submit" value="Create" />
+                                <input class="buttonElement" type="reset" value="Reset" />
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <!--AIRCRAFTS LIST--->
+                <div class="aircraftListForm">
+                    <form name="aircraftList" style="width: 250px;">
+                        <fieldset>
+                            <legend align="center">Aircrafts</legend>
+                            <select name="aircraftObject" size=5 multiple style="opacity: 0.8">
+                                <spec:forEach var="aircraft" items="${allAircrafts}">
+                                    <option>[${aircraft.getAircraftCode().toUpperCase()}]-[${aircraft.getModel().toUpperCase()}]</option>
+                                </spec:forEach>
+                            </select>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+
+            <!--USER TYPE-->
+            <div class="userTypeElement">
+                </br>${String.valueOf(user.getUserType())}
+                <spec:if test="${sessionScope.airportUniqueError eq 'true'}">
+                    <i> : MESSAGE : Airport with this code has already existed.</i>
+                </spec:if>
+                <spec:if test="${sessionScope.airportAddSuccess eq 'true'}">
+                    <i> : MESSAGE : Airport has been created. Log in again to your account to see the changes.</i>
+                </spec:if>
+                <spec:if test="${sessionScope.luggageDeleteSuccess eq 'true'}">
+                    <i> : MESSAGE : Luggage has been deleted. Log in again to your account to see the changes.</i>
+                </spec:if>
+                <spec:if test="${sessionScope.luggageUpdateSuccess eq 'true'}">
+                    <i> : MESSAGE : Luggage has been updated. Log in again to your account to see the changes.</i>
+                </spec:if>
+                <spec:if test="${sessionScope.luggageAddSuccess eq 'true'}">
+                    <i> : MESSAGE : Luggage has been created. Log in again to your account to see the changes.</i>
+                </spec:if>
+                <spec:if test="${sessionScope.successUpdate eq 'true'}">
+                    <i> : MESSAGE : You have successfully updated your personal data. Log in again to your account to see the changes.</i>
+                </spec:if>
+                <spec:if test="${sessionScope.aircraftAddSuccess eq 'true'}">
+                    <i> : MESSAGE : Aircraft has been created. Log in again to your account to see the changes.</i>
+                </spec:if>
+                <spec:if test="${sessionScope.aircraftUniqueError eq 'true'}">
+                    <i> : MESSAGE : Aircraft with this code has already existed.</i>
+                </spec:if>
             </div>
         </div>
-        <div id="usertypeelem">${String.valueOf(user.getUserType())}</div>
+        <!--LOGOUT-->
+        <div class="logoutElement">
+            <form name="logout" method="POST" action="controller">
+                <input type="hidden" name="command" value="logout" />
+                <input type="submit" value="Log Out" />
+            </form>
+        </div>
     </body>
 </html>

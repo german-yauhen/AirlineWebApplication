@@ -2,9 +2,8 @@ package by.pvt.hermanovich.airline.utils.controllerUtils;
 
 import by.pvt.hermanovich.airline.commands.factory.CommandType;
 import by.pvt.hermanovich.airline.constants.Parameters;
-import by.pvt.hermanovich.airline.entities.Luggage;
-import by.pvt.hermanovich.airline.entities.User;
-import by.pvt.hermanovich.airline.entities.UserType;
+import by.pvt.hermanovich.airline.entities.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -205,5 +204,44 @@ public class RequestParameterIdentifier {
             luggage.setPrice(Float.parseFloat(luggagePrice));
         }
         return luggage;
+    }
+
+    /**
+     * This method creates a new entity of airport from request parameters.
+     *
+     * @param request   - an object of request with necessary parameters.
+     * @return          - a new entity of airport.
+     */
+    public static Airport getAirportFromRequest(HttpServletRequest request) {
+        Airport airport = new Airport();
+        String airportCode = request.getParameter(Parameters.AIRPORT_CODE);
+        String airportName = request.getParameter(Parameters.AIRPORT_NAME);
+        String airportCity = request.getParameter(Parameters.AIRPORT_CITY);
+        if ( airportCode != null && !airportCode.isEmpty()
+                && airportName != null && !airportName.isEmpty()
+                && airportCity != null && !airportCity.isEmpty() ) {
+            airport.setAirportCode(airportCode.toUpperCase());
+            airport.setAirportName(airportName.toUpperCase());
+            airport.setCity(airportCity.toUpperCase());
+        }
+        return airport;
+    }
+
+    /**
+     * This method creates a new entity of aircraft from request parameters.
+     *
+     * @param request   - an object of request with necessary parameters.
+     * @return          - a new entity of aircraft.
+     */
+    public static Aircraft getAircraftFromRequest(HttpServletRequest request) {
+        Aircraft aircraft = new Aircraft();
+        String aircraftCode = request.getParameter(Parameters.AIRCRAFT_CODE);
+        String aircraftModel = request.getParameter(Parameters.AIRCRAFT_MODEL);
+        if (aircraftCode != null && !aircraftCode.isEmpty()
+                && aircraftModel != null && !aircraftModel.isEmpty()) {
+            aircraft.setAircraftCode(aircraftCode);
+            aircraft.setModel(aircraftModel);
+        }
+        return aircraft;
     }
 }

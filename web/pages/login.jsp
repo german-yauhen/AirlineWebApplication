@@ -11,31 +11,33 @@
 				background: url("/images/bg_main.jpg") no-repeat center center fixed;
 				background-size: cover;
 			}
-			.loginform {
+			.wrapperLoginForm {
 				position: absolute;
-				top: 30%;
-				left: 20%;
+				top: 200px;
+				left: 300px;
 			}
-			.itputelem {
-				opacity: 0.7;
+			.inputElement {
+				opacity: 0.8;
 			}
-			#error {
+			.errorMessage {
 				color: firebrick;
 			}
 		</style>
 	</head>
 	<body>
-		<div class="loginform">
+		<div class="wrapperLoginForm">
 			<form name="loginForm" method="POST" action="controller">
 				<fieldset>
 					<legend align="center">Login Form</legend>
 					<input type="hidden" name="command" value="login"/>
-					Login:<br/><input class="itputelem" type="text" name="login" value=""/><br/>
-					Password:<br/><input class="itputelem" type="password" name="password" value=""/><br/><br/>
+					Login:<br/><input class="inputElement" type="text" name="login" value=""/><br/>
+					Password:<br/><input class="inputElement" type="password" name="password" value=""/><br/><br/>
 					<input type="submit" value="Log In"/>
 					<input type="button" value="Registration" onclick='location.href="controller?command=gotoregistration"'/>
 				</fieldset>
-				<h4 id="error">${errorLoginOrPassword}</h4>
+				<div class="errorMessage">
+					</br>${errorLoginOrPassword}
+				</div>
 			</form>
 		</div>
 	</body>

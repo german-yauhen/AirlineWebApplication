@@ -12,83 +12,104 @@
                 background: url("/images/bg_menu.jpg") no-repeat center center fixed;
                 background-size: cover;
             }
-            .data {
-                position: fixed;
-                left: 15px;
+            select {
+                width: 100%;
             }
-            .itputelem {
-                opacity: 0.7;
+            .wrapperWelcomeInfo {
+                position: absolute;
+                left: 10px; top: 5px;
             }
-            .buttons {
+            .welcomeElement {
+                font-size: 18px;
+            }
+            .wrapperPageData {
+                position: absolute;
+                left: 10px; top: 50px;
+            }
+            .updateUserElement {
+                position: absolute;
+            }
+            .wrapperButtons {
                 display: flex;
                 justify-content: space-between;
                 text-align: justify;
                 text-align-last: justify;
             }
-            .buttomsitem {
+            .buttonElement {
                 display: inline-block;
             }
-            #usertypeelem {
+            .messageElement {
+                color: firebrick;
+                font-weight: 600;
+            }
+            .inputElement {
+                opacity: 0.7;
+            }
+            .userTypeElement {
                 position: fixed;
-                left: 10px; bottom: 10px;
+                left: 10px; bottom: 5px;
                 color: firebrick;
             }
-            #logoutelem {
+            .logoutElement {
                 position: fixed;
-                right: 25px; top: 25px;
-                color: firebrick;
-            }
-            #updateelem {
-                position: absolute;
-                left: 25px; top: 50px;
+                right: 10px; top: 10px;
             }
         </style>
     </head>
     <body>
-        <div class="data">
-            <h3>Welcome to Airline Company, <i>${user.getFirstName()} ${user.getSurname()}</i>!</h3>
+        <div class="wrapperWelcomeInfo">
+            <div class="welcomeElement">
+                Welcome to Airline Company, <i>${user.getFirstName()} ${user.getSurname()}</i>!
+            </div>
+        </div>
+        <div class="wrapperPageData">
             <!--UPDATE-->
-            <div id="updateelem">
+            <div class="updateUserElement">
                 <form name="clientData" method="POST" action="controller">
                     <fieldset>
-                        <legend align="center">Update Data Form</legend>
-                        <input type="hidden" name="command" value="updateclient" />
+                        <legend align="center">Update Form</legend>
+                        <input type="hidden" name="command" value="updateclient"/>
                         <table>
                             <tr>
                                 <td>Login:</td>
-                                <td><input class="itputelem" type="text" name="login" value="${user.getLogin()}" readonly="readonly" /></td>
+                                <td><input class="inputElement" type="text" name="login" value="${user.getLogin()}" readonly="readonly" /></td>
                             </tr>
                             <tr>
-                                <td>First Name:</td>
-                                <td><input class="itputelem" type="text" name="firstName" value="" /></td>
+                                <td>Name:</td>
+                                <td><input class="inputElement" type="text" name="firstName" value=""/></td>
                             </tr>
                             <tr>
                                 <td>Surname:</td>
-                                <td><input class="itputelem" type="text" name="surname" value="" /></td>
+                                <td><input class="inputElement" type="text" name="surname" value=""/></td>
                             </tr>
                             <tr>
-                                <td>Document Number:</td>
-                                <td><input class="itputelem" type="text" name="documentNumber" value="" /></td>
+                                <td>Document:</td>
+                                <td><input class="inputElement" type="text" name="documentNumber" value=""/></td>
                             </tr>
                         </table>
-                        <div class="buttons">
-                            <input class="buttomsitem" type="submit" value="Update" />
-                            <input class="buttomsitem" type="reset" value="Reset" />
+                        <div class="wrapperButtons">
+                            <input class="buttonElement" type="submit" value="Update"/>
+                            <input class="buttonElement" type="reset" value="Reset"/>
                         </div>
                     </fieldset>
-                    <spec:if test="${sessionScope.successUpdate eq 'true'}">
-                        <i>You have successfully updated you personal data.</i>
-                    </spec:if>
+                    <div class="messageElement">
+                        <spec:if test="${sessionScope.successUpdate eq 'true'}">
+                            <i>You have successfully updated you personal data.</i>
+                        </spec:if>
+                    </div>
                 </form>
             </div>
-            <!--LOGOUT-->
-            <div id="logoutelem">
-                <form name="logout" method="POST" action="controller">
-                    <input type="hidden" name="command" value="logout" />
-                    <input type="submit" value="Log Out" />
-                </form>
+            <!--USER TYPE-->
+            <div class="userTypeElement">
+                </br>${String.valueOf(user.getUserType())}
             </div>
         </div>
-        <div id="usertypeelem">${String.valueOf(user.getUserType())}</div>
+        <!--LOGOUT-->
+        <div class="logoutElement">
+            <form name="logout" method="POST" action="controller">
+                <input type="hidden" name="command" value="logout" />
+                <input type="submit" value="Log Out" />
+            </form>
+        </div>
     </body>
 </html>

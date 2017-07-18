@@ -1,11 +1,15 @@
 package by.pvt.hermanovich.airline.commands.implementations.user;
 
 import by.pvt.hermanovich.airline.commands.BasicCommand;
+import by.pvt.hermanovich.airline.commands.implementations.aircraft.ShowAllAircraftsCommand;
+import by.pvt.hermanovich.airline.commands.implementations.airport.ShowAllAirportsCommand;
 import by.pvt.hermanovich.airline.commands.implementations.luggage.ShowAllLuggageCommand;
 import by.pvt.hermanovich.airline.constants.MessageConstants;
 import by.pvt.hermanovich.airline.constants.Parameters;
 import by.pvt.hermanovich.airline.constants.PathPageConstants;
 import by.pvt.hermanovich.airline.dao.services.UserService;
+import by.pvt.hermanovich.airline.entities.Aircraft;
+import by.pvt.hermanovich.airline.entities.Airport;
 import by.pvt.hermanovich.airline.entities.Luggage;
 import by.pvt.hermanovich.airline.entities.User;
 import by.pvt.hermanovich.airline.managers.ConfigManagerPages;
@@ -52,6 +56,10 @@ public class LoginCommand implements BasicCommand {
                         // TODO: 17.07.2017 session.setAttribute(this parameters)
                         List<Luggage> allLuggageTypes = ShowAllLuggageCommand.getAllLuggage();
                         session.setAttribute(Parameters.ALL_LUGGAGE_TYPES, allLuggageTypes);
+                        List<Airport> airportList = ShowAllAirportsCommand.getAllAirports();
+                        session.setAttribute(Parameters.ALL_AIRPORTS, airportList);
+                        List<Aircraft> aircraftList = ShowAllAircraftsCommand.getAllAircrafts();
+                        session.setAttribute(Parameters.ALL_AIRCRAFTS, aircraftList);
                         page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ADMIN_PAGE_PATH);
                         break;
                     case CLIENT:

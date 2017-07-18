@@ -30,4 +30,15 @@ public class Parameters {
     public static final String LUGGAGE_DELETE_SUCCESS = "luggageDeleteSuccess";
     public static final String ALL_LUGGAGE_TYPES = "allLuggageTypes";
     public static final String LUGGAGE_TYPE_TO_UPDATE = "luggageTypeToUpdate";
+    public static final String AIRPORT_CODE = "airportCode";
+    public static final String AIRPORT_NAME = "airportName";
+    public static final String AIRPORT_CITY = "airportCity";
+    public static final String AIRPORT_ADD_SUCCESS = "airportAddSuccess";
+    public static final String AIRPORT_UNIQUE_ERROR = "airportUniqueError";
+    public static final String ALL_AIRPORTS = "allAirports";
+    public static final String AIRCRAFT_CODE = "aircraftCode";
+    public static final String AIRCRAFT_MODEL = "aircraftModel";
+    public static final String AIRCRAFT_ADD_SUCCESS = "aircraftAddSuccess";
+    public static final String AIRCRAFT_UNIQUE_ERROR = "aircraftUniqueError";
+    public static final String ALL_AIRCRAFTS = "allAircrafts";
 }
