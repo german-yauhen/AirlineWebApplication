@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * Description: This class contains implementation of interface methods which works with <i>luggage</i> database table.
+ *
  * Created by Yauheni Hermanovich on 13.07.2017.
  */
 public class LuggageDAO implements ImplLuggageDAO {

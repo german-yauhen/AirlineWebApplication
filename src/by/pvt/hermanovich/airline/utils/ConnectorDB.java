@@ -29,7 +29,6 @@ public class ConnectorDB {
                     ConfigManagerDB.getInstance().getProperty("db.user"),
                     ConfigManagerDB.getInstance().getProperty("db.password")
             );
-            logger.info(MessageConstants.CONNECTION_SUCCESS);
         } catch (ClassNotFoundException e) {
             logger.error(MessageConstants.CLASS_FOR_NAME_ERROR, e);
         }

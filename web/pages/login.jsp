@@ -17,7 +17,7 @@
 				left: 20%;
 			}
 			.itputelem {
-				opacity: 0.5;
+				opacity: 0.7;
 			}
 			#error {
 				color: firebrick;

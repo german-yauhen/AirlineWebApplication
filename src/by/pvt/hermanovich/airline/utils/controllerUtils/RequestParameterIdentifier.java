@@ -166,9 +166,42 @@ public class RequestParameterIdentifier {
         Luggage luggage = new Luggage();
         String luggageType = request.getParameter(Parameters.LUGGAGE_TYPE);
         String luggagePrice = request.getParameter(Parameters.LUGGAGE_PRICE);
-        if ( luggageType != null && !luggageType.isEmpty()
-                && luggagePrice != null && !luggagePrice.isEmpty() ) {
+        if (luggageType != null && !luggageType.isEmpty()) {
             luggage.setLuggageType(luggageType);
+        }
+        if (luggagePrice != null && !luggagePrice.isEmpty()) {
+            luggage.setPrice(Float.parseFloat(luggagePrice));
+        }
+        return luggage;
+    }
+
+    /**
+     * This method identifies a kind of a luggage from request that will be deleted.
+     *
+     * @param request   - an object of request with necessary parameters.
+     * @return          - a type of luggage from request that will be deleted.
+     */
+    public static Luggage getLuggaggeToUpdate(HttpServletRequest request) {
+        Luggage luggage = new Luggage();
+        String luggageType = request.getSession().getAttribute(Parameters.LUGGAGE_TYPE_TO_UPDATE).toString();
+        request.getSession().removeAttribute(Parameters.LUGGAGE_TYPE_TO_UPDATE);
+        if (luggageType != null && !luggageType.isEmpty()) {
+            luggage.setLuggageType(luggageType);
+        }
+        return luggage;
+    }
+
+    /**
+     * This method updates the fields of current luggage type according to the requests parameters.
+     * This method receives a type of a luggage and price from request and sets this values
+     * to the corresponding fields of the luggage which is passed to the method as parameter.
+     *
+     * @param request   - an object of request with necessary parameters.
+     * @return          - a type of luggage from request that will be updated.
+     */
+    public static Luggage updateLuggageFromRequest(Luggage luggage, HttpServletRequest request) {
+        String luggagePrice = request.getParameter(Parameters.LUGGAGE_PRICE);
+        if (luggagePrice != null && !luggagePrice.isEmpty()) {
             luggage.setPrice(Float.parseFloat(luggagePrice));
         }
         return luggage;

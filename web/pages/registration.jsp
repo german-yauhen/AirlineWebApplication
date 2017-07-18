@@ -21,7 +21,7 @@
                 display: inline-block;
             }
             .itputelem {
-                opacity: 0.5;
+                opacity: 0.7;
             }
             #registartionelem {
                 position: absolute;

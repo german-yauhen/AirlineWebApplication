@@ -25,6 +25,7 @@ public class MessageConstants {
     public static final String EMPTY_FIELDS = "Attention! At least one of the fields is empty!";
     public static final String SUCCESS_ADD_LUGGAGE = "Creation of the luggage has been executed successfully.";
     public static final String UNIQUE_LUGGAGE_ERROR = "Luggage with this type already exists!";
+    public static final String SUCCESS_DELETE_LUGGAGE = "Luggage has been deleted successfully.";
 
     public MessageConstants() {
     }

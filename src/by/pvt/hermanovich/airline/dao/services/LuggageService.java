@@ -6,8 +6,12 @@ import by.pvt.hermanovich.airline.entities.Luggage;
 import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description: This class describes actions on the luggage object.
@@ -78,6 +82,109 @@ public class LuggageService {
             connection.commit();
             logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+    }
+
+    /**
+     * This method deletes luggage type from database.
+     *
+     * @param luggage   - a luggage type which will be deleted from database.
+     */
+    public void deleteLuggage(Luggage luggage) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            LuggageDAO.getInstance().deleteById(luggage.getId(), connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+    }
+
+    /**
+     * This method receives a luggage from database.
+     *
+     * @param luggage   - luggage type from request.
+     * @return          - luggage type from database.
+     * @throws SQLException
+     */
+    public Luggage getLuggageFromDB(Luggage luggage) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            luggage = LuggageDAO.getInstance().getByType(luggage.getLuggageType(), connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return luggage;
+    }
+
+    /**
+     * This method receives all luggage types from database.
+     *
+     * @return      - a list of luggage types received from database.
+     * @throws SQLException
+     */
+    public List<Luggage> showAllLuggageTypes() throws SQLException {
+        List<Luggage> luggageTypesFromDB;
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            luggageTypesFromDB = LuggageDAO.getInstance().getAll(connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return luggageTypesFromDB;
+    }
+
+    /**
+     * This method updates luggage object. This method implements work with transaction support.
+     *
+     * @param luggage          - an luggage which fields will be updated.
+     * @throws SQLException
+     */
+    public void updateLuggage(Luggage luggage) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            LuggageDAO.getInstance().update(luggage, connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        }  catch (SQLException | DAOException e) {
             if (connection != null) {
                 connection.rollback();
             }

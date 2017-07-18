@@ -25,5 +25,9 @@ public class Parameters {
     public static final String BACK_PAGE = "backpage";
     public static final String LUGGAGE_TYPE = "luggageType";
     public static final String LUGGAGE_PRICE = "luggagePrice";
-    public static final String SUCCESS_ADD_LUGGAGE = "luggageAddSuccess";
+    public static final String LUGGAGE_ADD_SUCCESS = "luggageAddSuccess";
+    public static final String LUGGAGE_UPDATE_SUCCESS = "luggageUpdateSuccess";
+    public static final String LUGGAGE_DELETE_SUCCESS = "luggageDeleteSuccess";
+    public static final String ALL_LUGGAGE_TYPES = "allLuggageTypes";
+    public static final String LUGGAGE_TYPE_TO_UPDATE = "luggageTypeToUpdate";
 }

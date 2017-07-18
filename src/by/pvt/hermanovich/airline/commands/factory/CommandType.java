@@ -2,9 +2,9 @@ package by.pvt.hermanovich.airline.commands.factory;
 
 import by.pvt.hermanovich.airline.commands.BasicCommand;
 import by.pvt.hermanovich.airline.commands.implementations.*;
-import by.pvt.hermanovich.airline.commands.implementations.luggage.CreateLuggage;
-import by.pvt.hermanovich.airline.commands.implementations.luggage.DeleteLuggage;
-import by.pvt.hermanovich.airline.commands.implementations.luggage.UpdateLuggage;
+import by.pvt.hermanovich.airline.commands.implementations.luggage.CreateLuggageCommand;
+import by.pvt.hermanovich.airline.commands.implementations.luggage.DeleteLuggageCommand;
+import by.pvt.hermanovich.airline.commands.implementations.luggage.UpdateLuggageCommand;
 import by.pvt.hermanovich.airline.commands.implementations.user.*;
 
 /**
@@ -35,11 +35,11 @@ public enum CommandType {
             case BACK:
                 return new BackCommand();
             case CREATELUGGAGE:
-                return new CreateLuggage();
+                return new CreateLuggageCommand();
             case DELETELUGGAGE:
-                return new DeleteLuggage();
+                return new DeleteLuggageCommand();
             case UPDATELUGGAGE:
-                return new UpdateLuggage();
+                return new UpdateLuggageCommand();
             case DEFAULT:
                 return new DefaultCommand();
             default:
