@@ -4,57 +4,7 @@
 <html>
     <head>
         <title>Clients account page</title>
-        <style type="text/css">
-            body {
-                margin: 0px;
-                padding: 0px;
-                display: inline-block;
-                background: url("/images/bg_menu.jpg") no-repeat center center fixed;
-                background-size: cover;
-            }
-            select {
-                width: 100%;
-            }
-            .wrapperWelcomeInfo {
-                position: absolute;
-                left: 10px; top: 5px;
-            }
-            .welcomeElement {
-                font-size: 18px;
-            }
-            .wrapperPageData {
-                position: absolute;
-                left: 10px; top: 50px;
-            }
-            .updateUserElement {
-                position: absolute;
-            }
-            .wrapperButtons {
-                display: flex;
-                justify-content: space-between;
-                text-align: justify;
-                text-align-last: justify;
-            }
-            .buttonElement {
-                display: inline-block;
-            }
-            .messageElement {
-                color: firebrick;
-                font-weight: 600;
-            }
-            .inputElement {
-                opacity: 0.7;
-            }
-            .userTypeElement {
-                position: fixed;
-                left: 10px; bottom: 5px;
-                color: firebrick;
-            }
-            .logoutElement {
-                position: fixed;
-                right: 10px; top: 10px;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="/css/clientMain.css" />
     </head>
     <body>
         <div class="wrapperWelcomeInfo">
@@ -99,6 +49,34 @@
                     </div>
                 </form>
             </div>
+            <div class="luggageForm">
+                <form name="updateLuggage" method="POST" action="controller">
+                    <fieldset>
+                        <legend align="center">Update Luggage</legend>
+                        <input type="hidden" name="command" value="updateluggage"/>
+                        <table>
+                            <tr>
+                                <td>Type:</td>
+                                <td>
+                                    <select name="luggageTypeToUpdate">
+                                        <option selected="selected" disabled>Choose Type</option>
+                                        <spec:forEach var="luggage" items="${allLuggageTypes}">
+                                            <option value="${luggage.getLuggageType()}">${luggage.getLuggageType()}</option>
+                                        </spec:forEach>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="wrapperButtons">
+                            <input class="buttonElement" type="submit" value="Update"/>
+                            <input class="buttonElement" type="reset" value="Reset"/>
+                            <input type="button" value="Delete" onclick='location.href="controller?command=deleteluggage"'/>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+
             <!--USER TYPE-->
             <div class="userTypeElement">
                 </br>${String.valueOf(user.getUserType())}

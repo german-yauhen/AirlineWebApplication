@@ -1,6 +1,7 @@
 package by.pvt.hermanovich.airline.dao.services;
 
 import by.pvt.hermanovich.airline.constants.MessageConstants;
+import by.pvt.hermanovich.airline.dao.implementations.AircraftDAO;
 import by.pvt.hermanovich.airline.dao.implementations.AirportDAO;
 import by.pvt.hermanovich.airline.entities.Airport;
 import by.pvt.hermanovich.airline.exceptions.DAOException;
@@ -96,7 +97,7 @@ public class AirportService {
     }
 
     /**
-     * This method receives all airports from database.
+     * This method receives all airports from database. This method implements work with transaction support.
      *
      * @return          - a list of airports received from database.
      * @throws SQLException
@@ -120,5 +121,32 @@ public class AirportService {
             ConnectorDB.closeConnection(connection);
         }
         return airportList;
+    }
+
+    /**
+     * This method receives an entity of an airport from the database. This method implements work with transaction support.
+     *
+     * @param airportCode               - an airportCode for query to database to find an aircraft in the database.
+     * @return                          - an entity of airport from database.
+     * @throws SQLException
+     */
+    public Airport getAirportFromDB(String airportCode) throws SQLException {
+        Airport airport;
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            airport = AirportDAO.getInstance().getByCode(airportCode, connection);
+            connection.commit();
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return airport;
     }
 }

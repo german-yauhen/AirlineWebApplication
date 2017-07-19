@@ -1,0 +1,53 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+    background: url("/images/bg_menu.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+select {
+    width: 100%;
+}
+.wrapperWelcomeInfo {
+    position: absolute;
+    left: 10px; top: 5px;
+}
+.welcomeElement {
+    font-size: 18px;
+}
+.wrapperPageData {
+    position: absolute;
+    left: 10px; top: 50px;
+}
+.updateUserElement {
+    position: absolute;
+}
+.wrapperButtons {
+    display: flex;
+    justify-content: space-between;
+    text-align: justify;
+    text-align-last: justify;
+}
+.buttonElement {
+    display: inline-block;
+}
+.messageElement {
+    color: firebrick;
+    font-weight: 600;
+}
+.inputElement {
+    opacity: 0.7;
+}
+.userTypeElement {
+    position: fixed;
+    left: 10px; bottom: 5px;
+    color: firebrick;
+}
+.logoutElement {
+    position: fixed;
+    right: 10px; top: 10px;
+}
+.luggageForm {
+    position: absolute;
+    top: 200px; left: 100px;
+}

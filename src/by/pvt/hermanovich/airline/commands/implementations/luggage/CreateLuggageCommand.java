@@ -37,7 +37,7 @@ public class CreateLuggageCommand implements BasicCommand {
                 request.getSession().setAttribute(Parameters.LUGGAGE_ADD_SUCCESS, Parameters.TRUE);
                 page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ADMIN_PAGE_PATH);
             } else {
-                request.setAttribute(Parameters.OPERATION_MESSAGE, MessageConstants.UNIQUE_LUGGAGE_ERROR);
+                request.setAttribute(Parameters.LUGGAGE_UNIQUE_ERROR, Parameters.TRUE);
                 page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ADMIN_PAGE_PATH);
             }
         } catch (SQLException e) {

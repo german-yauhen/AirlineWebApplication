@@ -12,10 +12,10 @@ public class QueriesDB {
 //    public static final String ADD_USER = "INSERT INTO users (firstname, surname, document_number, login, password, user_type)" +
 //            "VALUES (?, ?, ?, ?, ?, ?)";
     public static final String ADD_USER_WITHOUT_USERTYPE = "INSERT INTO users (firstname, surname, document_number, login, password)" +
-        "VALUES (?, ?, ?, ?, ?)";
+                                                            "VALUES (?, ?, ?, ?, ?)";
     public static final String DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
     public static final String UPDATE_USER_BY_ID = "UPDATE users SET firstname = ?, surname = ?, document_number = ?," +
-            "login = ?, password = ?, user_type = ?  WHERE id = ?";
+                                                    "login = ?, password = ?, user_type = ?  WHERE id = ?";
     public static final String GET_ALL_USERS = "SELECT * FROM users";
     /*Queries to work with airports database table.*/
     public static final String ADD_AIRPORT = "INSERT INTO airports (airport_code, airport_name, city) VALUES (?, ?, ?)";
@@ -35,6 +35,8 @@ public class QueriesDB {
     public static final String GET_ALL_AIRCRAFTS = "SELECT * FROM aircrafts";
     public static final String GET_AIRCRAFT_BY_CODE = "SELECT * FROM aircrafts WHERE aircraft_code = ?";
     public static final String DELETE_AIRCRAFT_BY_CODE = "DELETE FROM aircrafts WHERE aircraft_code = ?";
-
-
+    /*Queries to work with flight database table.*/
+    public static final String ADD_FLIGHT = "INSERT INTO flights (aircrafts_aircraft_code, flight_number, departure_airport" +
+                                            ", arrival_airport, sheduled_departure_date, sheduled_arrival_date, price_per_seat)" +
+                                            "VALUES(?, ?, ?, ?, ?, ?, ?)";
 }

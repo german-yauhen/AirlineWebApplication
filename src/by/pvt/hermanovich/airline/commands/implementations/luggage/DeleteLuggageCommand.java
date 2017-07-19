@@ -35,7 +35,6 @@ public class DeleteLuggageCommand implements BasicCommand {
             LuggageService.getInstance().deleteLuggage(luggage);
             request.getSession().setAttribute(Parameters.LUGGAGE_DELETE_SUCCESS, Parameters.TRUE);
             page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ADMIN_PAGE_PATH);
-            logger.info(MessageConstants.SUCCESS_DELETE_LUGGAGE);
         } catch (SQLException e) {
             request.setAttribute(Parameters.ERROR_DATABASE, MessageConstants.DATABASE_ACCESS_ERROR);
             page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ERROR_PAGE_PATH);

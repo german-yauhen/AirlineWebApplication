@@ -3,26 +3,7 @@
 <html>
 	<head>
 		<title>Login Page</title>
-		<style type="text/css">
-			body {
-				margin: 0px;
-				padding: 0px;
-				display: inline-block;
-				background: url("/images/bg_main.jpg") no-repeat center center fixed;
-				background-size: cover;
-			}
-			.wrapperLoginForm {
-				position: absolute;
-				top: 200px;
-				left: 300px;
-			}
-			.inputElement {
-				opacity: 0.8;
-			}
-			.errorMessage {
-				color: firebrick;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="/css/login.css" />
 	</head>
 	<body>
 		<div class="wrapperLoginForm">

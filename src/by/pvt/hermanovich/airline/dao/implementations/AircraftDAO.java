@@ -133,7 +133,6 @@ public class AircraftDAO implements ImplAircraftDAO {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 createAircraft(resultSet, aircraft);
-                logger.info(aircraft);
             }
         } catch (SQLException e) {
             String message = "The record in the database was not found.";

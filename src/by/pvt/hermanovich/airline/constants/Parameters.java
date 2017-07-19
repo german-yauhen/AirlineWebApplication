@@ -41,4 +41,12 @@ public class Parameters {
     public static final String AIRCRAFT_ADD_SUCCESS = "aircraftAddSuccess";
     public static final String AIRCRAFT_UNIQUE_ERROR = "aircraftUniqueError";
     public static final String ALL_AIRCRAFTS = "allAircrafts";
+    public static final String AIRCRAFT_FOR_FLIGHT = "aircraftForFlight";
+    public static final String FLIGHT_NUMBER_FOR_FLIGHT = "flightNumberForFlight";
+    public static final String DEPARTURE_FOR_FLIGHT = "departureForFlight";
+    public static final String ARRIVAL_FOR_FLIGHT = "arrivalForFlight";
+    public static final String DATE_OF_FLIGHT = "dateForFlight";
+    public static final String PRICE_PER_SEAT = "pricePerSeat";
+    public static final String FLIGHT_REGISTER_SUCCESS = "flightRegisterSuccess";
+    public static final String LUGGAGE_UNIQUE_ERROR = "luggageUniqueError";
 }

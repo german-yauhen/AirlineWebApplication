@@ -19,7 +19,7 @@ public class MessageConstants {
     public static final String RESULTSET_ERROR = "ResultSet object is empty.";
     public static final String CONNECTION_ERROR = "Connection object is null.";
     public static final String DATABASE_ACCESS_ERROR = "Database is not available.";
-    public static final String EXECUTE_QUERY_ERROR = "An error was occurred while executing the query to database.";
+    public static final String EXECUTE_QUERY_ERROR = "An error was occurred while executing the query to the database.";
     public static final String USER_EXISTS = "User with this login has already existed.";
     public static final String EMPTY_FIELDS = "Attention! At least one of the fields is empty.";
     public static final String SUCCESS_ADD_LUGGAGE = "Creation of the luggage has been executed successfully.";

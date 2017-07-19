@@ -4,6 +4,7 @@ import by.pvt.hermanovich.airline.commands.BasicCommand;
 import by.pvt.hermanovich.airline.commands.implementations.*;
 import by.pvt.hermanovich.airline.commands.implementations.aircraft.CreateAircraftCommand;
 import by.pvt.hermanovich.airline.commands.implementations.airport.CreateAirportCommand;
+import by.pvt.hermanovich.airline.commands.implementations.flight.CreateFlightCommand;
 import by.pvt.hermanovich.airline.commands.implementations.luggage.CreateLuggageCommand;
 import by.pvt.hermanovich.airline.commands.implementations.luggage.DeleteLuggageCommand;
 import by.pvt.hermanovich.airline.commands.implementations.luggage.UpdateLuggageCommand;
@@ -26,7 +27,14 @@ public enum CommandType {
     CREATEAIRPORT,
 
     /*aircraft commands*/
-    CREATEAIRCRAFT;
+    CREATEAIRCRAFT,
+
+    /*CREATEFLIGHT*/
+    CREATEFLIGHT, SHOWALLFLIGHTS,
+
+    /**/
+    CREATETICKET, SHOWUSERSTICKETS, RETURNTICKET
+    ;
 
     public BasicCommand getCurrentCommand() {
         switch (this) {
@@ -52,6 +60,9 @@ public enum CommandType {
                 return new CreateAirportCommand();
             case CREATEAIRCRAFT:
                 return new CreateAircraftCommand();
+            case CREATEFLIGHT:
+                return new CreateFlightCommand();
+
 
             case DEFAULT:
                 return new DefaultCommand();

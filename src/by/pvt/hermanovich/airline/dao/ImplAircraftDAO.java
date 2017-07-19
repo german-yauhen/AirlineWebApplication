@@ -5,7 +5,7 @@ import by.pvt.hermanovich.airline.exceptions.DAOException;
 import java.sql.Connection;
 
 /**
- * Description: The interface describes methods for working with <i>aircrafts</i> database table,
+ * Description: This interface describes methods for working with <i>aircrafts</i> database table.
  * extending the capabilities of basic DAO interface.
  *
  * Created by Yauheni Hermanovich on 13.07.2017.

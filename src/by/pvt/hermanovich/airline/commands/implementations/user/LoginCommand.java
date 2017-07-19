@@ -48,18 +48,9 @@ public class LoginCommand implements BasicCommand {
         try {
             if (UserService.getInstance().checkUserAuthorization(user.getLogin(), user.getPassword())) {
                 user = UserService.getInstance().getUserByLogin(user.getLogin());
-                session.setAttribute(Parameters.USER, user);
-                session.setAttribute(Parameters.USER_TYPE, String.valueOf(user.getUserType()));
+                UserService.getInstance().setParamToSession(user, session);
                 switch (user.getUserType()) {
                     case ADMIN:
-                        // TODO: 17.07.2017 method() that returns lists of luggage, aircrafts ... to the admins page
-                        // TODO: 17.07.2017 session.setAttribute(this parameters)
-                        List<Luggage> allLuggageTypes = ShowAllLuggageCommand.getAllLuggage();
-                        session.setAttribute(Parameters.ALL_LUGGAGE_TYPES, allLuggageTypes);
-                        List<Airport> airportList = ShowAllAirportsCommand.getAllAirports();
-                        session.setAttribute(Parameters.ALL_AIRPORTS, airportList);
-                        List<Aircraft> aircraftList = ShowAllAircraftsCommand.getAllAircrafts();
-                        session.setAttribute(Parameters.ALL_AIRCRAFTS, aircraftList);
                         page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ADMIN_PAGE_PATH);
                         break;
                     case CLIENT:

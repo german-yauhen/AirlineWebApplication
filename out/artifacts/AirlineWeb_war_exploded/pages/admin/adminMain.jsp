@@ -4,89 +4,10 @@
 <html>
     <head>
         <title>Administration Page</title>
-        <style type="text/css">
-            body {
-                margin: 0px;
-                padding: 0px;
-                display: inline-block;
-                background: url("/images/bg_menu.jpg") no-repeat center center fixed;
-                background-size: cover;
-            }
-            select {
-                width: 100%;
-            }
-            .wrapperWelcomeInfo {
-                position: absolute;
-                left: 10px; top: 5px;
-            }
-            .welcomeElement {
-                font-size: 18px;
-            }
-            .wrapperPageData {
-                position: absolute;
-                left: 10px; top: 50px;
-            }
-            .updateUserElement {
-                position: absolute;
-            }
-            .wrapperButtons {
-                display: flex;
-                justify-content: space-between;
-                text-align: justify;
-                text-align-last: justify;
-            }
-            .buttonElement {
-                display: inline-block;
-            }
-            .wrapperLuggageForms {
-                position: absolute;
-                left: 255px; top: 0px;
-            }
-            .addLuggageForm {
-                position: absolute;
-                left: 0px; top: 0px;
-            }
-            .updateLuggageForm {
-                position: absolute;
-                left: 225px;
-            }
-            .wrapperAirportForms {
-                position: absolute;
-                left: 705px;
-            }
-            .addAirportForm {
-                position: absolute;
-                left: 0px;
-            }
-            .airportListForm {
-                position: absolute;
-                left: 230px;
-                width: 250px;
-            }
-            .inputElement {
-                opacity: 0.7;
-            }
-            .wrapperAircraftForms {
-                position: absolute;
-                top: 210px;
-            }
-            .addAircraftForm {
-                position: absolute;
-            }
-            .aircraftListForm {
-                position: absolute;
-                left: 235px;
-            }
-            .userTypeElement {
-                position: fixed;
-                left: 10px; bottom: 5px;
-                color: firebrick;
-            }
-            .logoutElement {
-                position: fixed;
-                right: 10px; top: 10px;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="/css/tcal.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/adminMain.css"/>
+        <script type="text/javascript" src="/js/tcal_en.js"></script>
+
     </head>
     <body>
         <div class="wrapperWelcomeInfo">
@@ -95,33 +16,33 @@
             </div>
         </div>
         <div class="wrapperPageData">
-            <!--UPDATE-->
+            <!--UPDATE USER-->
             <div class="updateUserElement">
                 <form name="clientData" method="POST" action="controller">
                     <fieldset>
                         <legend align="center">Update Data Form</legend>
-                        <input type="hidden" name="command" value="updateclient" />
+                        <input type="hidden" name="command" value="updateclient"/>
                         <table>
                             <tr>
                                 <td>Login:</td>
-                                <td><input class="inputElement" type="text" name="login" value="${user.getLogin()}" readonly="readonly" /></td>
+                                <td><input class="inputElement" type="text" name="login" value="${user.getLogin()}" readonly="readonly"/></td>
                             </tr>
                             <tr>
                                 <td>Name:</td>
-                                <td><input class="inputElement" type="text" name="firstName" value="" /></td>
+                                <td><input class="inputElement" type="text" name="firstName" value=""/></td>
                             </tr>
                             <tr>
                                 <td>Surname:</td>
-                                <td><input class="inputElement" type="text" name="surname" value="" /></td>
+                                <td><input class="inputElement" type="text" name="surname" value=""/></td>
                             </tr>
                             <tr>
                                 <td>Document:</td>
-                                <td><input class="inputElement" type="text" name="documentNumber" value="" /></td>
+                                <td><input class="inputElement" type="text" name="documentNumber" value=""/></td>
                             </tr>
                         </table>
                         <div class="wrapperButtons">
-                            <input class="buttonElement" type="submit" value="Update" />
-                            <input class="buttonElement" type="reset" value="Reset" />
+                            <input class="buttonElement" type="submit" value="Update"/>
+                            <input class="buttonElement" type="reset" value="Reset"/>
                         </div>
                     </fieldset>
                     <!--4-->
@@ -133,20 +54,20 @@
                     <form name="createLuggage" method="POST" action="controller">
                         <fieldset>
                             <legend align="center">Add Luggage</legend>
-                            <input type="hidden" name="command" value="createluggage">
+                            <input type="hidden" name="command" value="createluggage"/>
                             <table>
                                 <tr>
                                     <td>Type:</td>
-                                    <td><input class="inputElement" type="text" name="luggageType" value="" /></td>
+                                    <td><input class="inputElement" type="text" name="luggageType" value=""/></td>
                                 </tr>
                                 <tr>
                                     <td>Price:</td>
-                                    <td><input class="inputElement" type="text" name="luggagePrice" /></td>
+                                    <td><input class="inputElement" type="text" name="luggagePrice"/></td>
                                 </tr>
                             </table>
                             <div class="wrapperButtons">
-                                <input class="buttonElement" type="submit" value="Create" />
-                                <input class="buttonElement" type="reset" value="Reset" />
+                                <input class="buttonElement" type="submit" value="Create"/>
+                                <input class="buttonElement" type="reset" value="Reset"/>
                             </div>
                         </fieldset>
                         <!--3-->
@@ -157,16 +78,15 @@
                     <form name="updateLuggage" method="POST" action="controller">
                         <fieldset>
                             <legend align="center">Update Luggage</legend>
-                            <input type="hidden" name="command" value="updateluggage">
+                            <input type="hidden" name="command" value="updateluggage"/>
                             <table>
                                 <tr>
                                     <td>Type:</td>
                                     <td>
-                                        <select name="luggageType">
+                                        <select name="luggageTypeToUpdate">
                                             <option selected="selected" disabled>Choose Type</option>
                                             <spec:forEach var="luggage" items="${allLuggageTypes}">
-                                                <option>${luggage.getLuggageType()}</option>
-                                                <spec:set var="luggageTypeToUpdate" value="${luggage.getLuggageType()}" scope="session"/>
+                                                <option value="${luggage.getLuggageType()}">${luggage.getLuggageType()}</option>
                                             </spec:forEach>
                                         </select>
                                     </td>
@@ -177,8 +97,8 @@
                                 </tr>
                             </table>
                             <div class="wrapperButtons">
-                                <input class="buttonElement" type="submit" value="Update" />
-                                <input class="buttonElement" type="reset" value="Reset" />
+                                <input class="buttonElement" type="submit" value="Update"/>
+                                <input class="buttonElement" type="reset" value="Reset"/>
                                 <input type="button" value="Delete" onclick='location.href="controller?command=deleteluggage"'/>
                             </div>
                         </fieldset>
@@ -192,11 +112,13 @@
                     <form name="Airport Data" method="POST" action="controller">
                         <fieldset>
                             <legend align="center">Add Airport</legend>
-                            <input type="hidden" name="command" value="createairport" />
+                            <input type="hidden" name="command" value="createairport"/>
                             <table>
                                 <tr>
                                     <td>Code:</td>
-                                    <td><input class="inputElement" type="text" name="airportCode" value="WWW"/></td>
+                                    <td>
+                                        <input class="inputElement" type="text" name="airportCode" value="" pattern="\d\d\d" placeholder="###"/>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Name:</td>
@@ -235,11 +157,13 @@
                     <form name="Aircraft Data" method="POST" action="controller">
                         <fieldset>
                             <legend align="center">Add Aircraft</legend>
-                            <input type="hidden" name="command" value="createaircraft" />
+                            <input type="hidden" name="command" value="createaircraft"/>
                             <table>
                                 <tr>
                                     <td>Code:</td>
-                                    <td><input class="inputElement" type="text" name="aircraftCode" value="WW-WWW"/></td>
+                                    <td>
+                                        <input class="inputElement" type="text" name="aircraftCode" value="" pattern="\d\d-\d\d\d" placeholder="##-###"/>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Model:</td>
@@ -247,8 +171,8 @@
                                 </tr>
                             </table>
                             <div class="wrapperButtons">
-                                <input class="buttonElement" type="submit" value="Create" />
-                                <input class="buttonElement" type="reset" value="Reset" />
+                                <input class="buttonElement" type="submit" value="Create"/>
+                                <input class="buttonElement" type="reset" value="Reset"/>
                             </div>
                         </fieldset>
                     </form>
@@ -267,11 +191,75 @@
                     </form>
                 </div>
             </div>
-
-
+            <div class="wrapperFlightMenu">
+                <form name="FlightInfo" method="POST" action="controller">
+                    <fieldset>
+                        <legend align="left">Create Flight Menu</legend>
+                        <input type="hidden" name="command" value="createFlight"/>
+                        <div class="flightInfoForm">
+                            <table class="equalWidthColumns">
+                                <tr>
+                                    <th>Aircraft</th>
+                                    <th>Flight Number</th>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Sheduled date</th>
+                                    <th>Price [1pc]</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name="aircraftForFlight">
+                                            <option selected="selected" disabled>Choose aircraft</option>
+                                            <spec:forEach var="aircraft" items="${allAircrafts}">
+                                                <option value="${aircraft.getAircraftCode()}">[${aircraft.getAircraftCode().toUpperCase()}]-[${aircraft.getModel().toUpperCase()}]</option>
+                                            </spec:forEach>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="inputElement" type="text" name="flightNumberForFlight" value=""/>
+                                    </td>
+                                    <td>
+                                        <select name="departureForFlight">
+                                            <option selected="selected" disabled>Choose airport</option>
+                                            <spec:forEach var="airport" items="${allAirports}">
+                                                <option value="${airport.getAirportCode()}">[${airport.getAirportCode().toUpperCase()}]-[${airport.getCity().toUpperCase()}]</option>
+                                            </spec:forEach>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="arrivalForFlight">
+                                            <option selected="selected" disabled>Choose airport</option>
+                                            <spec:forEach var="airport" items="${allAirports}">
+                                                <option value="${airport.getAirportCode()}">[${airport.getAirportCode().toUpperCase()}]-[${airport.getCity().toUpperCase()}]</option>
+                                            </spec:forEach>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <!--CALENDAR-->
+                                        <form action="#">
+                                            <div><input class="tcal" type="text" name="dateForFlight" value=""/></div>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <input class="inputElement" type="text" name="pricePerSeat" value=""/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="wrapperButtonsCreateFlight">
+                            <input class="buttonElement" type="submit" value="Create"/>
+                            <input class="buttonElement" type="reset" value="Reset"/>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+<!------------------------------------------------------------------------------------------------------------------->
             <!--USER TYPE-->
             <div class="userTypeElement">
                 </br>${String.valueOf(user.getUserType())}
+                <spec:if test="${sessionScope.flightRegisterSuccess eq 'true'}">
+                    <i> : MESSAGE : Flight has been created.</i>
+                </spec:if>
                 <spec:if test="${sessionScope.airportUniqueError eq 'true'}">
                     <i> : MESSAGE : Airport with this code has already existed.</i>
                 </spec:if>
@@ -286,6 +274,9 @@
                 </spec:if>
                 <spec:if test="${sessionScope.luggageAddSuccess eq 'true'}">
                     <i> : MESSAGE : Luggage has been created. Log in again to your account to see the changes.</i>
+                </spec:if>
+                <spec:if test="${sessionScope.luggageUniqueError eq 'true'}">
+                    <i> : MESSAGE : Luggage with this type has already existed.</i>
                 </spec:if>
                 <spec:if test="${sessionScope.successUpdate eq 'true'}">
                     <i> : MESSAGE : You have successfully updated your personal data. Log in again to your account to see the changes.</i>

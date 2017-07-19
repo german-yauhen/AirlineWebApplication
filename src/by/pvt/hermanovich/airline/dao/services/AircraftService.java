@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Description: This class describes actions on the aircraft object.
+ *
  * This class contains methods that implement work with transaction support.
  *
  * Created by Yauheni Hermanovich on 18.07.2017.
@@ -96,7 +97,7 @@ public class AircraftService {
     }
 
     /**
-     * This method receives all aircrafts from database.
+     * This method receives all aircrafts from database. This method implements work with transaction support.
      *
      * @return          - a list of aircrafts from the database.
      * @throws SQLException
@@ -120,5 +121,32 @@ public class AircraftService {
             ConnectorDB.closeConnection(connection);
         }
         return aircraftList;
+    }
+
+    /**
+     * This method receive an aircraft from database by code. This method implements work with transaction support.
+     *
+     * @param aircraftCode      - an aircraftCode for query to database to find an aircraft in the database.
+     * @return                  - an entity of aircraft from database.
+     */
+    public Aircraft getAircraftFromDB(String aircraftCode) throws SQLException {
+        Aircraft aircraftFromDB;
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            aircraftFromDB = AircraftDAO.getInstance().getByCode(aircraftCode, connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return aircraftFromDB;
     }
 }

@@ -1,14 +1,23 @@
 package by.pvt.hermanovich.airline.dao.services;
 
+import by.pvt.hermanovich.airline.commands.implementations.aircraft.ShowAllAircraftsCommand;
+import by.pvt.hermanovich.airline.commands.implementations.airport.ShowAllAirportsCommand;
+import by.pvt.hermanovich.airline.commands.implementations.luggage.ShowAllLuggageCommand;
 import by.pvt.hermanovich.airline.constants.MessageConstants;
+import by.pvt.hermanovich.airline.constants.Parameters;
 import by.pvt.hermanovich.airline.dao.implementations.UserDAO;
+import by.pvt.hermanovich.airline.entities.Aircraft;
+import by.pvt.hermanovich.airline.entities.Airport;
+import by.pvt.hermanovich.airline.entities.Luggage;
 import by.pvt.hermanovich.airline.entities.User;
 import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Description: This class describes actions on the user object.
@@ -172,6 +181,30 @@ public class UserService {
             throw new SQLException(e);
         } finally {
             ConnectorDB.closeConnection(connection);
+        }
+    }
+
+    /**
+     * An additional accessory method that provides work with some attributes of the object of http session.
+     * This method sets user's parameters, lists of airports, aircrafts, luggage types to the session.
+     *
+     * @param session   - an object of the current session.
+     */
+    public void setParamToSession(User user, HttpSession session) {
+        session.setAttribute(Parameters.USER, user);
+        session.setAttribute(Parameters.USER_TYPE, String.valueOf(user.getUserType()));
+        List<Luggage> allLuggageTypes = ShowAllLuggageCommand.getAllLuggage();
+        session.setAttribute(Parameters.ALL_LUGGAGE_TYPES, allLuggageTypes);
+        switch (user.getUserType()) {
+            case CLIENT:
+                break;
+            case ADMIN:
+                List<Airport> airportList = ShowAllAirportsCommand.getAllAirports();
+                session.setAttribute(Parameters.ALL_AIRPORTS, airportList);
+                List<Aircraft> aircraftList = ShowAllAircraftsCommand.getAllAircrafts();
+                session.setAttribute(Parameters.ALL_AIRCRAFTS, aircraftList);
+                break;
+            default: break;
         }
     }
 }

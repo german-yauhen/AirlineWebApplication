@@ -5,6 +5,7 @@ import by.pvt.hermanovich.airline.constants.Parameters;
 import by.pvt.hermanovich.airline.entities.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 /**
  * Description: This class identifies request parameters.
@@ -182,8 +183,7 @@ public class RequestParameterIdentifier {
      */
     public static Luggage getLuggaggeToUpdate(HttpServletRequest request) {
         Luggage luggage = new Luggage();
-        String luggageType = request.getSession().getAttribute(Parameters.LUGGAGE_TYPE_TO_UPDATE).toString();
-        request.getSession().removeAttribute(Parameters.LUGGAGE_TYPE_TO_UPDATE);
+        String luggageType = request.getParameter(Parameters.LUGGAGE_TYPE_TO_UPDATE);
         if (luggageType != null && !luggageType.isEmpty()) {
             luggage.setLuggageType(luggageType);
         }
@@ -243,5 +243,36 @@ public class RequestParameterIdentifier {
             aircraft.setModel(aircraftModel);
         }
         return aircraft;
+    }
+
+    /**
+     * This method fills a <i>map</i> of parameters of the flight with values from the request.
+     * The <i>map</i> is passed to the method as a parameter.
+     *
+     * @param flightInfoFromRequest     - an empty map of parameters that will be filled.
+     * @param request                   - an object of request with necessary parameters.
+     * @return                          - a map with parameters.
+     */
+    public static HashMap<String,String> getFlightInfoFromRequest(HashMap<String, String> flightInfoFromRequest, HttpServletRequest request) {
+        String aircraftForFlight = request.getParameter(Parameters.AIRCRAFT_FOR_FLIGHT);
+        String flightNumber = request.getParameter(Parameters.FLIGHT_NUMBER_FOR_FLIGHT);
+        String departureForFlight = request.getParameter(Parameters.DEPARTURE_FOR_FLIGHT);
+        String arrivalForFlight = request.getParameter(Parameters.ARRIVAL_FOR_FLIGHT);
+        String dateForFlight = request.getParameter(Parameters.DATE_OF_FLIGHT);
+        String pricePerSeat = request.getParameter(Parameters.PRICE_PER_SEAT);
+        if (    aircraftForFlight != null && !aircraftForFlight.isEmpty()
+                && flightNumber != null && !flightNumber.isEmpty()
+                && departureForFlight != null && !departureForFlight.isEmpty()
+                && arrivalForFlight != null && !arrivalForFlight.isEmpty()
+                && dateForFlight != null && !dateForFlight.isEmpty()
+                && pricePerSeat != null && !pricePerSeat.isEmpty()      ) {
+            flightInfoFromRequest.put(Parameters.AIRCRAFT_FOR_FLIGHT, aircraftForFlight);
+            flightInfoFromRequest.put(Parameters.FLIGHT_NUMBER_FOR_FLIGHT, flightNumber);
+            flightInfoFromRequest.put(Parameters.DEPARTURE_FOR_FLIGHT, departureForFlight);
+            flightInfoFromRequest.put(Parameters.ARRIVAL_FOR_FLIGHT, arrivalForFlight);
+            flightInfoFromRequest.put(Parameters.DATE_OF_FLIGHT, dateForFlight);
+            flightInfoFromRequest.put(Parameters.PRICE_PER_SEAT, pricePerSeat);
+        }
+        return flightInfoFromRequest;
     }
 }
