@@ -186,6 +186,10 @@ public class RequestParameterIdentifier {
         String luggageType = request.getParameter(Parameters.LUGGAGE_TYPE_TO_UPDATE);
         if (luggageType != null && !luggageType.isEmpty()) {
             luggage.setLuggageType(luggageType);
+        } else {
+            luggageType = String.valueOf(request.getSession().getAttribute(Parameters.LUGGAGE_TYPE_TO_UPDATE));
+            luggage.setLuggageType(luggageType);
+            request.getSession().removeAttribute(Parameters.LUGGAGE_TYPE_TO_UPDATE);
         }
         return luggage;
     }

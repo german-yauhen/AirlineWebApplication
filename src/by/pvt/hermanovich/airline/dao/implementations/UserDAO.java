@@ -1,6 +1,7 @@
 package by.pvt.hermanovich.airline.dao.implementations;
 
 import by.pvt.hermanovich.airline.constants.MessageConstants;
+import by.pvt.hermanovich.airline.constants.Parameters;
 import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplUserDAO;
 import by.pvt.hermanovich.airline.entities.User;
@@ -59,9 +60,8 @@ public class UserDAO implements ImplUserDAO {
             statement.setString(5, user.getPassword());
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the request to add the user.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -91,9 +91,8 @@ public class UserDAO implements ImplUserDAO {
                 isLogined = true;
             }
         } catch (SQLException e) {
-            String message = "The record in the database was not found.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -121,9 +120,8 @@ public class UserDAO implements ImplUserDAO {
             statement.setInt(7, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the query to update the user.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -143,9 +141,8 @@ public class UserDAO implements ImplUserDAO {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the query to deleteById the user from database.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -171,9 +168,8 @@ public class UserDAO implements ImplUserDAO {
                 createUser(resultSet, user);
             }
         } catch (SQLException e) {
-            String message = "The record in the database was not found.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -201,9 +197,8 @@ public class UserDAO implements ImplUserDAO {
                 createUser(resultSet, user);
             }
         } catch (SQLException e) {
-            String message = "The record in the database was not found.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -227,12 +222,10 @@ public class UserDAO implements ImplUserDAO {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 users.add(createUser(resultSet, new User()));
-//                logger.info(users.get((users.size()-1)));
             }
         } catch (SQLException e) {
-            String message = "There are no records in the users database table or one particular record in the database was not found.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -250,16 +243,18 @@ public class UserDAO implements ImplUserDAO {
      * @throws SQLException
      */
     private User createUser(ResultSet resultSet, User user) throws SQLException {
-        user.setId(resultSet.getInt("id"));
-        user.setFirstName(resultSet.getString("firstname"));
-        user.setSurname(resultSet.getString("surname"));
-        user.setDocumentNumber(resultSet.getString("document_number"));
-        user.setLogin(resultSet.getString("login"));
-        user.setPassword(resultSet.getString("password"));
-        switch (resultSet.getString("user_type")) {
-            case "client": user.setUserType(UserType.CLIENT);
+        user.setId(resultSet.getInt(Parameters.ID));
+        user.setFirstName(resultSet.getString(Parameters.FIRST_NAME));
+        user.setSurname(resultSet.getString(Parameters.SURNAME));
+        user.setDocumentNumber(resultSet.getString(Parameters.DOCUMENT_NUMBER));
+        user.setLogin(resultSet.getString(Parameters.LOGIN));
+        user.setPassword(resultSet.getString(Parameters.PASSWORD));
+        switch (resultSet.getString(Parameters.USER_TYPE)) {
+            case Parameters.CLIENT:
+                user.setUserType(UserType.CLIENT);
                 break;
-            case "admin": user.setUserType(UserType.ADMIN);
+            case Parameters.ADMIN:
+                user.setUserType(UserType.ADMIN);
                 break;
         }
         return user;

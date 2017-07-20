@@ -87,6 +87,7 @@
                                             <option selected="selected" disabled>Choose Type</option>
                                             <spec:forEach var="luggage" items="${allLuggageTypes}">
                                                 <option value="${luggage.getLuggageType()}">${luggage.getLuggageType()}</option>
+                                                <spec:set var="luggageTypeToUpdate" value="${luggage.getLuggageType()}" scope="session"/>
                                             </spec:forEach>
                                         </select>
                                     </td>
@@ -99,7 +100,7 @@
                             <div class="wrapperButtons">
                                 <input class="buttonElement" type="submit" value="Update"/>
                                 <input class="buttonElement" type="reset" value="Reset"/>
-                                <input type="button" value="Delete" onclick='location.href="controller?command=deleteluggage"'/>
+                                <input class="buttonElement" type="button" value="Delete" onclick='location.href="controller?command=deleteluggage"'/>
                             </div>
                         </fieldset>
                         <!--2-->
