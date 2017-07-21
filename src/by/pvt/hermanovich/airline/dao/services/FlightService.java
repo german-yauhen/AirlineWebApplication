@@ -12,7 +12,9 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Description: This class describes actions on the flight object.
@@ -104,5 +106,122 @@ public class FlightService {
             throw new SQLException(MessageConstants.DATABASE_ACCESS_ERROR, e);
         }
         return  flight;
+    }
+
+    /**
+     * This method identifies a search context. The method determines the context according to the
+     * parameters in the <i>searchConditions</i> map with corresponding values. The search context has
+     * three search options following bellow:
+     *          - the <i>searchConditions</i> has departure, arrival and date keys;
+     *          - the <i>searchConditions</i> has departure and arrival keys;
+     *          - the <i>searchConditions</i> has departure and date keys.
+     * Each option means calling to the corresponding method of the flight service module
+     *
+     * @return                      - a result list of flights.
+     * @param searchConditions      - the <i>searchConditions</i> map with corresponding values.
+     */
+    public List<Flight> identifySearchContext(HashMap<String, String> searchConditions) throws SQLException {
+        List<Flight> flightsFromDB = null;
+        try {
+            if (searchConditions.containsKey(Parameters.DEPARTURE_FOR_FLIGHT)
+                    && searchConditions.containsKey(Parameters.ARRIVAL_FOR_FLIGHT)
+                    && searchConditions.containsKey(Parameters.DATE_OF_FLIGHT)) {
+                flightsFromDB = getFlightsByDepArrDateFromDB(searchConditions);
+            } else if (searchConditions.containsKey(Parameters.DEPARTURE_FOR_FLIGHT)
+                    && searchConditions.containsKey(Parameters.ARRIVAL_FOR_FLIGHT)) {
+//                flightsFromDB = getFlightsByDepArrFromDB(searchConditions);
+            } else if (searchConditions.containsKey(Parameters.DEPARTURE_FOR_FLIGHT)
+                    && searchConditions.containsKey(Parameters.ARRIVAL_FOR_FLIGHT)) {
+//                flightsFromDB = getFlightsByDepDateFromDB(searchConditions);
+            }
+        } catch (SQLException e) {
+            logger.error(MessageConstants.DATABASE_ACCESS_ERROR);
+            throw new SQLException(MessageConstants.DATABASE_ACCESS_ERROR, e);
+        }
+        return flightsFromDB;
+    }
+
+    /**
+     * This method describes actions to find the flights by the departure airport and the date of the flight.
+     *
+     * @param flightsFromDB         - incoming empty list of flights that will be filled.
+     * @param searchConditions      - the <i>searchConditions</i> map with corresponding values.
+     * @return                      - a result list of flights.
+     * @throws SQLException
+     */
+    private List<Flight> getFlightsByDepDateFromDB(List<Flight> flightsFromDB, HashMap<String, String> searchConditions) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+//            flightsFromDB = FlightDAO.getInstance().getFlightsByDepDate(searchConditions, connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return flightsFromDB;
+    }
+
+    /**
+     * This method describes actions to find the flights by the departure airport, arrival airport of the flight.
+     *
+     * @param flightsFromDB         - incoming empty list of flights that will be filled.
+     * @param searchConditions      - the <i>searchConditions</i> map with corresponding values.
+     * @return                      - a result list of flights.
+     * @throws SQLException
+     */
+    private List<Flight> getFlightsByDepArrFromDB(List<Flight> flightsFromDB, HashMap<String, String> searchConditions) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+//            flightsFromDB = FlightDAO.getInstance().getFlightsByDepArr(searchConditions, connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return flightsFromDB;
+    }
+
+    /**
+     * This method describes actions to find the flights by the departure airport, arrival airport and the date of the flight.
+     *
+     * @param searchConditions      - the <i>searchConditions</i> map with corresponding values.
+     * @return                      - a result list of flights.
+     * @throws SQLException
+     */
+    private List<Flight> getFlightsByDepArrDateFromDB(HashMap<String, String> searchConditions) throws SQLException {
+        List<Flight> flightsFromDB = null;
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            Airport depAirportForSearch = AirportService.getInstance().getAirportFromDB(searchConditions.get(Parameters.DEPARTURE_FOR_FLIGHT));
+            Airport arrAirportForSearch = AirportService.getInstance().getAirportFromDB(searchConditions.get(Parameters.ARRIVAL_FOR_FLIGHT));
+            Date dateForSearch = Date.valueOf(searchConditions.get(Parameters.DATE_OF_FLIGHT));
+            flightsFromDB = FlightDAO.getInstance().getFlightsByDepArrDate(depAirportForSearch, arrAirportForSearch, dateForSearch, connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return flightsFromDB;
     }
 }

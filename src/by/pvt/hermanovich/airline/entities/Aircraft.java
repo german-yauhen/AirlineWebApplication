@@ -54,9 +54,6 @@ public class Aircraft extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Aircraft{" +
-                "aircraftCode='" + aircraftCode + '\'' +
-                ", model='" + model + '\'' +
-                '}';
+        return model + " [" + aircraftCode + "]";
     }
 }

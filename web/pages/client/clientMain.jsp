@@ -4,7 +4,9 @@
 <html>
     <head>
         <title>Clients account page</title>
-        <link rel="stylesheet" type="text/css" href="/css/clientMain.css" />
+        <link rel="stylesheet" type="text/css" href="/css/clientMain.css"/>
+        <link rel="stylesheet" type="text/css" href="/css/tcal.css"/>
+        <script type="text/javascript" src="/js/tcal_en.js"></script>
     </head>
     <body>
         <div class="wrapperWelcomeInfo">
@@ -49,6 +51,55 @@
                     </div>
                 </form>
             </div>
+            <div class="flightsFindForm">
+                <form name="flightsFindForm" method="POST" action="controller">
+                    <fieldset>
+                        <legend align="left">Find Flights</legend>
+                        <input type="hidden" name="command" value="showflights"/>
+                        <div class="flightInfoForm">
+                            <table>
+                                <tr>
+                                    <th>Departure</th>
+                                    <th>Arrival</th>
+                                    <th>Date</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name="departureForFlight">
+                                            <option selected="selected" disabled>Choose airport</option>
+                                            <spec:forEach var="airport" items="${allAirports}">
+                                                <option value="${airport.getAirportCode()}">[${airport.getAirportCode().toUpperCase()}]-[${airport.getCity().toUpperCase()}]</option>
+                                            </spec:forEach>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="arrivalForFlight">
+                                            <option selected="selected" disabled>Choose airport</option>
+                                            <spec:forEach var="airport" items="${allAirports}">
+                                                <option value="${airport.getAirportCode()}">[${airport.getAirportCode().toUpperCase()}]-[${airport.getCity().toUpperCase()}]</option>
+                                            </spec:forEach>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <!--CALENDAR-->
+                                        <form action="#">
+                                            <div><input class="tcal" type="text" name="dateForFlight" value=""/></div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="wrapperButtonsSearchFlight">
+                            <input class="buttonElement" type="submit" value="Search"/>
+                            <input class="buttonElement" type="reset" value="Reset"/>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+
+
+
             <div class="luggageForm">
                 <form name="updateLuggage" method="POST" action="controller">
                     <fieldset>

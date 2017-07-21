@@ -195,12 +195,12 @@ public class UserService {
         session.setAttribute(Parameters.USER_TYPE, String.valueOf(user.getUserType()));
         List<Luggage> allLuggageTypes = ShowAllLuggageCommand.getAllLuggage();
         session.setAttribute(Parameters.ALL_LUGGAGE_TYPES, allLuggageTypes);
+        List<Airport> airportList = ShowAllAirportsCommand.getAllAirports();
+        session.setAttribute(Parameters.ALL_AIRPORTS, airportList);
         switch (user.getUserType()) {
             case CLIENT:
                 break;
             case ADMIN:
-                List<Airport> airportList = ShowAllAirportsCommand.getAllAirports();
-                session.setAttribute(Parameters.ALL_AIRPORTS, airportList);
                 List<Aircraft> aircraftList = ShowAllAircraftsCommand.getAllAircrafts();
                 session.setAttribute(Parameters.ALL_AIRCRAFTS, aircraftList);
                 break;

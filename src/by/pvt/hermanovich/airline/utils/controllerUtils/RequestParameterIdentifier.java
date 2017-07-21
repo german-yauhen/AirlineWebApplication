@@ -277,6 +277,15 @@ public class RequestParameterIdentifier {
             flightInfoFromRequest.put(Parameters.DATE_OF_FLIGHT, dateForFlight);
             flightInfoFromRequest.put(Parameters.PRICE_PER_SEAT, pricePerSeat);
         }
+        if (departureForFlight != null && !departureForFlight.isEmpty()) {
+            flightInfoFromRequest.put(Parameters.DEPARTURE_FOR_FLIGHT, departureForFlight);
+        }
+        if (arrivalForFlight != null && !arrivalForFlight.isEmpty()) {
+            flightInfoFromRequest.put(Parameters.ARRIVAL_FOR_FLIGHT, arrivalForFlight);
+        }
+        if (dateForFlight != null && !dateForFlight.isEmpty()) {
+            flightInfoFromRequest.put(Parameters.DATE_OF_FLIGHT, dateForFlight);
+        }
         return flightInfoFromRequest;
     }
 }

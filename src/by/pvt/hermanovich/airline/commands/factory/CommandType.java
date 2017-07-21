@@ -5,9 +5,11 @@ import by.pvt.hermanovich.airline.commands.implementations.*;
 import by.pvt.hermanovich.airline.commands.implementations.aircraft.CreateAircraftCommand;
 import by.pvt.hermanovich.airline.commands.implementations.airport.CreateAirportCommand;
 import by.pvt.hermanovich.airline.commands.implementations.flight.CreateFlightCommand;
+import by.pvt.hermanovich.airline.commands.implementations.flight.ShowFlightsCommand;
 import by.pvt.hermanovich.airline.commands.implementations.luggage.CreateLuggageCommand;
 import by.pvt.hermanovich.airline.commands.implementations.luggage.DeleteLuggageCommand;
 import by.pvt.hermanovich.airline.commands.implementations.luggage.UpdateLuggageCommand;
+import by.pvt.hermanovich.airline.commands.implementations.ticket.CreateTicketCommand;
 import by.pvt.hermanovich.airline.commands.implementations.user.*;
 
 /**
@@ -30,7 +32,7 @@ public enum CommandType {
     CREATEAIRCRAFT,
 
     /*CREATEFLIGHT*/
-    CREATEFLIGHT, SHOWALLFLIGHTS,
+    CREATEFLIGHT, SHOWFLIGHTS,
 
     /**/
     CREATETICKET, SHOWUSERSTICKETS, RETURNTICKET
@@ -62,6 +64,15 @@ public enum CommandType {
                 return new CreateAircraftCommand();
             case CREATEFLIGHT:
                 return new CreateFlightCommand();
+            case SHOWFLIGHTS:
+                return new ShowFlightsCommand();
+
+
+
+            case CREATETICKET:
+                return new CreateTicketCommand();
+
+
 
 
             case DEFAULT:

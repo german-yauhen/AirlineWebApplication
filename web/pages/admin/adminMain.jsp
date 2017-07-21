@@ -7,7 +7,6 @@
         <link rel="stylesheet" type="text/css" href="/css/tcal.css"/>
         <link rel="stylesheet" type="text/css" href="/css/adminMain.css"/>
         <script type="text/javascript" src="/js/tcal_en.js"></script>
-
     </head>
     <body>
         <div class="wrapperWelcomeInfo">

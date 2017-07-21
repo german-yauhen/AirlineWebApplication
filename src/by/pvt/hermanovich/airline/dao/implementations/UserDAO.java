@@ -246,10 +246,10 @@ public class UserDAO implements ImplUserDAO {
         user.setId(resultSet.getInt(Parameters.ID));
         user.setFirstName(resultSet.getString(Parameters.FIRST_NAME));
         user.setSurname(resultSet.getString(Parameters.SURNAME));
-        user.setDocumentNumber(resultSet.getString(Parameters.DOCUMENT_NUMBER));
+        user.setDocumentNumber(resultSet.getString(Parameters.DOCUMENT_NUMBER_DB));
         user.setLogin(resultSet.getString(Parameters.LOGIN));
         user.setPassword(resultSet.getString(Parameters.PASSWORD));
-        switch (resultSet.getString(Parameters.USER_TYPE)) {
+        switch (resultSet.getString(Parameters.USER_TYPE_DB)) {
             case Parameters.CLIENT:
                 user.setUserType(UserType.CLIENT);
                 break;

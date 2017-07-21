@@ -65,10 +65,6 @@ public class Luggage extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Luggage{" +
-                "id=" + id +
-                ", luggageType='" + luggageType + '\'' +
-                ", price=" + price +
-                '}';
+        return luggageType;
     }
 }

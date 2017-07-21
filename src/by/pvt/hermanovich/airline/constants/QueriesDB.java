@@ -39,6 +39,11 @@ public class QueriesDB {
     public static final String ADD_FLIGHT = "INSERT INTO flights (aircrafts_aircraft_code, flight_number, departure_airport" +
                                             ", arrival_airport, sheduled_departure_date, sheduled_arrival_date, price_per_seat)" +
                                             "VALUES(?, ?, ?, ?, ?, ?, ?)";
+    public static final String GET_FLIGHTS_BY_DEP_ARR_DATE = "SELECT * FROM flights WHERE departure_airport = ? AND arrival_airport = ? AND sheduled_departure_date = ?";
+
+
+
+    /*Queries to work with tickets database table.*/
 //    public static final String ADD_TICKET = "INSERT INTO tickets (ticket_number, users_id, flights_id, luggage_id, total_price)" +
 //            "VALUES(?, ?, ?, ?, SELECT airline.flights.price_per_seat + airline.luggage.price AS total_price" +
 //            "FROM airline.flights, airline.luggage WHERE airline.flights.id=? AND airline.luggage.id=?)";

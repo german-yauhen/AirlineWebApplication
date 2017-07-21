@@ -25,10 +25,13 @@ public class BackCommand implements BasicCommand {
     public String execute(HttpServletRequest request) {
         String pageFromRequest = RequestParameterIdentifier.getPageFromRequest(request);
         String page = null;
-        if ( pageFromRequest != null && pageFromRequest.equals(Parameters.LOGIN) ) {
-            return page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.LOGIN_PAGE_PATH);
-        } else {
-            return page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.CLIENT_PAGE_PATH);
+        if (pageFromRequest != null && pageFromRequest.equals(Parameters.LOGIN)) {
+            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.LOGIN_PAGE_PATH);
+        } else if (pageFromRequest != null && pageFromRequest.equals(Parameters.CLIENT)){
+            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.CLIENT_PAGE_PATH);
+        } else if (pageFromRequest != null && pageFromRequest.equals(Parameters.ADMIN)) {
+            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ADMIN_PAGE_PATH);
         }
+        return page;
     }
 }

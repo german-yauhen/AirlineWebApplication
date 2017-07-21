@@ -65,10 +65,6 @@ public class Airport extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Airport{" +
-                "airportCode='" + airportCode + '\'' +
-                ", airportName='" + airportName + '\'' +
-                ", city='" + city + '\'' +
-                '}';
+        return city + "[" + airportCode + "]";
     }
 }

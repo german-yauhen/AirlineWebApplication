@@ -13,7 +13,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -69,25 +69,28 @@ public class RunnerForTesting {
 //                AircraftDAO.getInstance().update(aircraftNew, connection);
 //                AircraftDAO.getInstance().getAll(connection);
 //                AircraftDAO.getInstance().deleteAircraftByCode("NEW-AIR", connection);
-                Aircraft aircraft = new Aircraft("HA-LWY", "Airbus 320-200");
-                String flightNumber = "FR1441";
-                Airport departureAirport = new Airport("BRE", "OTSUDA", "OTSUDACITY");
-                Airport arrivalAirport = new Airport("WMI", "TUDA", "TUDACITY");
-                float pricePerSeat = (float) 31.5;
+//                Aircraft aircraft = new Aircraft("HA-LWY", "Airbus 320-200");
+//                String flightNumber = "FR1441";
+//                Airport departureAirport = new Airport("BRE", "OTSUDA", "OTSUDACITY");
+//                Airport arrivalAirport = new Airport("WMI", "TUDA", "TUDACITY");
+//                float pricePerSeat = (float) 31.5;
+//                String dateString = "2018-01-01";
+//
+//                Flight flight = new Flight();
+//                flight.setFlightNumber(flightNumber);
+//                flight.setAircraft(aircraft);
+//                flight.setDepartureAirport(departureAirport);
+//                flight.setArrivalAirport(arrivalAirport);
+//                flight.setSheduledDeparture(java.sql.Date.valueOf(dateString));
+//                flight.setSheduledArrival(java.sql.Date.valueOf(dateString));
+//                flight.setPricePerSeat(pricePerSeat);
+//                FlightDAO.getInstance().add(flight, connection);
                 String dateString = "2018-01-01";
-
-                Flight flight = new Flight();
-                flight.setFlightNumber(flightNumber);
-                flight.setAircraft(aircraft);
-                flight.setDepartureAirport(departureAirport);
-                flight.setArrivalAirport(arrivalAirport);
-                flight.setSheduledDeparture(java.sql.Date.valueOf(dateString));
-                flight.setSheduledArrival(java.sql.Date.valueOf(dateString));
-                flight.setPricePerSeat(pricePerSeat);
-                FlightDAO.getInstance().add(flight, connection);
+                Date date = Date.valueOf(dateString);
+                System.out.println(String.valueOf(date));
                 logger.info("DONE!");
-            } catch (DAOException daoException) {
-                logger.error(daoException);
+            } catch (Exception e) {
+                logger.error(e);
             }
         } catch (SQLException e) {
             logger.error(e);

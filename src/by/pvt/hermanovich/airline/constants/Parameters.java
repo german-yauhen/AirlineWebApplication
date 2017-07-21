@@ -52,4 +52,10 @@ public class Parameters {
     public static final String PRICE_PER_SEAT = "pricePerSeat";
     public static final String FLIGHT_REGISTER_SUCCESS = "flightRegisterSuccess";
     public static final String LUGGAGE_UNIQUE_ERROR = "luggageUniqueError";
+    public static final String FLIGHT_NUMBER_DB = "flight_number";
+    public static final String PRICE_PER_SEAT_DB = "price_per_seat";
+    public static final String AIRCRAFTS_AIRCRAFT_CODE_DB = "aircrafts_aircraft_code";
+    public static final String USER_TYPE_DB = "user_type";
+    public static final String DOCUMENT_NUMBER_DB = "document_number";
+    public static final String FLIGHTS_LIST = "flightsList";
 }
