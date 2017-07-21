@@ -131,6 +131,6 @@ public class Flight extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Route " + flightNumber + " [" + departureAirport + " == " + arrivalAirport + "] " + String.valueOf(sheduledDeparture) + "***" + pricePerSeat + "\\u20ac";
+        return "Route " + flightNumber + " [" + departureAirport + " == " + arrivalAirport + "] " + String.valueOf(sheduledDeparture) + "***" + pricePerSeat;
     }
 }

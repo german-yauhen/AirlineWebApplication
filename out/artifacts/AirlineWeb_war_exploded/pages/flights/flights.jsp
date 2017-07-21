@@ -9,7 +9,7 @@
     <body>
         <div class="wrapperPageData">
             <div class="resultFlightForm">
-                <form name="airportList" style="width: 250px;">
+                <form name="flightSearchResults">
                     <fieldset>
                         <legend align="left">Search Results</legend>
                         <input type="hidden" name="command" value="createticket"/>
@@ -17,10 +17,12 @@
                             <table>
                                 <spec:forEach var="flight" items="${flightsList}">
                                     <tr>
-                                        <td>
-                                        [${flight.getFlightNumber()}]***[${flight.getDepartureAirport()}]***[${flight.getArrivalAirport()}]***[${String.valueOf(flight.getSheduledDeparture())}]***[${flight.getPricePerSeat()}EUR]
-                                        <input type="radio" name="flightInfo" value="${flight.getId()}"/></br>
-                                        </td>
+                                        <td>${flight.getFlightNumber()}</td>
+                                        <td>${flight.getDepartureAirport()}</td>
+                                        <td>${flight.getArrivalAirport()}</td>
+                                        <td>${String.valueOf(flight.getSheduledDeparture())}</td>
+                                        <td>${flight.getPricePerSeat()}&#8364;</td>
+                                        <td><input type="radio" name="flightInfo" value="${flight.getId()}"/></td>
                                     </tr>
                                 </spec:forEach>
                             </table>

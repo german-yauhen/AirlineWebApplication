@@ -54,7 +54,11 @@ public class Parameters {
     public static final String LUGGAGE_UNIQUE_ERROR = "luggageUniqueError";
     public static final String FLIGHT_NUMBER_DB = "flight_number";
     public static final String PRICE_PER_SEAT_DB = "price_per_seat";
+    public static final String DEPARTURE_AIRPORT_DB = "departure_airport";
+    public static final String ARRIVAL_AIRPORT_DB = "arrival_airport";
     public static final String AIRCRAFTS_AIRCRAFT_CODE_DB = "aircrafts_aircraft_code";
+    public static final String SHEDULED_DEPARTURE_DB = "sheduled_departure_date";
+    public static final String SHEDULED_ARRIVAL_DB = "sheduled_arrival_date";
     public static final String USER_TYPE_DB = "user_type";
     public static final String DOCUMENT_NUMBER_DB = "document_number";
     public static final String FLIGHTS_LIST = "flightsList";

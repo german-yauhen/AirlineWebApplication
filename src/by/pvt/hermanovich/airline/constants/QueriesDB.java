@@ -40,7 +40,8 @@ public class QueriesDB {
                                             ", arrival_airport, sheduled_departure_date, sheduled_arrival_date, price_per_seat)" +
                                             "VALUES(?, ?, ?, ?, ?, ?, ?)";
     public static final String GET_FLIGHTS_BY_DEP_ARR_DATE = "SELECT * FROM flights WHERE departure_airport = ? AND arrival_airport = ? AND sheduled_departure_date = ?";
-
+    public static final String GET_FLIGHTS_BY_DEP_ARR = "SELECT * FROM flights WHERE departure_airport = ? AND arrival_airport = ?";
+    public static final String GET_FLIGHTS_BY_DEP_DATE = "SELECT * FROM flights WHERE departure_airport = ? AND sheduled_departure_date = ?";
 
 
     /*Queries to work with tickets database table.*/

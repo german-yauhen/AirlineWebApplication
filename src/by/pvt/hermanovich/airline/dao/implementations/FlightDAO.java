@@ -125,13 +125,8 @@ public class FlightDAO implements ImplFlightDAO {
                 flight.setSheduledArrival(dateForSearch);
                 flight.setAircraft(AircraftDAO.getInstance().getByCode(resultSet.getString(Parameters.AIRCRAFTS_AIRCRAFT_CODE_DB), connection));
                 flight.setPricePerSeat(resultSet.getFloat(Parameters.PRICE_PER_SEAT_DB));
-
-                logger.info(flight.toString());
-
                 flightsFromDB.add(flight);
             }
-            logger.info(flightsFromDB.get(0));
-            logger.info(flightsFromDB.get(1));
         } catch (SQLException e) {
             logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
             throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
@@ -153,7 +148,35 @@ public class FlightDAO implements ImplFlightDAO {
      */
     @Override
     public List<Flight> getFlightsByDepArr(Airport depAirportForSearch, Airport arrAirportForSearch, Connection connection) throws DAOException {
-        return null;
+        List<Flight> flightsFromDB = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_FLIGHTS_BY_DEP_ARR);
+            statement.setString(1, depAirportForSearch.getAirportCode());
+            statement.setString(2, arrAirportForSearch.getAirportCode());
+            resultSet = statement.executeQuery();
+            flightsFromDB = new ArrayList<Flight>();
+            while (resultSet.next()) {
+                Flight flight = new Flight();
+                flight.setId(resultSet.getInt(Parameters.ID));
+                flight.setFlightNumber(resultSet.getString(Parameters.FLIGHT_NUMBER_DB));
+                flight.setDepartureAirport(depAirportForSearch);
+                flight.setArrivalAirport(arrAirportForSearch);
+                flight.setSheduledDeparture(Date.valueOf(resultSet.getString(Parameters.SHEDULED_DEPARTURE_DB)));
+                flight.setSheduledArrival(Date.valueOf(resultSet.getString(Parameters.SHEDULED_ARRIVAL_DB)));
+                flight.setAircraft(AircraftDAO.getInstance().getByCode(resultSet.getString(Parameters.AIRCRAFTS_AIRCRAFT_CODE_DB), connection));
+                flight.setPricePerSeat(resultSet.getFloat(Parameters.PRICE_PER_SEAT_DB));
+                flightsFromDB.add(flight);
+            }
+        } catch (SQLException e) {
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return flightsFromDB;
     }
 
     /**
@@ -167,6 +190,34 @@ public class FlightDAO implements ImplFlightDAO {
      */
     @Override
     public List<Flight> getFlightsByDepDate(Airport depAirportForSearch, Date dateForSearch, Connection connection) throws DAOException {
-        return null;
+        List<Flight> flightsFromDB = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_FLIGHTS_BY_DEP_DATE);
+            statement.setString(1, depAirportForSearch.getAirportCode());
+            statement.setDate(2, dateForSearch);
+            resultSet = statement.executeQuery();
+            flightsFromDB = new ArrayList<Flight>();
+            while (resultSet.next()) {
+                Flight flight = new Flight();
+                flight.setId(resultSet.getInt(Parameters.ID));
+                flight.setFlightNumber(resultSet.getString(Parameters.FLIGHT_NUMBER_DB));
+                flight.setDepartureAirport(depAirportForSearch);
+                flight.setArrivalAirport(AirportDAO.getInstance().getByCode(resultSet.getString(Parameters.ARRIVAL_AIRPORT_DB), connection));
+                flight.setSheduledDeparture(dateForSearch);
+                flight.setSheduledArrival(dateForSearch);
+                flight.setAircraft(AircraftDAO.getInstance().getByCode(resultSet.getString(Parameters.AIRCRAFTS_AIRCRAFT_CODE_DB), connection));
+                flight.setPricePerSeat(resultSet.getFloat(Parameters.PRICE_PER_SEAT_DB));
+                flightsFromDB.add(flight);
+            }
+        } catch (SQLException e) {
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return flightsFromDB;
     }
 }
