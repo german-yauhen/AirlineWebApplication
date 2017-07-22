@@ -28,6 +28,16 @@
                             </table>
                         </div>
                         <div class="wrapperButtonsChooseFlight">
+                            <div class="buttonElement">
+                                <b><i>Choose Luggage: </i></b>
+                                <select name="luggageForBooking">
+                                    <spec:forEach var="luggage" items="${allLuggageTypes}">
+                                        <option value="${luggage.getLuggageType()}">
+                                                ${luggage.getLuggageType()} + ${luggage.getPrice()} &#8364;
+                                        </option>
+                                    </spec:forEach>
+                                </select>
+                            </div>
                             <input class="buttonElement" type="submit" value="Book Flight"/>
                             ${pageContext.session.setAttribute("backpage", "client")}
                             <input class="buttonElement" type="button" value="Back To Menu" onclick='location.href="controller?command=back"'/>

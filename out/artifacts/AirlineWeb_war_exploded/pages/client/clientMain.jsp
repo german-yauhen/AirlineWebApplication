@@ -96,38 +96,6 @@
                     </fieldset>
                 </form>
             </div>
-
-
-
-
-            <div class="luggageForm">
-                <form name="updateLuggage" method="POST" action="controller">
-                    <fieldset>
-                        <legend align="center">Update Luggage</legend>
-                        <input type="hidden" name="command" value="updateluggage"/>
-                        <table>
-                            <tr>
-                                <td>Type:</td>
-                                <td>
-                                    <select name="luggageTypeToUpdate">
-                                        <option selected="selected" disabled>Choose Type</option>
-                                        <spec:forEach var="luggage" items="${allLuggageTypes}">
-                                            <option value="${luggage.getLuggageType()}">${luggage.getLuggageType()}</option>
-                                        </spec:forEach>
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="wrapperButtons">
-                            <input class="buttonElement" type="submit" value="Update"/>
-                            <input class="buttonElement" type="reset" value="Reset"/>
-                            <input type="button" value="Delete" onclick='location.href="controller?command=deleteluggage"'/>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-
-
             <!--USER TYPE-->
             <div class="userTypeElement">
                 </br>${String.valueOf(user.getUserType())}

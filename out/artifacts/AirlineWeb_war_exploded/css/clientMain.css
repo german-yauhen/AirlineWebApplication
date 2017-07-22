@@ -30,6 +30,7 @@ select {
 }
 .buttonElement {
     display: inline-block;
+    margin-right: 10px;
 }
 .messageElement {
     color: firebrick;
