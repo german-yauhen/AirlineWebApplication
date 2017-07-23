@@ -1,7 +1,8 @@
 package by.pvt.hermanovich.airline.constants;
 
 /**
- * Description:
+ * Description: This class contains the sql-queries to the current database. The queries are formatted in constant view.
+ *
  * Created by Yauheni Hermanovich on 11.07.2017.
  */
 public class QueriesDB {
@@ -44,14 +45,12 @@ public class QueriesDB {
     public static final String GET_FLIGHTS_BY_DEP_ARR_DATE = "SELECT * FROM flights WHERE departure_airport = ? AND arrival_airport = ? AND sheduled_departure_date = ?";
     public static final String GET_FLIGHTS_BY_DEP_ARR = "SELECT * FROM flights WHERE departure_airport = ? AND arrival_airport = ?";
     public static final String GET_FLIGHTS_BY_DEP_DATE = "SELECT * FROM flights WHERE departure_airport = ? AND sheduled_departure_date = ?";
-
-
     /*Queries to work with tickets database table.*/
 //    public static final String ADD_TICKET = "INSERT INTO tickets (ticket_number, users_id, flights_id, luggage_id, total_price)" +
 //            "VALUES(?, ?, ?, ?, SELECT airline.flights.price_per_seat + airline.luggage.price AS total_price" +
 //            "FROM airline.flights, airline.luggage WHERE airline.flights.id=? AND airline.luggage.id=?)";
     public static final String ADD_TICKET = "INSERT INTO tickets (ticket_number, users_id, flights_id, luggage_id, total_price)" +
         "VALUES(?, ?, ?, ?, ?)";
-
-    public static final String GET_ALL_TICKETS = "";
+    public static final String GET_ALL_TICKETS = "SELECT * FROM tickets";
+    public static final String GET_TICKET_BY_NUMBER = "SELECT * FROM tickets WHERE ticket_number = ?";
 }

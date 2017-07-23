@@ -290,23 +290,22 @@ public class RequestParameterIdentifier {
 
     /**
      * This method fills a <i>map</i> of parameters of the flight with values from the request.
-     * The <i>map</i> is passed to the method as a parameter.
      *
-     * @param ticketParamMapFromRequest - an empty map of parameters that will be filled.
      * @param request                   - an object of request with necessary parameters.
      * @return                          - a map with parameters.
      */
-    public static HashMap<String,String> getTicketInfoFromRequest(HashMap<String, String> ticketParamMapFromRequest, HttpServletRequest request) {
+    public static HashMap<String,String> getTicketInfoFromRequest(HttpServletRequest request) {
+        HashMap<String, String> ticketInfoMap = new HashMap<>();
         String userLogin = request.getParameter(Parameters.LOGIN);
         String flightId = request.getParameter(Parameters.FLIGHT_ID);
-        String luggageId = request.getParameter(Parameters.LUGGAGE_FOR_BOOKING);
+        String luggageId = request.getParameter(Parameters.LUGGAGE_ID);
         if (userLogin != null && !userLogin.isEmpty()
                 && flightId != null && !flightId.isEmpty()
                 && luggageId != null && !luggageId.isEmpty()) {
-            ticketParamMapFromRequest.put(Parameters.LOGIN, userLogin);
-            ticketParamMapFromRequest.put(Parameters.FLIGHT_ID, flightId);
-            ticketParamMapFromRequest.put(Parameters.LUGGAGE_ID, luggageId);
+            ticketInfoMap.put(Parameters.LOGIN, userLogin);
+            ticketInfoMap.put(Parameters.FLIGHT_ID, flightId);
+            ticketInfoMap.put(Parameters.LUGGAGE_ID, luggageId);
         }
-        return ticketParamMapFromRequest;
+        return ticketInfoMap;
     }
 }

@@ -62,3 +62,8 @@ legend {
 .welcomeElement {
     font-size: 18px;
 }
+.userTypeElement {
+    position: fixed;
+    left: 10px; bottom: 5px;
+    color: firebrick;
+}

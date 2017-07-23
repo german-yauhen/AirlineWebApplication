@@ -44,7 +44,7 @@
                             <div class="buttonElement">
                                 <input type="hidden" name="login" value="${user.getLogin()}"/>
                                 <b><i>Choose Luggage: </i></b>
-                                <select name="luggageForBooking">
+                                <select name="luggageId">
                                     <spec:forEach var="luggage" items="${allLuggageTypes}">
                                         <option value="${luggage.getId()}">
                                                 ${luggage.getLuggageType()} + ${luggage.getPrice()} &#8364;
@@ -59,6 +59,13 @@
                         </div>
                     </fieldset>
                 </form>
+            </div>
+            <!--USER TYPE-->
+            <div class="userTypeElement">
+                </br>${String.valueOf(user.getUserType())}
+                <spec:if test="${sessionScope.ticketBookingSuccess eq 'true'}">
+                    <i> : MESSAGE : Ticket has been booked successful.</i>
+                </spec:if>
             </div>
         </div>
         <!--LOGOUT-->

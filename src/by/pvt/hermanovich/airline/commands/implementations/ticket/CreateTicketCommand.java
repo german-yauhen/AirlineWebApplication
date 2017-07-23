@@ -1,8 +1,12 @@
 package by.pvt.hermanovich.airline.commands.implementations.ticket;
 
 import by.pvt.hermanovich.airline.commands.BasicCommand;
+import by.pvt.hermanovich.airline.constants.MessageConstants;
+import by.pvt.hermanovich.airline.constants.Parameters;
+import by.pvt.hermanovich.airline.constants.PathPageConstants;
 import by.pvt.hermanovich.airline.dao.services.TicketService;
 import by.pvt.hermanovich.airline.entities.Ticket;
+import by.pvt.hermanovich.airline.managers.ConfigManagerPages;
 import by.pvt.hermanovich.airline.utils.controllerUtils.RequestParameterIdentifier;
 import org.apache.log4j.Logger;
 
@@ -27,14 +31,16 @@ public class CreateTicketCommand implements BasicCommand {
     @Override
     public String execute(HttpServletRequest request) {
         String page = null;
-        Ticket ticket = null;
-        HashMap<String, String> ticketInfoMap = new HashMap<>();
-        // TODO: 23.07.2017 REFACTORING: map with Integer keys; {user.getId()} put in the jsp and in the request
-        ticketInfoMap = RequestParameterIdentifier.getTicketInfoFromRequest(ticketInfoMap, request);
+        HashMap<String, String> ticketInfoMap = RequestParameterIdentifier.getTicketInfoFromRequest(request);
         try {
-            ticket = TicketService.getInstance().createTicketFromInfoMap(ticketInfoMap);
+            Ticket ticket = TicketService.getInstance().createTicket(ticketInfoMap);
+            TicketService.getInstance().addTicketToDB(ticket);
+            request.getSession().setAttribute(Parameters.TICKET_BOOKING_SUCCESS, Parameters.TRUE);
+            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.FLIGHTS_PAGE_PATH);
         } catch (SQLException e) {
-
+            page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ERROR_PAGE_PATH);
+            request.setAttribute(Parameters.ERROR_DATABASE, MessageConstants.DATABASE_ACCESS_ERROR);
+            logger.error(MessageConstants.DATABASE_ACCESS_ERROR);
         }
         return page;
     }

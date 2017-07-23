@@ -35,8 +35,7 @@ public class ShowFlightsCommand implements BasicCommand {
     public String execute(HttpServletRequest request) {
         String page = null;
         List<Flight> flightsList = null;
-        HashMap<String, String> searchConditions = new HashMap<>();
-        searchConditions = RequestParameterIdentifier.getFlightInfoFromRequest(searchConditions, request);
+        HashMap<String, String> searchConditions = RequestParameterIdentifier.getFlightInfoFromRequest(request);
         try {
             flightsList = FlightService.getInstance().identifySearchContext(searchConditions);
             request.getSession().setAttribute(Parameters.FLIGHTS_LIST, flightsList);

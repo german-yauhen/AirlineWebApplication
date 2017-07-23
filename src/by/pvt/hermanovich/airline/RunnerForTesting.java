@@ -2,6 +2,7 @@ package by.pvt.hermanovich.airline;
 
 import by.pvt.hermanovich.airline.dao.implementations.AircraftDAO;
 import by.pvt.hermanovich.airline.dao.implementations.FlightDAO;
+import by.pvt.hermanovich.airline.dao.services.TicketNumberGenerator;
 import by.pvt.hermanovich.airline.entities.Aircraft;
 import by.pvt.hermanovich.airline.entities.Airport;
 import by.pvt.hermanovich.airline.entities.Flight;
@@ -85,9 +86,15 @@ public class RunnerForTesting {
 //                flight.setSheduledArrival(java.sql.Date.valueOf(dateString));
 //                flight.setPricePerSeat(pricePerSeat);
 //                FlightDAO.getInstance().add(flight, connection);
-                String dateString = "2018-01-01";
-                Date date = Date.valueOf(dateString);
-                System.out.println(String.valueOf(date));
+//                String dateString = "2018-01-01";
+//                Date date = Date.valueOf(dateString);
+//                System.out.println(String.valueOf(date));
+                String number = null;
+                number = TicketNumberGenerator.getInstance().generateTicketNumber();
+                System.out.println(number);
+//                for (int i=0; i<10; i++) {
+//                    System.out.println(TicketNumberGenerator.getInstance().generateTicketNumber());
+//                }
                 logger.info("DONE!");
             } catch (Exception e) {
                 logger.error(e);

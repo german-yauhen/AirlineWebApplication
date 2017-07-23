@@ -55,7 +55,7 @@ public class Parameters {
     public static final String LUGGAGE_UNIQUE_ERROR = "luggageUniqueError";
     public static final String FLIGHTS_LIST = "flightsList";
     public static final String USER_ID = "userId";
-    public static final String FLIGHT_ID = "flghtId";
+    public static final String FLIGHT_ID = "flightId";
     public static final String LUGGAGE_ID = "luggageId";
 
 
@@ -76,4 +76,6 @@ public class Parameters {
     public static final String LUGGAGE_ID_DB = "luggage_id";
     public static final String LUGGAGE_TYPE_DB = "luggage_type";
     public static final String PRICE_DB = "price";
+    public static final String TICKET = "ticket";
+    public static final String TICKET_BOOKING_SUCCESS = "ticketBookingSuccess";
 }

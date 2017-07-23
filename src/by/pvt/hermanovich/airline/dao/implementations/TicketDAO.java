@@ -55,11 +55,12 @@ public class TicketDAO implements ImplTicketDAO {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(QueriesDB.ADD_TICKET);
-            statement.setString(1, ticket.getTicketNumber());
+            statement.setString(1, ticket.getTicketNumber().toUpperCase());
             statement.setInt(2, ticket.getUser().getId());
             statement.setInt(3, ticket.getFlight().getId());
             statement.setInt(4, ticket.getLuggage().getId());
-            statement.setFloat(5, (ticket.getFlight().getPricePerSeat() + ticket.getLuggage().getPrice()));
+//            statement.setFloat(5, (ticket.getFlight().getPricePerSeat() + ticket.getLuggage().getPrice()));
+            statement.setFloat(5, ticket.getTotalPrice());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(MessageConstants.EXECUTE_QUERY_ERROR);
@@ -98,14 +99,47 @@ public class TicketDAO implements ImplTicketDAO {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
         }
         return ticketsList;
     }
 
-    public Ticket createTicket(ResultSet resultSet, Connection connection) throws DAOException {
+    public Ticket createTicketFromDB(ResultSet resultSet, Connection connection) throws DAOException {
         Ticket ticket = new Ticket();
         // TODO: 21.07.2017 Build ticket logic
         return ticket;
+    }
+
+    /**
+     * This method checks the uniqueness of the ticket number.
+     *
+     * @param number        - a ticket number that will be processed.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return              - a boolean value of the condition.
+     * @throws DAOException
+     */
+    public boolean checkUniqueNumber(String number, Connection connection) throws DAOException {
+        boolean isUnique = true;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_TICKET_BY_NUMBER);
+            statement.setString(1, number);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                isUnique = false;
+            }
+        } catch (SQLException e) {
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return isUnique;
     }
 }

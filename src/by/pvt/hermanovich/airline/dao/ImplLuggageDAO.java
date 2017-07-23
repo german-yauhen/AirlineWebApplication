@@ -23,6 +23,15 @@ public interface ImplLuggageDAO extends AbstractDAO<Luggage> {
     Luggage getByType(String luggageType, Connection connection) throws DAOException;
 
     /**
+     * This method reads data from <i>luggage</i> database table, creates and returns Luggage object according to the entered id.
+     *
+     * @param id                - entered <i>id</i> of luggage type.
+     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return                  - Luggage object.
+     */
+    Luggage getById(int id, Connection connection) throws DAOException;
+
+    /**
      * This method deletes an existing record (row) in a database table.
      *
      * @param id            - entered <i>id</i>.
@@ -38,7 +47,6 @@ public interface ImplLuggageDAO extends AbstractDAO<Luggage> {
      * @return              - boolean value of the condition:
      *                          returns "false" if the incoming data correspond to the record of the database table;
      *                          returns "true" if the incoming data do not correspond to the record of the database table.
-     * @throws DAOException
      */
     boolean checkUniqueLuggage(String luggageType, Connection connection) throws DAOException;
 }

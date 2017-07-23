@@ -73,7 +73,7 @@ public class FlightService {
      * This method receives a new entity of flight from database using the id. The workflow of this method
      * consists of the following steps:
      *          - the method invokes a DAO method and receives a map with parameters that are returned from database table;
-     *          - the method invokes method <i>createFlightFromMap(...map)</i> and receives an entity of flight.
+     *          - the method invokes method <i>buildFlightFromMap(...map)</i> and receives an entity of flight.
      *
      * @param id            - flight id;
      * @return              - an entity of flight.
@@ -88,8 +88,8 @@ public class FlightService {
             HashMap<String, String> flightInfoMap = FlightDAO.getInstance().getFlightInfoById(id, connection);
             connection.commit();
             logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
-            flight = createFlightFromMap(flightInfoMap);
-            flight.setId(Integer.parseInt(flightInfoMap.get(Parameters.ID)));
+            flight = buildFlightFromMap(flightInfoMap);
+            flight.setId(Integer.parseInt(flightInfoMap.get(Parameters.FLIGHT_ID)));
         } catch (SQLException | DAOException e) {
             if (connection != null) {
                 connection.rollback();
@@ -110,27 +110,24 @@ public class FlightService {
      *      - AirportService
      *      - AirportService
      *
-     * @param flightParamMapFromRequest     - a map with parameters.
+     * @param flightInfoMap     - a map with parameters.
      * @return                              - an entity of flight.
      * @throws SQLException
      */
-    public Flight createFlightFromMap(HashMap<String, String> flightParamMapFromRequest) throws SQLException {
+    public Flight buildFlightFromMap(HashMap<String, String> flightInfoMap) throws SQLException {
         Flight flight = new Flight();
-        Aircraft aircraftForFlight = null;
-        Airport departureForFlight = null;
-        Airport arrivalForFlight = null;
         try {
-            aircraftForFlight =  AircraftService.getInstance().getAircraftFromDB(flightParamMapFromRequest.get(Parameters.AIRCRAFT_FOR_FLIGHT));
-            departureForFlight = AirportService.getInstance().getAirportFromDB(flightParamMapFromRequest.get(Parameters.DEPARTURE_FOR_FLIGHT));
-            arrivalForFlight = AirportService.getInstance().getAirportFromDB(flightParamMapFromRequest.get(Parameters.ARRIVAL_FOR_FLIGHT));
+            Aircraft aircraftForFlight = AircraftService.getInstance().getAircraftFromDB(flightInfoMap.get(Parameters.AIRCRAFT_FOR_FLIGHT));
+            Airport departureForFlight = AirportService.getInstance().getAirportFromDB(flightInfoMap.get(Parameters.DEPARTURE_FOR_FLIGHT));
+            Airport arrivalForFlight = AirportService.getInstance().getAirportFromDB(flightInfoMap.get(Parameters.ARRIVAL_FOR_FLIGHT));
             if (aircraftForFlight != null && departureForFlight != null && arrivalForFlight != null) {
                 flight.setAircraft(aircraftForFlight);
-                flight.setFlightNumber(flightParamMapFromRequest.get(Parameters.FLIGHT_NUMBER_FOR_FLIGHT));
+                flight.setFlightNumber(flightInfoMap.get(Parameters.FLIGHT_NUMBER_FOR_FLIGHT));
                 flight.setDepartureAirport(departureForFlight);
                 flight.setArrivalAirport(arrivalForFlight);
-                flight.setSheduledDeparture(Date.valueOf(flightParamMapFromRequest.get(Parameters.DATE_OF_FLIGHT)));
-                flight.setSheduledArrival(Date.valueOf(flightParamMapFromRequest.get(Parameters.DATE_OF_FLIGHT)));
-                flight.setPricePerSeat(Float.parseFloat(flightParamMapFromRequest.get(Parameters.PRICE_PER_SEAT)));
+                flight.setSheduledDeparture(Date.valueOf(flightInfoMap.get(Parameters.DATE_OF_FLIGHT)));
+                flight.setSheduledArrival(Date.valueOf(flightInfoMap.get(Parameters.DATE_OF_FLIGHT)));
+                flight.setPricePerSeat(Float.parseFloat(flightInfoMap.get(Parameters.PRICE_PER_SEAT)));
             }
         } catch (SQLException e) {
             logger.error(MessageConstants.DATABASE_ACCESS_ERROR);

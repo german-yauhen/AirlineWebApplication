@@ -5,6 +5,7 @@ import by.pvt.hermanovich.airline.entities.Flight;
 import by.pvt.hermanovich.airline.exceptions.DAOException;
 import java.sql.Connection;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -48,5 +49,15 @@ public interface ImplFlightDAO extends AbstractDAO<Flight> {
      * @throws DAOException
      */
     List<Flight> getFlightsByDepDate(Airport depAirportForSearch, Date dateForSearch, Connection connection) throws DAOException;
+
+    /**
+     * This method creates an information about flight represented in <i>map</i> view.
+     *
+     * @param id                - flight id;
+     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions;
+     * @return                  - a <i>map</i> of parameters for building the flight object.
+     * @throws DAOException
+     */
+    HashMap<String, String> getFlightInfoById(int id, Connection connection) throws DAOException;
 
 }
