@@ -8,6 +8,9 @@ body {
 select {
     width: 100%;
 }
+fieldset {
+    padding-bottom: 5px; padding-right: 5px; padding-left: 5px;
+}
 .wrapperWelcomeInfo {
     position: absolute;
     left: 10px; top: 5px;
@@ -58,8 +61,9 @@ select {
 }
 .flightsFindForm {
     position: absolute;
-    top: 300px;
-    width: 500px;
+    top: 200px;
+    width: 460px;
+    margin-left: 6px;
 }
 .wrapperButtonsSearchFlight {
     position: relative;
@@ -67,6 +71,7 @@ select {
     justify-content: flex-end;
     text-align: justify;
     text-align-last: justify;
+    padding-top: 8px;
 }
 .buttonElement {
     display: inline-block;

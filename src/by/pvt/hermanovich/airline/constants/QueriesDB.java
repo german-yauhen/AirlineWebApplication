@@ -24,6 +24,7 @@ public class QueriesDB {
     public static final String GET_AIRPORT_BY_CODE = "SELECT * FROM airports WHERE airport_code = ?";
     public static final String GET_ALL_AIRPORTS = "SELECT * FROM airports";
     /*Queries to work with luggage database table.*/
+    public static final String GET_LUGGAGE_BY_ID = "SELECT * FROM luggage WHERE id = ?";
     public static final String ADD_LUGGAGE = "INSERT INTO luggage (luggage_type, price) VALUES (?, ?)";
     public static final String UPDATE_LUGGAGE = "UPDATE luggage SET luggage_type = ?, price = ? WHERE id = ?";
     public static final String GET_LUGGAGE_BY_TYPE = "SELECT * FROM luggage WHERE luggage_type = ?";
@@ -36,6 +37,7 @@ public class QueriesDB {
     public static final String GET_AIRCRAFT_BY_CODE = "SELECT * FROM aircrafts WHERE aircraft_code = ?";
     public static final String DELETE_AIRCRAFT_BY_CODE = "DELETE FROM aircrafts WHERE aircraft_code = ?";
     /*Queries to work with flight database table.*/
+    public static final String GET_FLIGHT_BY_ID = "SELECT * FROM flights WHERE id = ?";
     public static final String ADD_FLIGHT = "INSERT INTO flights (aircrafts_aircraft_code, flight_number, departure_airport" +
                                             ", arrival_airport, sheduled_departure_date, sheduled_arrival_date, price_per_seat)" +
                                             "VALUES(?, ?, ?, ?, ?, ?, ?)";

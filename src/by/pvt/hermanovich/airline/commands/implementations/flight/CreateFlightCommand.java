@@ -32,10 +32,9 @@ public class CreateFlightCommand implements BasicCommand {
     public String execute(HttpServletRequest request) {
         String page = null;
         Flight flight = null;
-        HashMap<String, String> flightParamMapFromRequest = new HashMap<>();
-        RequestParameterIdentifier.getFlightInfoFromRequest(flightParamMapFromRequest, request);
+        HashMap<String, String> flightInfoMap = RequestParameterIdentifier.getFlightInfoFromRequest(request);
         try {
-            flight = FlightService.getInstance().createFlightFromRequestParameters(flightParamMapFromRequest);
+            flight = FlightService.getInstance().createFlightFromMap(flightInfoMap);
             FlightService.getInstance().addFlightToDB(flight);
             request.getSession().setAttribute(Parameters.FLIGHT_REGISTER_SUCCESS, Parameters.TRUE);
             page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.ADMIN_PAGE_PATH);

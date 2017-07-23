@@ -9,10 +9,8 @@ import by.pvt.hermanovich.airline.entities.Flight;
 import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.util.ArrayList;
+
+import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 
@@ -72,6 +70,39 @@ public class FlightService {
     }
 
     /**
+     * This method receives a new entity of flight from database using the id. The workflow of this method
+     * consists of the following steps:
+     *          - the method invokes a DAO method and receives a map with parameters that are returned from database table;
+     *          - the method invokes method <i>createFlightFromMap(...map)</i> and receives an entity of flight.
+     *
+     * @param id            - flight id;
+     * @return              - an entity of flight.
+     * @throws SQLException
+     */
+    public Flight getFlightById(int id) throws SQLException {
+        Flight flight = null;
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            HashMap<String, String> flightInfoMap = FlightDAO.getInstance().getFlightInfoById(id, connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+            flight = createFlightFromMap(flightInfoMap);
+            flight.setId(Integer.parseInt(flightInfoMap.get(Parameters.ID)));
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return flight;
+    }
+
+    /**
      * This method create a new entity of flight from a <i>map</i> of parameters.
      * The map is passed the the method as a parameter. The method invokes and directs
      * the control to other service classes of this module:
@@ -83,7 +114,7 @@ public class FlightService {
      * @return                              - an entity of flight.
      * @throws SQLException
      */
-    public Flight createFlightFromRequestParameters(HashMap<String, String> flightParamMapFromRequest) throws SQLException {
+    public Flight createFlightFromMap(HashMap<String, String> flightParamMapFromRequest) throws SQLException {
         Flight flight = new Flight();
         Aircraft aircraftForFlight = null;
         Airport departureForFlight = null;
@@ -105,7 +136,7 @@ public class FlightService {
             logger.error(MessageConstants.DATABASE_ACCESS_ERROR);
             throw new SQLException(MessageConstants.DATABASE_ACCESS_ERROR, e);
         }
-        return  flight;
+        return flight;
     }
 
     /**

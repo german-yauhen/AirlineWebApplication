@@ -119,6 +119,34 @@ public class LuggageService {
     /**
      * This method receives a luggage from database.
      *
+     * @param id        - luggage id;
+     * @return          - luggage entity from database.
+     * @throws SQLException
+     */
+    public Luggage getLuggageById(int id) throws SQLException {
+        Luggage luggage = null;
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            luggage = LuggageDAO.getInstance().getById(id, connection);
+            connection.commit();
+            logger.info(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return luggage;
+    }
+
+    /**
+     * This method receives a luggage from database.
+     *
      * @param luggage   - luggage type from request.
      * @return          - luggage type from database.
      * @throws SQLException

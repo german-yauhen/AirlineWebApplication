@@ -48,10 +48,18 @@ public class Parameters {
     public static final String FLIGHT_NUMBER_FOR_FLIGHT = "flightNumberForFlight";
     public static final String DEPARTURE_FOR_FLIGHT = "departureForFlight";
     public static final String ARRIVAL_FOR_FLIGHT = "arrivalForFlight";
+    public static final String LUGGAGE_FOR_BOOKING = "luggageForBooking";
     public static final String DATE_OF_FLIGHT = "dateForFlight";
     public static final String PRICE_PER_SEAT = "pricePerSeat";
     public static final String FLIGHT_REGISTER_SUCCESS = "flightRegisterSuccess";
     public static final String LUGGAGE_UNIQUE_ERROR = "luggageUniqueError";
+    public static final String FLIGHTS_LIST = "flightsList";
+    public static final String USER_ID = "userId";
+    public static final String FLIGHT_ID = "flghtId";
+    public static final String LUGGAGE_ID = "luggageId";
+
+
+
     public static final String FLIGHT_NUMBER_DB = "flight_number";
     public static final String PRICE_PER_SEAT_DB = "price_per_seat";
     public static final String DEPARTURE_AIRPORT_DB = "departure_airport";
@@ -61,5 +69,11 @@ public class Parameters {
     public static final String SHEDULED_ARRIVAL_DB = "sheduled_arrival_date";
     public static final String USER_TYPE_DB = "user_type";
     public static final String DOCUMENT_NUMBER_DB = "document_number";
-    public static final String FLIGHTS_LIST = "flightsList";
+
+
+    public static final String USER_ID_DB = "user_id";
+    public static final String FLIGHT_ID_DB = "flght_id";
+    public static final String LUGGAGE_ID_DB = "luggage_id";
+    public static final String LUGGAGE_TYPE_DB = "luggage_type";
+    public static final String PRICE_DB = "price";
 }

@@ -10,8 +10,10 @@ import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
 
+import java.awt.print.PrinterAbortException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -71,26 +73,38 @@ public class FlightDAO implements ImplFlightDAO {
     }
 
     /**
-     * ***NOT USED***
-     * This method updates an existing record (row) in a database table.
+     * This method creates an information about flight represented in <i>map</i> view.
      *
-     * @param entity     - the current entity which will be updated.
-     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @param id                - flight id;
+     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions;
+     * @return                  - a <i>map</i> of parameters for building the flight object.
+     * @throws DAOException
      */
-    @Override
-    public void update(Flight entity, Connection connection) throws DAOException {
-    }
-
-    /**
-     * ***NOT USED***
-     * This method reads and returns information from all records (rows) of a database table.
-     *
-     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
-     * @return - list of all entities from a database table.
-     */
-    @Override
-    public List<Flight> getAll(Connection connection) throws DAOException {
-        return null;
+    public HashMap<String, String> getFlightInfoById(int id, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        HashMap<String, String> flightInfoMap = new HashMap<>();
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_FLIGHT_BY_ID);
+            statement.setInt(1, id);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                flightInfoMap.put(Parameters.FLIGHT_ID, String.valueOf(resultSet.getInt(Parameters.ID)));
+                flightInfoMap.put(Parameters.AIRCRAFT_FOR_FLIGHT, resultSet.getString(Parameters.AIRCRAFTS_AIRCRAFT_CODE_DB));
+                flightInfoMap.put(Parameters.FLIGHT_NUMBER_FOR_FLIGHT, resultSet.getString(Parameters.FLIGHT_NUMBER_DB));
+                flightInfoMap.put(Parameters.DEPARTURE_FOR_FLIGHT, resultSet.getString(Parameters.DEPARTURE_AIRPORT_DB));
+                flightInfoMap.put(Parameters.ARRIVAL_FOR_FLIGHT, resultSet.getString(Parameters.ARRIVAL_AIRPORT_DB));
+                flightInfoMap.put(Parameters.DATE_OF_FLIGHT, resultSet.getString(Parameters.SHEDULED_DEPARTURE_DB));
+                flightInfoMap.put(Parameters.PRICE_PER_SEAT, resultSet.getString(Parameters.PRICE_PER_SEAT_DB));
+            }
+        } catch (SQLException e) {
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return flightInfoMap;
     }
 
     /**
@@ -219,5 +233,28 @@ public class FlightDAO implements ImplFlightDAO {
             ConnectorDB.closeStatement(statement);
         }
         return flightsFromDB;
+    }
+
+    /**
+     * ***NOT USED***
+     * This method reads and returns information from all records (rows) of a database table.
+     *
+     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return - list of all entities from a database table.
+     */
+    @Override
+    public List<Flight> getAll(Connection connection) throws DAOException {
+        return null;
+    }
+
+    /**
+     * ***NOT USED***
+     * This method updates an existing record (row) in a database table.
+     *
+     * @param entity     - the current entity which will be updated.
+     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
+     */
+    @Override
+    public void update(Flight entity, Connection connection) throws DAOException {
     }
 }

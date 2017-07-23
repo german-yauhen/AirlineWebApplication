@@ -1,6 +1,7 @@
 package by.pvt.hermanovich.airline.dao.implementations;
 
 import by.pvt.hermanovich.airline.constants.MessageConstants;
+import by.pvt.hermanovich.airline.constants.Parameters;
 import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplLuggageDAO;
 import by.pvt.hermanovich.airline.entities.Luggage;
@@ -59,9 +60,8 @@ public class LuggageDAO implements ImplLuggageDAO {
             statement.setFloat(2, luggage.getPrice());
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the request to add the user.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -83,18 +83,46 @@ public class LuggageDAO implements ImplLuggageDAO {
             statement.setInt(3, luggage.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the query to update the luggage type.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
     }
 
     /**
-     * This method reads data from <i>users</i> database table, creates and returns User object according to the entered login.
+     * This method reads data from <i>luggage</i> database table, creates and returns Luggage object according to the entered id.
      *
-     * @param luggageType            - entered <i>id</i>.
+     * @param id                - entered <i>id</i> of luggage type.
+     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return                  - Luggage object.
+     * @throws DAOException
+     */
+    public Luggage getById(int id, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Luggage luggage = new Luggage();
+        try {
+            statement = connection.prepareStatement(QueriesDB.GET_LUGGAGE_BY_ID);
+            statement.setInt(1, id);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                createLuggage(resultSet, luggage);
+            }
+        } catch (SQLException e) {
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeResultSet(resultSet);
+            ConnectorDB.closeStatement(statement);
+        }
+        return luggage;
+    }
+
+    /**
+     * This method reads data from <i>luggage</i> database table, creates and returns Luggage object according to the entered luggage type.
+     *
+     * @param luggageType   - entered <i>luggage type</i>.
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
      * @return              - Luggage object.
      */
@@ -111,9 +139,8 @@ public class LuggageDAO implements ImplLuggageDAO {
                 createLuggage(resultSet, luggage);
             }
         } catch (SQLException e) {
-            String message = "The record in the database was not found.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -137,12 +164,10 @@ public class LuggageDAO implements ImplLuggageDAO {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 luggageTypes.add(createLuggage(resultSet, new Luggage()));
-                logger.info(luggageTypes.get((luggageTypes.size()-1)));
             }
         } catch (SQLException e) {
-            String message = "There are no records in the luggage database table or one particular record in the database was not found.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -164,9 +189,10 @@ public class LuggageDAO implements ImplLuggageDAO {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the query to delete the luggage from database.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeStatement(statement);
         }
     }
 
@@ -212,9 +238,9 @@ public class LuggageDAO implements ImplLuggageDAO {
      * @throws SQLException
      */
     private Luggage createLuggage(ResultSet resultSet, Luggage luggage) throws SQLException {
-        luggage.setId(resultSet.getInt("id"));
-        luggage.setLuggageType(resultSet.getString("luggage_type"));
-        luggage.setPrice(resultSet.getFloat("price"));
+        luggage.setId(resultSet.getInt(Parameters.ID));
+        luggage.setLuggageType(resultSet.getString(Parameters.LUGGAGE_TYPE_DB));
+        luggage.setPrice(resultSet.getFloat(Parameters.PRICE_DB));
         return luggage;
     }
 }
