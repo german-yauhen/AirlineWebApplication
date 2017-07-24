@@ -89,4 +89,6 @@ public class Parameters {
     public static final String SURNAME_DB = "surname";
     public static final String FIRST_NAME_DB = "firstname";
     public static final String TICKETS_LIST = "ticketsList";
+    public static final String TICKET_NUMBER = "ticketNumber";
+    public static final String TICKET_RETURN_SUCCESS = "ticketReturnSuccess";
 }

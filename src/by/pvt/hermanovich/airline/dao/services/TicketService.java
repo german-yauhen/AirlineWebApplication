@@ -153,6 +153,7 @@ public class TicketService {
             connection.setAutoCommit(false);
             ticketsList = TicketDAO.getInstance().getAllUsersTickets(user, connection);
             connection.commit();
+            logger.error(MessageConstants.TRANSACTION_SUCCEEDED);
         } catch (SQLException | DAOException e) {
             if (connection != null) {
                 connection.rollback();
@@ -163,5 +164,29 @@ public class TicketService {
             ConnectorDB.closeConnection(connection);
         }
         return ticketsList;
+    }
+
+    /**
+     * This method removes the shosen ticket from database table.
+     *
+     * @param ticketNumber   - a ticket number.
+     */
+    public void deleteTicket(String ticketNumber) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            TicketDAO.getInstance().deleteByNumber(ticketNumber, connection);
+            connection.commit();
+            logger.error(MessageConstants.TRANSACTION_SUCCEEDED);
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
     }
 }

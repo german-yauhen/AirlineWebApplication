@@ -8,11 +8,7 @@ import by.pvt.hermanovich.airline.entities.*;
 import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +67,27 @@ public class TicketDAO implements ImplTicketDAO {
     }
 
     /**
+     * This method removes the ticket from database table according to the ticket number.
+     *
+     * @param ticketNumber  - a ticket number.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     */
+    @Override
+    public void deleteByNumber(String ticketNumber, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(QueriesDB.DELETE_TICKET_BY_NUMBER);
+            statement.setString(1, ticketNumber);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
+        } finally {
+            ConnectorDB.closeStatement(statement);
+        }
+    }
+
+    /**
      * This method reads and returns information about user's tickets from a database table.
      *
      * @param user          - an user object with necessary fields.
@@ -113,7 +130,6 @@ public class TicketDAO implements ImplTicketDAO {
         try {
             ticket.setTicketNumber(resultSet.getString(Parameters.TICKET_NUMBER_DB));
             ticket.setUser(user);
-//            ticket.setUser(buildUserForTicket(resultSet));
             ticket.setFlight(buildFlightForTicket(resultSet));
             ticket.setLuggage(buildLuggageForTicket(resultSet));
             ticket.setTotalPrice(resultSet.getFloat(Parameters.TOTAL_PRICE_DB));
@@ -286,6 +302,7 @@ public class TicketDAO implements ImplTicketDAO {
 
 
     /**
+     * ***NOT USED***
      * This method reads and returns information from all records (rows) of a database table.
      *
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.

@@ -65,4 +65,5 @@ public class QueriesDB {
             "JOIN airports AS arr ON arr.airport_code = arrival_airport " +
             "WHERE users_id = ?";
     public static final String GET_TICKET_BY_NUMBER = "SELECT * FROM tickets WHERE ticket_number = ?";
+    public static final String DELETE_TICKET_BY_NUMBER = "DELETE FROM tickets WHERE ticket_number = ?";
 }

@@ -16,6 +16,23 @@
     </servlet-mapping>
     <!--Servlet description end-->
 
+    <!--Filter descripption start-->
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>by.pvt.hermanovich.airline.filters.EncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <servlet-name>controller</servlet-name>
+    </filter-mapping>
+    <!--Filter description end-->
+
+    <!--Error jsp page start-->
+    <error-page>
+        <location>/pages/error.jsp</location>
+    </error-page>
+    <!--Error jsp page end-->
+
     <!--Start page description start-->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

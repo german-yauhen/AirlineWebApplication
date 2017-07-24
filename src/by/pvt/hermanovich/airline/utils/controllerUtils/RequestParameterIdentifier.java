@@ -310,11 +310,26 @@ public class RequestParameterIdentifier {
      * This method receives an user object from the session object retrieved from the request instance.
      * An user object was passed into the session object while the login operation has been executing.
      *
-     * @param request   - a request instance.
+     * @param request   - an object of request.
      * @return          - an user object.
      */
     public static User getUserFromSession(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute(Parameters.USER);
         return user;
+    }
+
+    /**
+     * This method received a ticket number from request.
+     *
+     * @param request   - an object of request.
+     * @return          - a ticket number.
+     */
+    public static String getTicketNumberFromRequest(HttpServletRequest request) {
+        String ticketNumber = request.getParameter(Parameters.TICKET_NUMBER);
+        if (!ticketNumber.isEmpty()) {
+            return ticketNumber;
+        } else {
+            return null;
+        }
     }
 }

@@ -29,16 +29,24 @@ public interface ImplTicketDAO extends AbstractDAO<Ticket> {
      *
      * @param user          - an user object with necessary fields.
      * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
-     * @return - list of all tickets from a database table.
+     * @return              - list of all tickets from a database table.
      */
     List<Ticket> getAllUsersTickets(User user, Connection connection) throws DAOException;
 
     /**
      * This method reads and returns information from all records (rows) of a database table.
      *
-     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
-     * @return - list of all tickets from a database table.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return              - list of all tickets from a database table.
      */
     @Override
     List<Ticket> getAll(Connection connection) throws DAOException;
+
+    /**
+     * This method removes the ticket from database table according to the ticket number.
+     *
+     * @param ticketNumber  - a ticket number.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     */
+    void deleteByNumber(String ticketNumber, Connection connection) throws DAOException;
 }

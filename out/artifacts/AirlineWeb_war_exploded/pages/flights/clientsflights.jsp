@@ -26,6 +26,7 @@
                                 <th>Date</th>
                                 <th>Luggage Type</th>
                                 <th>Total Price</th>
+                                <th></th>
                                 <spec:forEach var="ticket" items="${ticketsList}">
                                     <tr>
                                         <td>${ticket.getTicketNumber()}</td>
@@ -37,10 +38,16 @@
                                         <td>${String.valueOf(ticket.getFlight().getSheduledDeparture())}</td>
                                         <td>${ticket.getLuggage().getLuggageType().toUpperCase()}</td>
                                         <td>${ticket.getTotalPrice()}&#8364;</td>
-                                        <td><input class="buttonElement" type="submit" value="Return Ticket"/></td>
+                                        <td><input type="radio" name="ticketNumber" value="${ticket.getTicketNumber()}"/></td>
                                     </tr>
                                 </spec:forEach>
                             </table>
+                        </div>
+                        <div class="wrapperButtonsChooseFlight">
+                            <input class="buttonElement" type="submit" value="Return Ticket"/>
+                            ${pageContext.session.setAttribute("backpage", "client")}
+                            <input class="buttonElement" type="reset" value="Reset"/>
+                            <input class="buttonElement" type="button" value="Back To Menu" onclick='location.href="controller?command=back"'/>
                         </div>
                     </fieldset>
                 </form>
@@ -48,9 +55,6 @@
             <!--USER TYPE-->
             <div class="userTypeElement">
                 </br>${String.valueOf(user.getUserType())}
-                <spec:if test="${sessionScope.ticketBookingSuccess eq 'true'}">
-                    <i> : MESSAGE : Ticket has been booked successful.</i>
-                </spec:if>
             </div>
         </div>
         <!--LOGOUT-->

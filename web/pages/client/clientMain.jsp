@@ -102,6 +102,9 @@
             <!--USER TYPE-->
             <div class="userTypeElement">
                 </br>${String.valueOf(user.getUserType())}
+                <spec:if test="${sessionScope.ticketReturnSuccess eq 'true'}">
+                    <i> : MESSAGE : You have successfully return the ticket.</i>
+                </spec:if>
             </div>
         </div>
         <!--LOGOUT-->
