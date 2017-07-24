@@ -27,6 +27,7 @@ public class MessageConstants {
     public static final String SUCCESS_DELETE_LUGGAGE = "Luggage has been deleted successfully.";
     public static final String AIRPORT_EXISTS = "Airport with this code has already existed.";
     public static final String SUCCESS_UPDATE_LUGGAGE = "Airport has been updated successfully.";
+    public static final String COLUMN_IS_NOT_VALID = "The column label is not valid.";
 
     public MessageConstants() {
     }

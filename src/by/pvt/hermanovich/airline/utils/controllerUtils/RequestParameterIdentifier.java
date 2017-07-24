@@ -36,13 +36,11 @@ public class RequestParameterIdentifier {
      * @return          - user type; it can be client or admin.
      */
     public static UserType getUserTypeFromRequest(HttpServletRequest request) {
-        switch (String.valueOf(request.getSession().getAttribute(Parameters.USER_TYPE))) {
-            case "client":
-                return UserType.CLIENT;
-            case "admin":
-                return UserType.ADMIN;
-            default:
-                return UserType.CLIENT;
+        String userType = String.valueOf(request.getSession().getAttribute(Parameters.USER_TYPE));
+        if (!userType.isEmpty() && userType.equals(Parameters.CLIENT)) {
+            return UserType.CLIENT;
+        } else {
+            return UserType.ADMIN;
         }
     }
 
@@ -144,15 +142,14 @@ public class RequestParameterIdentifier {
      * @return          - boolean value of the condition.
      */
     public static boolean areFieldsFilled(HttpServletRequest request) {
-        boolean areFilled = false;
         if ( !request.getParameter(Parameters.LOGIN).isEmpty()
                 && !request.getParameter(Parameters.PASSWORD).isEmpty()
                 && !request.getParameter(Parameters.FIRST_NAME).isEmpty()
                 && !request.getParameter(Parameters.SURNAME).isEmpty()
                 && !request.getParameter(Parameters.DOCUMENT_NUMBER).isEmpty() ) {
-            return areFilled = true;
+            return true;
         } else {
-            return areFilled = false;
+            return false;
         }
     }
 
@@ -252,8 +249,8 @@ public class RequestParameterIdentifier {
     /**
      * This method fills a <i>map</i> of parameters of the flight with values from the request.
      *
-     * @param request       - an object of request with necessary parameters.
-     * @return              - a map with parameters.
+     * @param request   - an object of request with necessary parameters.
+     * @return          - a map with parameters.
      */
     public static HashMap<String,String> getFlightInfoFromRequest(HttpServletRequest request) {
         HashMap<String, String> flightInfoFromRequest = new HashMap<>();
@@ -291,8 +288,8 @@ public class RequestParameterIdentifier {
     /**
      * This method fills a <i>map</i> of parameters of the flight with values from the request.
      *
-     * @param request                   - an object of request with necessary parameters.
-     * @return                          - a map with parameters.
+     * @param request       - an object of request with necessary parameters.
+     * @return              - a map with parameters.
      */
     public static HashMap<String,String> getTicketInfoFromRequest(HttpServletRequest request) {
         HashMap<String, String> ticketInfoMap = new HashMap<>();
@@ -307,5 +304,17 @@ public class RequestParameterIdentifier {
             ticketInfoMap.put(Parameters.LUGGAGE_ID, luggageId);
         }
         return ticketInfoMap;
+    }
+
+    /**
+     * This method receives an user object from the session object retrieved from the request instance.
+     * An user object was passed into the session object while the login operation has been executing.
+     *
+     * @param request   - a request instance.
+     * @return          - an user object.
+     */
+    public static User getUserFromSession(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute(Parameters.USER);
+        return user;
     }
 }

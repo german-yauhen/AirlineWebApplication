@@ -34,10 +34,9 @@ public class ShowFlightsCommand implements BasicCommand {
     @Override
     public String execute(HttpServletRequest request) {
         String page = null;
-        List<Flight> flightsList = null;
         HashMap<String, String> searchConditions = RequestParameterIdentifier.getFlightInfoFromRequest(request);
         try {
-            flightsList = FlightService.getInstance().identifySearchContext(searchConditions);
+            List<Flight> flightsList = FlightService.getInstance().identifySearchContext(searchConditions);
             request.getSession().setAttribute(Parameters.FLIGHTS_LIST, flightsList);
             page = ConfigManagerPages.getInstance().getProperty(PathPageConstants.FLIGHTS_PAGE_PATH);
         } catch (SQLException e) {

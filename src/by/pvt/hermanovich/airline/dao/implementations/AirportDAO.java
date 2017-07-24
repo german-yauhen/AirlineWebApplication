@@ -1,6 +1,7 @@
 package by.pvt.hermanovich.airline.dao.implementations;
 
 import by.pvt.hermanovich.airline.constants.MessageConstants;
+import by.pvt.hermanovich.airline.constants.Parameters;
 import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplAirportDAO;
 import by.pvt.hermanovich.airline.entities.Airport;
@@ -55,9 +56,8 @@ public class AirportDAO implements ImplAirportDAO {
             statement.setString(3, airport.getCity().toUpperCase());
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the request to add the airport.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -84,9 +84,8 @@ public class AirportDAO implements ImplAirportDAO {
                 createAirport(resultSet, airport);
             }
         } catch (SQLException e) {
-            String message = "The record in the database was not found.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         }
         return airport;
     }
@@ -107,12 +106,10 @@ public class AirportDAO implements ImplAirportDAO {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 airports.add(createAirport(resultSet, new Airport()));
-                logger.info(airports.get((airports.size()-1)));
             }
         } catch (SQLException e) {
-            String message = "There are no records in the airports database table or one particular record in the database was not found.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeResultSet(resultSet);
             ConnectorDB.closeStatement(statement);
@@ -130,9 +127,9 @@ public class AirportDAO implements ImplAirportDAO {
      * @throws SQLException
      */
     private Airport createAirport(ResultSet resultSet, Airport airport) throws SQLException {
-        airport.setAirportCode(resultSet.getString("airport_code"));
-        airport.setAirportName(resultSet.getString("airport_name"));
-        airport.setCity(resultSet.getString("city"));
+        airport.setAirportCode(resultSet.getString(Parameters.AIRPORT_CODE_DB));
+        airport.setAirportName(resultSet.getString(Parameters.AIRPORT_NAME_DB));
+        airport.setCity(resultSet.getString(Parameters.CITY_DB));
         return airport;
     }
 
@@ -152,9 +149,8 @@ public class AirportDAO implements ImplAirportDAO {
             statement.setString(3, airport.getAirportCode());
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the query to update the airport.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }
@@ -174,9 +170,8 @@ public class AirportDAO implements ImplAirportDAO {
             statement.setString(1, airportCode);
             statement.executeUpdate();
         } catch (SQLException e) {
-            String message = "An error was occurred while executing the query to deleteById the airport from the database.";
-            logger.error(message, e);
-            throw new DAOException(message, e);
+            logger.error(MessageConstants.EXECUTE_QUERY_ERROR, e);
+            throw new DAOException(MessageConstants.EXECUTE_QUERY_ERROR, e);
         } finally {
             ConnectorDB.closeStatement(statement);
         }

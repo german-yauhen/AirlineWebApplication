@@ -96,6 +96,9 @@
                     </fieldset>
                 </form>
             </div>
+            <div class="showTicketsForm">
+                <button class="buttonShow" onclick="location.href='controller?command=showtickets'">Show My Tickets</button>
+            </div>
             <!--USER TYPE-->
             <div class="userTypeElement">
                 </br>${String.valueOf(user.getUserType())}

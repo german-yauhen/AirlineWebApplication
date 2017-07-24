@@ -1,9 +1,10 @@
 package by.pvt.hermanovich.airline.dao.implementations;
 
 import by.pvt.hermanovich.airline.constants.MessageConstants;
+import by.pvt.hermanovich.airline.constants.Parameters;
 import by.pvt.hermanovich.airline.constants.QueriesDB;
 import by.pvt.hermanovich.airline.dao.ImplTicketDAO;
-import by.pvt.hermanovich.airline.entities.Ticket;
+import by.pvt.hermanovich.airline.entities.*;
 import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
@@ -59,7 +60,6 @@ public class TicketDAO implements ImplTicketDAO {
             statement.setInt(2, ticket.getUser().getId());
             statement.setInt(3, ticket.getFlight().getId());
             statement.setInt(4, ticket.getLuggage().getId());
-//            statement.setFloat(5, (ticket.getFlight().getPricePerSeat() + ticket.getLuggage().getPrice()));
             statement.setFloat(5, ticket.getTotalPrice());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -71,32 +71,23 @@ public class TicketDAO implements ImplTicketDAO {
     }
 
     /**
-     * This method updates an existing record (row) in a database table.
+     * This method reads and returns information about user's tickets from a database table.
      *
-     * @param ticket     - the current ticket which will be updated.
-     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @param user          - an user object with necessary fields.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return              - list of all tickets from a database table.
      */
     @Override
-    public void update(Ticket ticket, Connection connection) throws DAOException {
-
-    }
-
-    /**
-     * This method reads and returns information from all records (rows) of a database table.
-     *
-     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
-     * @return - list of all tickets from a database table.
-     */
-    @Override
-    public List<Ticket> getAll(Connection connection) throws DAOException {
-        List<Ticket> ticketsList = new ArrayList<Ticket>();
+    public List<Ticket> getAllUsersTickets(User user, Connection connection) throws DAOException {
+        List<Ticket> ticketsList = new ArrayList<>();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        // TODO: 21.07.2017 get resultSet and call the additional method to create an entity of ticket.
         try {
-            statement = connection.prepareStatement(QueriesDB.GET_ALL_TICKETS);
+            statement = connection.prepareStatement(QueriesDB.GET_ALL_TICKETS_BY_USER);
+            statement.setInt(1, user.getId());
+            resultSet = statement.executeQuery();
             while (resultSet.next()) {
-
+                ticketsList.add(createTicketFromDB(user, resultSet, new Ticket()));
             }
         } catch (SQLException e) {
             logger.error(MessageConstants.EXECUTE_QUERY_ERROR);
@@ -108,13 +99,163 @@ public class TicketDAO implements ImplTicketDAO {
         return ticketsList;
     }
 
-    public Ticket createTicketFromDB(ResultSet resultSet, Connection connection) throws DAOException {
-        Ticket ticket = new Ticket();
-        // TODO: 21.07.2017 Build ticket logic
+    /**
+     * An additional method. Not from interface.
+     * This method creates an entity of ticket from resultSet.
+     *
+     * @param user              - the entity of the current user.
+     * @param resultSet         - a table of data representing a database result set.
+     * @return                  - an entity of ticket.
+     * @return
+     * @throws SQLException
+     */
+    public Ticket createTicketFromDB(User user, ResultSet resultSet, Ticket ticket) throws SQLException {
+        try {
+            ticket.setTicketNumber(resultSet.getString(Parameters.TICKET_NUMBER_DB));
+            ticket.setUser(user);
+//            ticket.setUser(buildUserForTicket(resultSet));
+            ticket.setFlight(buildFlightForTicket(resultSet));
+            ticket.setLuggage(buildLuggageForTicket(resultSet));
+            ticket.setTotalPrice(resultSet.getFloat(Parameters.TOTAL_PRICE_DB));
+        } catch (SQLException e) {
+            logger.error(MessageConstants.COLUMN_IS_NOT_VALID, e);
+            throw new SQLException(MessageConstants.COLUMN_IS_NOT_VALID, e);
+        }
         return ticket;
     }
 
     /**
+     * An additional method. Not from interface.
+     * This method creates an entity of user from resultSet.
+     *
+     * @param resultSet         - a table of data representing a database result set.
+     * @return                  - an entity of user.
+     * @throws SQLException
+     */
+    private User buildUserForTicket(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        try {
+            user.setFirstName(resultSet.getString(Parameters.FIRST_NAME_DB));
+            user.setSurname(resultSet.getString(Parameters.SURNAME_DB));
+            user.setDocumentNumber(resultSet.getString(Parameters.DOCUMENT_NUMBER_DB));
+            user.setLogin(resultSet.getString(Parameters.LOGIN));
+            user.setUserType(UserType.valueOf(resultSet.getString(Parameters.USER_TYPE_DB)));
+        }  catch (SQLException e) {
+            logger.error(MessageConstants.COLUMN_IS_NOT_VALID, e);
+            throw new SQLException(MessageConstants.COLUMN_IS_NOT_VALID, e);
+        }
+        return user;
+    }
+
+    /**
+     * An additional method. Not from interface.
+     * This method creates an entity of luggage from resultSet.
+     *
+     * @param resultSet         - a table of data representing a database result set.
+     * @return                  - an entity of flight.
+     * @throws SQLException
+     */
+    private Luggage buildLuggageForTicket(ResultSet resultSet) throws SQLException {
+        Luggage luggage = new Luggage();
+        try {
+            luggage.setLuggageType(resultSet.getString(Parameters.LUGGAGE_TYPE_DB));
+            luggage.setPrice(resultSet.getFloat(Parameters.PRICE_DB));
+        } catch (SQLException e) {
+            logger.error(MessageConstants.COLUMN_IS_NOT_VALID, e);
+            throw new SQLException(MessageConstants.COLUMN_IS_NOT_VALID, e);
+        }
+        return luggage;
+    }
+
+    /**
+     * An additional method. Not from interface.
+     * This method creates an entity of flight from resultSet.
+     *
+     * @param resultSet         - a table of data representing a database result set.
+     * @return                  - an entity of flight.
+     * @throws SQLException
+     */
+    private Flight buildFlightForTicket(ResultSet resultSet) throws SQLException {
+        Flight flight = new Flight();
+        try {
+            flight.setAircraft(buildAircraftForFlight(resultSet));
+            flight.setFlightNumber(resultSet.getString(Parameters.FLIGHT_NUMBER_DB));
+            flight.setDepartureAirport(buildDepAirportForFlight(resultSet));
+            flight.setArrivalAirport(buildArrAirportForFlight(resultSet));
+            flight.setSheduledDeparture(resultSet.getDate(Parameters.SHEDULED_DEPARTURE_DB));
+            flight.setSheduledArrival(resultSet.getDate(Parameters.SHEDULED_ARRIVAL_DB));
+            flight.setPricePerSeat(resultSet.getFloat(Parameters.PRICE_PER_SEAT_DB));
+        } catch (SQLException e) {
+            logger.error(MessageConstants.COLUMN_IS_NOT_VALID, e);
+            throw new SQLException(MessageConstants.COLUMN_IS_NOT_VALID, e);
+        }
+        return flight;
+    }
+
+    /**
+     * An additional method. Not from interface.
+     * This method creates an entity of arrival airport from resultSet.
+     *
+     * @param resultSet         - a table of data representing a database result set.
+     * @return                  - an entity of departure airport.
+     * @throws SQLException
+     */
+    private Airport buildArrAirportForFlight(ResultSet resultSet) throws SQLException {
+        Airport airport = new Airport();
+        try {
+            airport.setAirportCode(resultSet.getString(Parameters.ARRIVAL_AIRPORT_DB_AS));
+            airport.setAirportName(resultSet.getString(Parameters.ARRIVAL_AIRPORT_NAME_DB_AS));
+            airport.setCity(resultSet.getString(Parameters.ARRIVAL_AIRPORT_CITY_DB_AS));
+        } catch (SQLException e) {
+            logger.error(MessageConstants.COLUMN_IS_NOT_VALID, e);
+            throw new SQLException(MessageConstants.COLUMN_IS_NOT_VALID, e);
+        }
+        return airport;
+    }
+
+    /**
+     * An additional method. Not from interface.
+     * This method creates an entity of departure airport from resultSet.
+     *
+     * @param resultSet         - a table of data representing a database result set.
+     * @return                  - an entity of departure airport.
+     * @throws SQLException
+     */
+    private Airport buildDepAirportForFlight(ResultSet resultSet) throws SQLException {
+        Airport airport = new Airport();
+        try {
+            airport.setAirportCode(resultSet.getString(Parameters.DEPARTURE_AIRPORT_DB_AS));
+            airport.setAirportName(resultSet.getString(Parameters.DEPARTURE_AIRPORT_NAME_DB_AS));
+            airport.setCity(resultSet.getString(Parameters.DEPARTURE_AIRPORT_CITY_DB_AS));
+        } catch (SQLException e) {
+            logger.error(MessageConstants.COLUMN_IS_NOT_VALID, e);
+            throw new SQLException(MessageConstants.COLUMN_IS_NOT_VALID, e);
+        }
+        return airport;
+    }
+
+    /**
+     * An additional method. Not from interface.
+     * This method creates an entity of aircraft from resultSet.
+     *
+     * @param resultSet         - a table of data representing a database result set.
+     * @return                  - an entity of aircraft.
+     * @throws SQLException
+     */
+    private Aircraft buildAircraftForFlight(ResultSet resultSet) throws SQLException {
+        Aircraft aircraft = new Aircraft();
+        try {
+            aircraft.setAircraftCode(resultSet.getString(Parameters.AIRCRAFT_CODE_DB));
+            aircraft.setModel(resultSet.getString(Parameters.AIRCRAFT_MODEL_DB));
+        } catch (SQLException e) {
+            logger.error(MessageConstants.COLUMN_IS_NOT_VALID, e);
+            throw new SQLException(MessageConstants.COLUMN_IS_NOT_VALID, e);
+        }
+        return aircraft;
+    }
+
+    /**
+     * An additional method. Not from interface.
      * This method checks the uniqueness of the ticket number.
      *
      * @param number        - a ticket number that will be processed.
@@ -141,5 +282,17 @@ public class TicketDAO implements ImplTicketDAO {
             ConnectorDB.closeStatement(statement);
         }
         return isUnique;
+    }
+
+
+    /**
+     * This method reads and returns information from all records (rows) of a database table.
+     *
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return              - list of all tickets from a database table.
+     */
+    @Override
+    public List<Ticket> getAll(Connection connection) throws DAOException {
+        return null;
     }
 }

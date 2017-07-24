@@ -22,9 +22,6 @@ legend {
     position: absolute;
     left: 10px; top: 5px;
 }
-.welcomeElement {
-    font-size: 18px;
-}
 .wrapperPageData {
     position: absolute;
     left: 10px; top: 50px;
@@ -38,6 +35,11 @@ legend {
     background-color: whitesmoke;
     opacity: 0.7;
     width: 700px;
+}
+.resultTableUsersFlights {
+    background-color: whitesmoke;
+    opacity: 0.85;
+    width: 850px;
 }
 .buttonElement {
     display: inline-block;
@@ -60,7 +62,7 @@ legend {
     left: 10px; top: 5px;
 }
 .welcomeElement {
-    font-size: 18px;
+    font-size: 22px;
 }
 .userTypeElement {
     position: fixed;

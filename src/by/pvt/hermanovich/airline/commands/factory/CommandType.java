@@ -10,10 +10,12 @@ import by.pvt.hermanovich.airline.commands.implementations.luggage.CreateLuggage
 import by.pvt.hermanovich.airline.commands.implementations.luggage.DeleteLuggageCommand;
 import by.pvt.hermanovich.airline.commands.implementations.luggage.UpdateLuggageCommand;
 import by.pvt.hermanovich.airline.commands.implementations.ticket.CreateTicketCommand;
+import by.pvt.hermanovich.airline.commands.implementations.ticket.ReturnTicketCommand;
+import by.pvt.hermanovich.airline.commands.implementations.ticket.ShowTicketsCommand;
 import by.pvt.hermanovich.airline.commands.implementations.user.*;
 
 /**
- * Description: This class describea all type of using commands.
+ * Description: This class describes all type of using commands.
  *
  * Created by Yauheni Hermanovich on 14.07.2017.
  */
@@ -28,16 +30,22 @@ public enum CommandType {
     /*airport commands*/
     CREATEAIRPORT,
 
-    /*aircraft commands*/
+    /*aircraft command*/
     CREATEAIRCRAFT,
 
-    /*CREATEFLIGHT*/
+    /*flight commands*/
     CREATEFLIGHT, SHOWFLIGHTS,
 
-    /**/
-    CREATETICKET, SHOWUSERSTICKETS, RETURNTICKET
-    ;
+    /*ticket commands*/
+    CREATETICKET, SHOWTICKETS, RETURNTICKET;
 
+    /**
+     * This method directs the control to the corresponding class. The transfer of the control to the corresponding class
+     * is carried out by determining the value of the parameter "command" from request. The current request is generated
+     * from the "form" placed on the jsp page.
+     *
+     * @return      - the current class will be processed.
+     */
     public BasicCommand getCurrentCommand() {
         switch (this) {
             case LOGIN:
@@ -66,15 +74,12 @@ public enum CommandType {
                 return new CreateFlightCommand();
             case SHOWFLIGHTS:
                 return new ShowFlightsCommand();
-
-
-
             case CREATETICKET:
                 return new CreateTicketCommand();
-
-
-
-
+            case SHOWTICKETS:
+                return new ShowTicketsCommand();
+            case RETURNTICKET:
+                return new ReturnTicketCommand();
             case DEFAULT:
                 return new DefaultCommand();
             default:

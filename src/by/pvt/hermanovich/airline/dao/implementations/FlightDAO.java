@@ -246,15 +246,4 @@ public class FlightDAO implements ImplFlightDAO {
     public List<Flight> getAll(Connection connection) throws DAOException {
         return null;
     }
-
-    /**
-     * ***NOT USED***
-     * This method updates an existing record (row) in a database table.
-     *
-     * @param entity     - the current entity which will be updated.
-     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
-     */
-    @Override
-    public void update(Flight entity, Connection connection) throws DAOException {
-    }
 }

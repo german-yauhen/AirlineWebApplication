@@ -57,9 +57,6 @@ public class Parameters {
     public static final String USER_ID = "userId";
     public static final String FLIGHT_ID = "flightId";
     public static final String LUGGAGE_ID = "luggageId";
-
-
-
     public static final String FLIGHT_NUMBER_DB = "flight_number";
     public static final String PRICE_PER_SEAT_DB = "price_per_seat";
     public static final String DEPARTURE_AIRPORT_DB = "departure_airport";
@@ -69,8 +66,6 @@ public class Parameters {
     public static final String SHEDULED_ARRIVAL_DB = "sheduled_arrival_date";
     public static final String USER_TYPE_DB = "user_type";
     public static final String DOCUMENT_NUMBER_DB = "document_number";
-
-
     public static final String USER_ID_DB = "user_id";
     public static final String FLIGHT_ID_DB = "flght_id";
     public static final String LUGGAGE_ID_DB = "luggage_id";
@@ -78,4 +73,20 @@ public class Parameters {
     public static final String PRICE_DB = "price";
     public static final String TICKET = "ticket";
     public static final String TICKET_BOOKING_SUCCESS = "ticketBookingSuccess";
+    public static final String AIRPORT_CODE_DB = "airport_code";
+    public static final String AIRPORT_NAME_DB = "airport_name";
+    public static final String CITY_DB = "city";
+    public static final String AIRCRAFT_CODE_DB = "aircraft_code";
+    public static final String AIRCRAFT_MODEL_DB = "model";
+    public static final String DEPARTURE_AIRPORT_DB_AS = "dep_airport_code";
+    public static final String DEPARTURE_AIRPORT_NAME_DB_AS = "dep_airport_name";
+    public static final String DEPARTURE_AIRPORT_CITY_DB_AS = "dep_airport_city";
+    public static final String ARRIVAL_AIRPORT_DB_AS = "arr_airport_code";
+    public static final String ARRIVAL_AIRPORT_NAME_DB_AS = "arr_airport_name";
+    public static final String ARRIVAL_AIRPORT_CITY_DB_AS = "arr_airport_city";
+    public static final String TICKET_NUMBER_DB = "ticket_number";
+    public static final String TOTAL_PRICE_DB = "total_price";
+    public static final String SURNAME_DB = "surname";
+    public static final String FIRST_NAME_DB = "firstname";
+    public static final String TICKETS_LIST = "ticketsList";
 }

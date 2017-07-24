@@ -49,4 +49,12 @@ public interface ImplLuggageDAO extends AbstractDAO<Luggage> {
      *                          returns "true" if the incoming data do not correspond to the record of the database table.
      */
     boolean checkUniqueLuggage(String luggageType, Connection connection) throws DAOException;
+
+    /**
+     * This method updates an existing record (row) in a database table.
+     *
+     * @param luggage       - the current entity which will be updated.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     */
+    void update(Luggage luggage, Connection connection) throws DAOException;
 }

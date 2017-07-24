@@ -13,6 +13,7 @@ public class PathPageConstants {
     public static final String ERROR_PAGE_PATH = "path.page.error";
     public static final String REGISTRATION_PAGE_PATH = "path.page.registration";
     public static final String FLIGHTS_PAGE_PATH = "path.page.flights";
+    public static final String CLIENT_FLIGHTS_PAGE_PATH = "path.page.clientsflights";
 
     public PathPageConstants() {
     }

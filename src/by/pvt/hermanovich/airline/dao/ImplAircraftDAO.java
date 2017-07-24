@@ -39,4 +39,12 @@ public interface ImplAircraftDAO extends AbstractDAO<Aircraft> {
      * @return              - boolean value of the condition.
      */
     boolean checkUniqueAircraft(String aircraftCode, Connection connection) throws DAOException;
+
+    /**
+     * This method updates an existing record (row) in a database table.
+     *
+     * @param aircraft      - the current entity which will be updated.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     */
+    void update(Aircraft aircraft, Connection connection) throws DAOException;
 }

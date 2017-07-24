@@ -11,9 +11,11 @@ import by.pvt.hermanovich.airline.exceptions.DAOException;
 import by.pvt.hermanovich.airline.utils.ConnectorDB;
 import org.apache.log4j.Logger;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Description: This class describes actions on the ticket object.
@@ -85,7 +87,7 @@ public class TicketService {
      * @return  - an unique string that means an unique ticket number.
      */
     private String createTicketNumber() throws SQLException {
-        String number = null;
+        String number = "";
         Connection connection = null;
         try {
             connection = ConnectorDB.getConnection();
@@ -133,5 +135,33 @@ public class TicketService {
         } finally {
             ConnectorDB.closeConnection(connection);
         }
+    }
+
+    /**
+     * This method describes actions to print all tickets to the flight on the user's jsp page.
+     *
+     *
+     * @param user
+     * @param request   - an object of current request with necessary parameters.
+     * @return
+     */
+    public List<Ticket> getTicketsFromDB(User user, HttpServletRequest request) throws SQLException {
+        List<Ticket> ticketsList = null;
+        Connection connection = null;
+        try {
+            connection = ConnectorDB.getConnection();
+            connection.setAutoCommit(false);
+            ticketsList = TicketDAO.getInstance().getAllUsersTickets(user, connection);
+            connection.commit();
+        } catch (SQLException | DAOException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            logger.error(MessageConstants.TRANSACTION_FAILED);
+            throw new SQLException(e);
+        } finally {
+            ConnectorDB.closeConnection(connection);
+        }
+        return ticketsList;
     }
 }

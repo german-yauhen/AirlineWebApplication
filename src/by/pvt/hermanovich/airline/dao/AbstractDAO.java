@@ -23,14 +23,6 @@ public interface AbstractDAO<T extends BaseEntity> {
     void add(T entity, Connection connection) throws DAOException;
 
     /**
-     * This method updates an existing record (row) in a database table.
-     *
-     * @param entity            - the current entity which will be updated.
-     * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.
-     */
-    void update(T entity, Connection connection) throws DAOException;
-
-    /**
      * This method reads and returns information from all records (rows) of a database table.
      *
      * @param connection        - the current connection to a database. Transmitted from the service module to provide transactions.

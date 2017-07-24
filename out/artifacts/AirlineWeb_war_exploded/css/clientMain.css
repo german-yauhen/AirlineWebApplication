@@ -65,6 +65,16 @@ fieldset {
     width: 460px;
     margin-left: 6px;
 }
+.showTicketsForm {
+    position: absolute;
+    top: 320px;
+    left: 10px;
+    width: 120px;
+}
+.buttonShow {
+    height: 30px;
+    width: 120px;
+}
 .wrapperButtonsSearchFlight {
     position: relative;
     display: flex;

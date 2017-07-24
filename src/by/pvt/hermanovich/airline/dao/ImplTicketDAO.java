@@ -2,6 +2,7 @@ package by.pvt.hermanovich.airline.dao;
 
 import by.pvt.hermanovich.airline.dao.AbstractDAO;
 import by.pvt.hermanovich.airline.entities.Ticket;
+import by.pvt.hermanovich.airline.entities.User;
 import by.pvt.hermanovich.airline.exceptions.DAOException;
 import java.sql.Connection;
 import java.util.List;
@@ -24,13 +25,13 @@ public interface ImplTicketDAO extends AbstractDAO<Ticket> {
     void add(Ticket ticket, Connection connection) throws DAOException;
 
     /**
-     * This method updates an existing record (row) in a database table.
+     * This method reads and returns information about user's tickets from a database table.
      *
-     * @param ticket     - the current ticket which will be updated.
-     * @param connection - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @param user          - an user object with necessary fields.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     * @return - list of all tickets from a database table.
      */
-    @Override
-    void update(Ticket ticket, Connection connection) throws DAOException;
+    List<Ticket> getAllUsersTickets(User user, Connection connection) throws DAOException;
 
     /**
      * This method reads and returns information from all records (rows) of a database table.

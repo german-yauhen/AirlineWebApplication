@@ -39,4 +39,12 @@ public interface ImplAirportDAO extends AbstractDAO<Airport> {
      * @return              - boolean value of the condition.
      */
     boolean checkUniqueAirport(String airportCode, Connection connection) throws DAOException;
+
+    /**
+     * This method updates an existing record (row) in a database table.
+     *
+     * @param airport       - the current entity which will be updated.
+     * @param connection    - the current connection to a database. Transmitted from the service module to provide transactions.
+     */
+    void update(Airport airport, Connection connection) throws DAOException;
 }

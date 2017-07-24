@@ -5,7 +5,6 @@ import by.pvt.hermanovich.airline.constants.Parameters;
 import by.pvt.hermanovich.airline.constants.PathPageConstants;
 import by.pvt.hermanovich.airline.managers.ConfigManagerPages;
 import by.pvt.hermanovich.airline.utils.controllerUtils.RequestParameterIdentifier;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
